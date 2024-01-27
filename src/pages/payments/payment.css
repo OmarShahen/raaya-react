@@ -1,0 +1,139 @@
+.payment-status-page-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    flex-direction: column;
+}
+
+.payment-status-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.payment-status-header-container h2 {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    font-weight: normal;
+}
+
+.payment-status-header-container svg {
+    font-size: 4rem;
+}
+
+.payment-status-list-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.payment-loading-modal {
+    width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    /*background: #C1C9D2B3;*/
+    background: #091E428A;
+    z-index: 100;
+}
+
+.payment-loading-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+}
+
+.billing-plans-wrapper {
+    display: grid;
+    grid-template-columns: 40% auto;
+    column-gap: 1rem;
+}
+
+.plans-features-container li {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    padding-bottom: 1rem;
+}
+
+.plans-features-container li svg {
+    margin-right: .5rem;
+    font-size: 1rem;
+}
+
+.plan-package-container {
+    box-shadow: var(--box-shadow);
+    margin-bottom: 1rem;
+    border-radius: .25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.plan-package-container:hover {
+    cursor: pointer;
+    border: 1px solid #5d93fc;
+    opacity: .8;
+}
+
+.circle-icon-container {
+    display: flex;
+    align-items: center;
+}
+
+.circle-icon-container svg {
+    font-size: 1.7rem;
+    color: #414552;
+}
+
+.circle-icon-container div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+}
+
+.circle-icon-container div strong {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #220E27;
+}
+
+.plan-price-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.plan-price-container strong {
+    font-size: 2rem;
+}
+
+.billing-plans-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+.billing-data-buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+@media only screen and (max-width: 700px) {
+
+    .billing-plans-wrapper {
+        grid-template-columns: auto;
+        row-gap: 1rem;
+    }
+}

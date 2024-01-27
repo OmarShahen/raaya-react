@@ -1,0 +1,35 @@
+.bottom-bar-container {
+    position: fixed;
+    bottom: 0;
+    z-index: 2;
+    background-color: #FFF;
+    width: 100vw;
+    border-top: 1px solid #F2F2F2;
+    box-shadow: var(--box-shadow);
+}
+
+.bottom-bar-container ul {
+    padding: 0 1rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bottom-bar-container ul li {
+    list-style-type: none;
+    padding: 1rem 0;
+}
+
+.bottom-bar-container ul li a {
+    color: #000;
+    text-decoration: none;
+    font-size: .8rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.bottom-bar-container ul li .active {
+    color: var(--main-color);
+}

@@ -1,0 +1,59 @@
+.confirmation-modal-container {
+    background-color: #FFF;
+    width:40rem;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem 1rem;
+    border-radius: .25rem;
+}
+
+.confirmation-modal-header h3 {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    color: #172B4D;
+}
+
+
+.confirmation-modal-header h3 svg {
+    color: #DE350B;
+    margin-right: .5rem;
+    font-size: 1.4rem;
+}
+
+.confirmation-modal-body {
+    color: #091E42;
+}
+
+.confirmation-modal-buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: .4rem;
+}
+
+.confirmation-modal-buttons-container button {
+    margin-left: .4rem;
+}
+
+.confirmation-modal-buttons-container .delete-button {
+    background-color: #DE350B;
+    color: #FFF;
+}
+
+.confirmation-modal-buttons-container .abort-button {
+    background-color: #FFF;
+    color: #42526E;
+    box-shadow: none;
+}
+
+@media only screen and (max-width: 700px) {
+
+    .confirmation-modal-container {
+        width:88vw;
+    }
+    
+}

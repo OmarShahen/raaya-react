@@ -1,0 +1,17 @@
+.home-page-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+  }
+
+.home-page-container div h1 {
+    text-align: center;
+}
+
+.home-page-container div p {
+    font-size: 1.5rem;
+    font-weight: normal;
+    text-align: center;
+}

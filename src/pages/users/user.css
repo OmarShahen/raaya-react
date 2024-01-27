@@ -1,0 +1,226 @@
+.user-profile-page-container {
+    padding: 2rem 0rem;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 1rem;
+    row-gap: 1rem;
+}
+
+.user-profile-info-container {
+    display: grid;
+    grid-template-columns: 7fr 1fr;
+    column-gap: 1rem;
+}
+
+.doctor-image-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.profile-form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+    margin-top: 1rem;
+}
+
+.doctor-image-container img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+}
+
+#profile-image-input {
+    display: none;
+}
+
+progress {
+    border-radius: 7px; 
+    width: 100%;
+    height: .5rem;
+    animation: progressAnimation 1s ease-in-out forwards;
+  }
+  
+  progress::-webkit-progress-bar {
+    background-color: #BDC5D1;
+    border-radius: 7px;
+  }
+  
+  progress::-webkit-progress-value {
+    background-color: var(--main-color);
+    border-radius: 7px;
+  }
+  
+  @keyframes progressAnimation {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  
+
+.doctor-details-container div strong {
+    display: block;
+    font-size: 1.2rem;
+}
+
+.doctor-review-status-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.doctor-review-status-number {
+    font-weight: bold;
+}
+
+.doctor-details-container div span {
+    color: #747470;
+    font-size: 1rem;
+}
+
+.doctor-rating-container {
+    display: flex;
+    align-items: center;
+}
+
+.review-numbers-container {
+    font-weight: bold;
+    font-size: .9rem !important;
+    color: #2F2F2F !important;
+    margin-left: .9rem;
+}
+
+.doctor-prices-container {
+    padding: .7rem 0;
+}
+
+.doctor-original-price {
+    color: #B9B9B9;
+    font-size: 1.1rem;
+    text-decoration: line-through;
+    margin-right: .5rem;
+}
+
+.doctor-discounted-price {
+    color: #00D563 !important;
+    font-size: 1.1rem !important;
+}
+
+.doctor-current-price strong {
+    color: #0070CD;
+    font-size: 2rem !important;
+}
+
+.doctor-stats-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: #747470;
+    width: 100%;
+    padding: 1rem 0;
+    margin: 1rem 0;
+    border-top: 1px solid #F2F2F2;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.doctor-stats-container div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-stats-container div span {
+    font-weight: normal;
+}
+
+.doctor-description-container {
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.doctor-description-container h4 {
+    color: #6D6E70;
+}
+
+.doctor-description-container p {
+    color: #747470;
+    font-size: .9rem;
+}
+
+/*.doctor-rating-number {
+    background-color: #0070CD;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .1rem .8rem;
+    border-radius: .7rem;
+    font-size: 1.2rem;
+}*/
+
+.doctor-review-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #F2F2F2;
+    padding-bottom: .7rem;
+}
+
+.doctor-review-container .doctor-review-info span {
+    color: #747470;
+    font-size: .9rem;
+    padding-bottom: .5rem;
+}
+
+.doctor-review-container div {
+    display: flex;
+    flex-direction: column;
+}
+
+.doctor-review-date-container {
+    font-size: .8rem !important;
+}
+
+.doctor-date-container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.doctor-available-slots {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    row-gap: .7rem;
+}
+
+.doctor-available-slots span {
+    border: 1px solid #B9B9B9;
+    border-radius: .2rem;
+    padding: .2rem .7rem;
+    margin-right: .3rem;
+    color: #2F2F2F;
+    transition: .2s;
+}
+
+.doctor-available-slots span:hover {
+    background-color: #0070CD;
+    color: #FFF;
+    cursor: pointer;
+    border: none;
+}
+
+@media only screen and (max-width: 900px) {
+
+    .user-profile-page-container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .profile-form-container {
+        grid-template-columns: 1fr;
+    }
+    
+}

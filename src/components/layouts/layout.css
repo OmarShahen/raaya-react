@@ -1,0 +1,26 @@
+.page-body {
+    padding: 0 7rem;
+}
+
+.mini-nav-container {
+    display: flex;
+}
+
+.mini-nav-container a {
+    margin-right: 1rem;
+    text-decoration: none;
+    color: #000;
+}
+
+.mini-nav-container .active {
+    background-color: var(--main-color);
+    color: #FFF !important;
+}
+
+@media only screen and (max-width: 900px) {
+
+    .page-body {
+        padding: 0 1rem;
+    }
+    
+}

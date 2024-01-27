@@ -1,0 +1,159 @@
+.video-call-page-container {
+  background-color: #1E1F22;
+  min-height: 100vh;
+}
+
+.video-call-screens-wrapper {
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-call-page-header {
+  padding: 1rem 2rem;
+  background-color: #313338;
+}
+
+.video-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 1rem;
+}
+
+.video-tag {
+  position: absolute;
+  top: .5rem;
+  left: .5rem;
+  color: #FFF;
+  font-weight: bold;
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: 70vh;
+  object-fit: cover;
+  border-radius: var(--normal-border-radius);
+}
+
+.video-call-container-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  background-color: #313338;
+  color: #FFF;
+}
+
+.video-footer-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+
+.end-meeting-button {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
+.video-controls-container span svg {
+  font-size: 1.7rem;
+}
+
+.video-controls-container {
+  display: flex;
+  align-items: center;
+}
+
+.calling-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem .9rem;
+  border-radius: var(--large-border-radius);
+}
+
+.video-controls-container span {
+  margin-right: 2rem;
+  font-size: .8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.call-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: white;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .video-call-screens-wrapper {
+    flex-direction: column;
+  }
+  
+  .video-wrapper {
+    flex: 0.5;
+    max-width: 75%;
+  }
+
+  .video-controls-container span svg {
+    font-size: 1.5rem;
+  }
+
+  .video-controls-container span {
+    background-color: #313338;
+    border-radius: 50%;
+    padding: .7rem;
+  }
+
+  .video-footer-wrapper {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  .video-call-page-header {
+    padding: 1rem;
+  }
+  
+  .video-call-container-footer {
+    background-color: transparent !important;
+  }
+
+  .video-wrapper video {
+    width: 100%;
+    height: 35vh;
+  }
+
+  .video-controls-container {
+    flex-direction: column;
+  }
+
+  .video-controls-container span {
+    margin-top: 1rem;
+  }
+
+}

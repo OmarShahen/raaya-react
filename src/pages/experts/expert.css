@@ -1,0 +1,289 @@
+.doctor-page-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+    padding-top: 2rem;
+}
+
+.doctor-info-container {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+
+.doctor-image-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.doctor-image-container img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+}
+
+.doctor-details-container div strong {
+    display: block;
+    font-size: 1.2rem;
+}
+
+.doctor-details-container div span {
+    color: #B9B9B9;
+    font-size: 1rem;
+}
+
+.doctor-rating-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.review-numbers-container {
+    font-weight: normal;
+    font-size: .7rem !important;
+    color: #2F2F2F !important;
+    margin-left: .9rem;
+}
+
+.ratings-stars-container {
+    display: flex;
+    align-items: center;
+}
+
+.ratings-stars-container span {
+    margin-left: .4rem;
+}
+
+.doctor-prices-container {
+    padding: .7rem 0;
+}
+
+.doctor-original-price {
+    color: #B9B9B9;
+    font-size: 1.1rem;
+    text-decoration: line-through;
+    margin-right: .5rem;
+}
+
+.doctor-discounted-price {
+    color: var(--main-color) !important;
+    font-size: 1.1rem !important;
+}
+
+.doctor-current-price strong {
+    color: #000 !important;
+    font-size: 2rem !important;
+}
+
+.doctor-appointment-buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 1rem;
+    transition: .2s;
+}
+
+.doctor-stats-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: #747470;
+    width: 100%;
+    padding: 1rem 0;
+    margin: 1rem 0;
+    border-top: 1px solid #F2F2F2;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.doctor-stats-container div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-stats-container div span {
+    font-weight: normal;
+}
+
+.doctor-description-container {
+    border-bottom: 1px solid #F2F2F2;
+    text-align: right;
+}
+
+.doctor-description-container h4 {
+    color: #6D6E70;
+}
+
+.doctor-description-container p {
+    color: #747470;
+    font-size: .9rem;
+}
+
+/*.doctor-rating-number {
+    background-color: #0070CD;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .1rem .8rem;
+    border-radius: .7rem;
+    font-size: 1.2rem;
+}*/
+
+.doctor-clinic-locations-container h4 {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
+.doctor-clinic-locations-container ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: .5rem;
+}
+
+.doctor-clinic-locations-container ul li {
+    list-style-type: none;
+    padding: .2rem .3rem !important;
+    border-radius: var(--button-border-radius);
+    background-color: #0000000D;
+    color: #0F0F0F;
+    font-weight: bold;
+    font-size: .8rem;
+    transition: .2s;
+    margin-left: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-available-slots-container h4 {
+}
+
+
+.doctor-available-slots-container .available-slots-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.doctor-clinic-locations-container ul li:hover {
+    background-color: var(--main-color);
+    color: #FFF;
+    cursor: pointer;
+}
+
+.doctor-clinic-locations-container ul .active-clinic {
+    background-color: var(--main-color);
+    color: #FFF;
+    padding: .2rem .3rem !important;
+}
+
+.doctor-review-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #F2F2F2;
+    padding-bottom: .7rem;
+}
+
+.doctor-review-container .doctor-review-info span {
+    color: #747470;
+    font-size: .9rem;
+    padding-bottom: .5rem;
+}
+
+.doctor-review-container div {
+    display: flex;
+    flex-direction: column;
+}
+
+.doctor-review-date-container {
+    font-size: .8rem !important;
+}
+
+.doctor-available-slots {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    row-gap: .7rem;
+}
+
+.doctor-available-slots span {
+    border: 1px solid #B9B9B9;
+    padding: .2rem .7rem;
+    margin-right: .3rem;
+    color: #2F2F2F;
+    transition: .2s;
+}
+
+.doctor-available-slots span:hover {
+    background-color: var(--main-color) !important;
+    color: #FFF;
+    cursor: pointer;
+    border: none;
+}
+
+.active-booking-time {
+    background-color: var(--main-color) !important;
+    color: #FFF !important;
+    border: none !important;
+}
+
+.doctor-page-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+    padding-top: 2rem;
+}
+
+.calender-container {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-center {
+    text-align: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+@media only screen and (max-width: 900px) {
+
+    .doctor-page-container {
+        grid-template-columns: 1fr;
+        row-gap: 1rem;
+    }
+
+    .doctor-info-container {
+        grid-template-columns: 1fr 10fr;
+    }
+
+    .ratings-start-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .expert-price-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .expert-price-container span {
+        padding-bottom: .5rem;
+    }
+
+    .doctor-available-slots {
+        grid-template-columns: 1fr 1fr 1fr !important;
+    }
+
+    .doctor-available-slots span {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        margin-right: .7rem !important;
+    }
+    
+}

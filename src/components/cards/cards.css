@@ -1,0 +1,256 @@
+.card-container {
+    border-bottom: 1px solid rgb(230, 231, 232);
+    padding: 1rem 0;
+    flex: 1;
+}
+
+.card-container:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+
+.card-image-container {
+    display: flex;
+    justify-content: center;
+}
+
+.card-image-container img {
+    object-fit: fill;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+
+.card-body-container {
+    text-align: right;
+}
+
+.card-body-container h6 {
+    font-size: 1rem;
+    padding: 0 0 .2rem 0;
+    margin: 0;
+}
+
+.card-codes-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.card-codes-container span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: .3rem;
+    margin-top: .3rem;
+    font-size: .9rem;
+    padding: .2rem .5rem;
+    border-radius: var(--button-border-radius);
+    background-color: #F2F2F2;
+    color: #0F0F0F;
+}
+
+.card-codes-container span svg {
+    font-size: 1.2rem;
+    margin-right: .5rem;
+}
+
+.card-description {
+    font-size: .9rem;
+    color: #6D6E70;
+}
+
+.card-rating-container {
+    font-size: 1rem;
+    color: #6D6E70;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.card-rating-container span {
+    display: flex;
+    align-items: center;
+    padding-right: .2rem;
+}
+
+.original-price {
+    color: #808184;
+    text-decoration: line-through;
+    padding-left: .7rem;
+}
+
+.saved-price {
+    color: #00D563;
+}
+
+.current-price-container {
+    padding-top: .2rem;
+}
+
+.current-price-container strong {
+    color: var(--main-color);
+    font-size: 1.3rem;   
+}
+
+.book-btn-container {
+    padding-top: 1rem;
+    text-align: left;
+}
+
+.book-btn {
+    border: 1px solid var(--main-color);
+    background-color: #FFF;
+    color: var(--main-color);
+    border-radius: var(--button-border-radius);
+    text-decoration: none;
+    padding: .1rem 1.2rem;
+    transition: .2s;
+    font-weight: bold;
+}
+
+.book-btn:hover {
+    background-color: var(--main-color);
+    color: #FFF;
+}
+
+.doctor-review-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 0rem !important;
+    border-bottom: 1px solid #F2F2F2;
+    padding: 1rem .5rem .5rem .5rem;
+    transition: .2s;
+}
+
+.doctor-review-container:last-child {
+    border-bottom: none;
+}
+
+.doctor-review-container:hover {
+    background-color: #F2F2F2;
+}
+
+.doctor-review-info {
+    display: flex;
+    align-items: column;
+    justify-content: space-between;
+}
+
+.doctor-review-container .doctor-review-info span {
+    padding-bottom: .5rem;
+    color: #000 !important;
+    font-size: .9rem !important;
+}
+
+.item-image-expert-info-container {
+    display: grid !important;
+    grid-template-columns: 1fr 10fr !important;
+    column-gap: .7rem;
+}
+
+.doctor-review-container div {
+    display: flex;
+    flex-direction: column;
+}
+
+.doctor-review-date-container {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.expert-card-container {
+    display: flex;
+    /*grid-template-columns: 2.8fr 1.8fr;*/
+    flex-direction: row;
+}
+
+.expert-card-container .expert-card-body-container, .expert-card-container .expert-card-buttons-container  {
+    flex: 1;
+}
+
+.expert-card-body-container h6 {
+    padding: 0;
+    margin: 0;
+}
+
+.expert-card-stars-container {
+    display: flex;
+    align-items: center;
+}
+
+.expert-card-stars-container svg {
+    font-size: 1rem;
+}
+
+.expert-booking-container {
+    border-left: 2px solid #F2F2F2;
+    margin-left: .8rem;
+    padding-left: .8rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    flex: .7 !important;
+}
+
+.expert-card-buttons-container {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+}
+
+
+.expert-nearest-time-container {
+    border: 1px solid #F2F2F2;
+    padding: 0rem;
+}
+
+.expert-nearest-time-header {
+    border-bottom: 1px solid #F2F2F2;
+    padding: .5rem .7rem;
+    background-color: var(--main-color);
+    color: #FFF;
+    border-top-right-radius: var(--normal-border-radius);
+    border-top-left-radius: var(--normal-border-radius);
+}
+
+.expert-nearest-time-slot-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.7rem 0;
+}
+
+.card-table-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-table-cell {
+    flex: 1;
+}
+
+.card-right-side-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 950px) {
+    .card-date-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .doctor-review-container {
+        padding: 1rem 0;
+    }
+
+    .expert-booking-container {
+        display: none;
+    }
+}

@@ -1,0 +1,137 @@
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: .5rem 7rem;
+    background-color: #FFF;
+    color: #000;
+    margin: 0;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.navbar-links-container ul {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-links-container ul li {
+    list-style-type: none;
+    margin-left: 1rem;
+}
+
+.navbar-links-container ul li a {
+    text-decoration: none;
+}
+
+.navbar-container img:hover {
+    cursor: pointer;
+}
+
+.categories-navbar-container {
+    margin: 0;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 3px 0px;
+}
+
+.categories-navbar-container ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 !important;
+}
+
+.categories-navbar-container ul li {
+    list-style-type: none;
+    color: #343434;
+    font-weight: bold;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 3px solid #FFF;
+    font-size: 1rem;
+}
+
+.categories-navbar-container ul li:hover {
+    cursor: pointer;
+    border-bottom: 3px solid rgb(209, 41, 40);
+}
+
+.language-container {
+   /* color: #7C82A1;*/
+   color: #000;
+}
+
+.language-container span:hover {
+    cursor: pointer;
+    color: dodgerblue;
+}
+
+.login-button {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+.signup-button {
+    background-color: var(--main-color);
+    border-radius: .8rem;
+    padding: .5rem 1rem;
+    color: #FFF;
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+}
+
+.login-button:hover, .signup-button:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
+.navbar-profile-container ul {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-profile-container ul li {
+    list-style-type: none;
+    margin-left: 2rem;
+}
+
+.navbar-profile-container ul li a {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-decoration: none;
+    color: #000;
+    transition: .2s;
+}
+
+
+.navbar-profile-container ul li a span {
+    font-size: .8rem;
+}
+
+.navbar-profile-container ul li a svg {
+    color: #00000099;
+}
+
+.collapse-menu-container {
+    transition: .2s;
+}
+
+.collapse-menu-container:hover {
+    color: var(--main-color);
+}
+
+@media only screen and (max-width: 900px) {
+
+    .navbar-container {
+        padding: .5rem 1rem;
+    } 
+    
+}

@@ -1,0 +1,32 @@
+.pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem 0 1rem 0;
+}
+
+.pagination-container span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem .8rem;
+    margin: 0 4px;
+    color: #000;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: .2s;
+    background-color: #FFF;
+}
+
+.pagination-container span:hover {
+    background-color: var(--main-color);
+    color: #FFF !important;
+    cursor: pointer;
+}
+
+
+.pagination-arrow {
+    background-color: var(--main-color);
+    color: #000 !important;
+}

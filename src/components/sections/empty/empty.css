@@ -1,0 +1,23 @@
+.empty-section-container {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.empty-section-body-container {
+    margin-bottom: .5rem;
+}
+
+.empty-section-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: .5rem;
+}
+
+.empty-section-icon-container svg {
+    font-size: 3rem;
+    color: var(--dark-grey);
+}

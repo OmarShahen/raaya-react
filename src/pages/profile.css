@@ -1,0 +1,133 @@
+.profile-top-header-container {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-image-name-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    padding-bottom: 2.5rem;
+}
+
+.reverse-row {
+    flex-direction: row-reverse;
+}
+
+.profile-image-name-container div img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    margin-left: .7rem;
+}
+
+.profile-image-name-container div {
+    text-align: right;
+}
+
+.profile-image-name-container div strong {
+    display: block;
+    padding-bottom: .2rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.profile-image-name-container div span {
+    color: #7C82A1;
+}
+
+.profile-image-name-container div button {
+    margin-top: .5rem;
+    transition: .5s;
+    display: flex;
+    align-items: center;
+    border-radius: .3rem;
+    background-color: #DE350B;
+    color: #FFF;
+    border: none;
+    font-weight: 500;
+    font-size: .9rem;
+    padding: .4rem .7rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.profile-body-container ul li {
+    list-style-type: none;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row-reverse;
+    margin-bottom: 1rem;
+}
+
+.profile-body-container ul li:hover {
+    cursor: pointer;
+    opacity: .8;
+    transition: .3s;
+}
+
+.profile-list-item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end !important;
+    justify-content: center;
+    text-align: right !important;
+}
+
+.profile-list-item-container span {
+    font-size: .9rem;
+    padding-top: .1rem;
+}
+
+.arrow-container {
+    padding-right: 1rem;
+}
+
+.profile-list-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding-right: 1rem;
+    border-bottom: 1px solid #F2F2F2;
+    padding-bottom: .7rem;
+}
+
+.profile-list-wrapper svg {
+    font-size: 1rem;
+}
+
+.profile-body-container ul li div {
+    display: flex;
+    align-items: center;
+}
+
+
+.profile-body-container ul {
+    padding: 0;
+    margin: 0;
+}
+
+.profile-icon-container {
+    border-radius: 50%;
+    padding: .7rem;
+    color: #FFF !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-footer-container {
+    font-size: .7rem;
+    padding-top: .2rem;
+    text-align: left;
+    display: flex;
+    flex-direction: row !important;
+}
+
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}

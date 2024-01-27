@@ -1,0 +1,8 @@
+.prescription-page-container {
+    background-color: #F2F2F2;
+    min-height: 100vh;
+}
+
+.prescription-page-card-container {
+    padding: 1rem .5rem;
+}

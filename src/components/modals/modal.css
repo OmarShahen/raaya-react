@@ -1,0 +1,324 @@
+.modal {
+    width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    /*background: #C1C9D2B3;*/
+    background: #091E428A;
+    z-index: 100;
+}
+
+.top-modal {
+    z-index: 1000;
+}
+
+.modal-header-description {
+    font-size: .9rem;
+    color: #747470;
+}
+
+.modal-container {
+    background-color: #FFF;
+    width: 30rem !important;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem !important;
+    border-radius: var(--normal-button-radius);
+}
+
+.modal-wide-width {
+    width: 40rem !important;
+}
+
+.forgot-password-container {
+    color: var(--main-color);
+    font-weight: bold;
+    font-size: .8rem;
+    text-align: right;
+}
+
+.modal-close-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.modal-close-container svg:hover {
+    cursor: pointer;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: .5rem;
+}
+
+.modal-header img {
+    height: 4rem;
+}
+
+.modal-header h2 {
+    padding: 1rem 0;
+    margin: 0;
+}
+
+.modal-body-container-temp {
+    overflow-y: scroll;
+    max-height: 25rem;
+    padding: 0rem 0rem !important;
+}
+
+.modal-form-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.modal-form-container div {
+    padding: .4rem 0;
+}
+
+.modal-form-container div input {
+    /*display: block;
+    width: 90%;
+    margin-top: 0rem;*/
+}
+
+.modal-form-container div select {
+    margin-top: 0rem;
+}
+
+.modal-form-btn-container {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem 0;
+}
+
+.modal-form-btn-container button {
+    margin-right: .6rem;
+}
+
+.modal-form-btn-container div svg {
+    margin-right: 3rem;
+}
+
+.modal-send-email-container {
+    padding: 1rem 0 0 0;
+    display: flex;
+    align-items: center;
+}
+
+.modal-send-email-container:hover,.modal-send-email-container:hover svg {
+    cursor: pointer;
+    color: var(--main-color) !important;
+}
+
+.modal-send-email-container svg {
+    font-size: 1rem;
+    color: #000;
+    margin-right: .2rem;
+}
+
+.upload-file-form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+}
+
+.upload-file-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 100%;
+    min-height: 60vh;
+    background-color: #F8FAFD;
+    border: .125rem dashed rgba(231, 234, 243, .7);
+    border-radius: .5rem;
+}
+
+.upload-file-form-container ul li {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.upload-file-form-container ul li div svg {
+    margin-right: .1rem;
+    color: var(--main-color);
+    background-color: #F8FAFD;
+    padding: .7rem;
+    border-radius: 50%;
+    box-shadow: var(--border-color);
+}
+
+.upload-file-form-container ul li span {
+    display: flex;
+    flex-direction: column;
+    margin-left: .1rem;
+}
+
+.file-upload-info-container {
+    display: flex;
+}
+
+
+.upload-file-input-container svg {
+    font-size: 7rem;
+    color: #677788;
+}
+
+.remove-file-button svg {
+    font-size: 1rem;
+    color: #677788;
+}
+
+.remove-file-button:hover {
+    cursor: pointer;
+}
+
+.upload-file-input-container p {
+    color: #1E2022;
+    font-weight: bold;
+}
+
+.form-signup-container {
+    display: flex;
+    justify-content: center;
+    font-size: .9rem;
+}
+
+.form-signup-container .signup {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+.signup-progress-bar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: .7rem;
+}
+
+.signup-progress-bar-container div {
+    background-color: #747470;
+    color: #FFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .1rem .5rem;
+}
+
+
+.signup-acheived-container {
+    background-color: var(--main-color) !important;
+}
+
+.verification-code-note-container {
+    font-size: .9rem;
+    color: #747470;
+    display: flex;
+}
+
+.verification-code-note-container span {
+    padding-left: .2rem;
+}
+
+.resend-code-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .9rem;
+    color: #747470;
+    padding-top: .4rem;
+    padding-bottom: 0;
+}
+
+.resend-code-container .code-button {
+    color: var(--main-color);
+    border: 0;
+    outline: 0;
+}
+
+.resend-code-container .code-button:hover {
+    cursor: pointer;
+    opacity: .8;
+    text-decoration: underline;
+}
+
+.review-options-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.review-options-container div {
+    display: flex;
+    align-items: center;
+}
+
+.review-options-container div span {
+    margin-left: .4rem;
+}
+
+@media only screen and (max-width: 700px) {
+
+    .responsive-form {
+        display: grid;
+        grid-template-columns: 100% !important;
+    }
+
+    .modal-container {
+        width: 90%;
+        margin: auto;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        padding: 0 .5rem;
+        border-radius: .25rem;
+    }
+
+    .modal-form-container {
+        grid-template-columns: 50% 50%;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+
+    .modal-container {
+        width: 90%;
+        margin: auto;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        padding: 0 .5rem;
+        border-radius: .25rem;
+    }
+
+    .modal-wide-width {
+        width: 90%;
+    }
+
+    .modal-form-container {
+        grid-template-columns: 50% 50%;
+    }
+
+    .upload-file-form-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 1rem;
+    }
+
+    .file-upload-info-container {
+        margin-top: 1rem;
+    }
+    
+}

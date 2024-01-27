@@ -1,0 +1,12 @@
+.policies-container {
+
+}
+
+.policies-container ul {
+    padding: 0;
+    margin: 0;
+}
+
+.policies-container ul li {
+    list-style-type: none;
+}

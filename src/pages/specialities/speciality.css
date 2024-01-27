@@ -1,0 +1,24 @@
+.find-expert-container h6 {
+    padding-bottom: 2rem !important;
+}
+
+
+.find-expert-tags-container a {
+    margin-bottom: .5rem !important;
+}
+
+.find-expert-question-container {
+    font-size: 1.4rem;
+}
+
+@media only screen and (max-width: 900px) {
+    
+    .find-expert-question-container {
+        font-size: .9rem;
+        text-align: center;
+    }
+
+    .find-expert-tags-container a {
+        font-size: .9rem;
+    }
+}
