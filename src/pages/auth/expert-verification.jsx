@@ -44,7 +44,7 @@ const ExpertVerificationPage = () => {
     const divAnimation = {
         hidden: { opacity: 0, y: 50 },
         visible: { opacity: 1, y: 0 },
-      }
+    }
 
     useEffect(() => {
         scroll(0, 0)

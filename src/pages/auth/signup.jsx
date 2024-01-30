@@ -9,12 +9,18 @@ import { serverRequest } from '../../components/API/request'
 import Loading from '../../components/loading/loading'
 import { getTimeZone } from '../../utils/time'
 import { setUser, setIsLogged } from '../../redux/slices/userSlice'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google'
 import axios from 'axios'
+import { motion } from 'framer-motion'
 
 
 const SignupPage = () => {
+
+    const [searchParams] = useSearchParams()
+
+    const [isExpert] = useState(searchParams.get('type') === 'EXPERT' ? true : false)
+    const expertVerificationId = searchParams.get('expertVerification')
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -44,6 +50,11 @@ const SignupPage = () => {
     const [genderError, setGenderError] = useState()
     const [dateOfBirthError, setDateOfBirthError] = useState()
     const [verificationCodeError, setVerificationCodeError] = useState()
+
+    const divAnimation = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0 },
+    }
 
     useEffect(() => {
         scroll(0, 0)
@@ -84,6 +95,57 @@ const SignupPage = () => {
 
         setIsLoading(true)
         serverRequest.post('/v1/auth/seekers/signup', signupData)
+        .then(response => {
+            setIsLoading(false)
+            setUserId(response.data.user._id)
+            setUserEmail(response.data.user.email)
+            setIsShowVerificationCode(true)
+        })
+        .catch(error => {
+            setIsLoading(false)
+
+            console.log(error?.response)
+
+            const responseError = error?.response?.data
+
+            if(responseError?.field === 'email') return setEmailError(responseError?.message)
+
+            if(responseError?.field === 'phone') return setPhoneError(responseError?.message)
+
+            if(responseError?.field === 'password') return setPasswordError(responseError?.message)
+
+            toast.error(responseError.message, { position: 'top-right', duration: 3000 })
+            
+        })
+    }
+
+    const handleExpertSubmit = (e) => {
+        e.preventDefault()
+
+        if(!name) return setNameError('Name is required')
+
+        if(!email) return setEmailError('Email is required')
+
+        if(!phone) return setPhoneError('Phone is required')
+
+        if(phone.length !== 11) return setPhoneError('Phone number must be 11 digits')
+
+        if(phone[0] !== '0' && phone[1] !== '1') return setPhoneError('Phone number must be in this format: 01*********')
+
+        if(!password) return setPasswordError('Password is required')
+
+        const signupData = {
+            firstName: name,
+            email,
+            phone: Number.parseInt(phone),
+            password,
+            countryCode: 20,
+            timeZone: getTimeZone(),
+            expertVerificationId
+        }
+
+        setIsLoading(true)
+        serverRequest.post('/v1/auth/experts/signup', signupData)
         .then(response => {
             setIsLoading(false)
             setUserId(response.data.user._id)
@@ -183,7 +245,7 @@ const SignupPage = () => {
             user.accessToken = data.token
             localStorage.setItem('user', JSON.stringify({ ...user, isLogged: true }))
             dispatch(setUser({ ...user, isLogged: true }))
-            navigate('/find-expert')
+            isExpert ? navigate('/users/profile') : navigate('/find-expert')
         })
         .catch(error => {
             setIsLoading(false)
@@ -247,58 +309,73 @@ const SignupPage = () => {
             <div className="auth-form-container">
                 <h1>Sign Up</h1>
                 <div>
-                    <span className="fadded-black-text normal-font sub-header-text">Book sessions with knowledgeable experts and receive personalized advice and guidance</span>
+                    <span className="fadded-black-text normal-font sub-header-text">
+                    {
+                        isExpert ?
+                        'Unlock your expertise - Join our expert community!'
+                        :
+                        'Book sessions with knowledgeable experts and receive personalized advice and guidance'
+                    } 
+                    </span>
                 </div>
                 <div className="margin-top-1">
                     
                     {
                         isShowVerificationCode ?
                         <form onSubmit={handleVerificationCode} className="auth-verification-code-container">
-                            <div>
+                            <motion.div
+                            initial="hidden"
+                            animate="visible"
+                            variants={divAnimation}
+                            transition={{ duration: 0.5 }}
+                            >
                                 <div>
-                                    <span className="verification-code-note-container">
-                                        verification code is sent to <span className="main-color-text bold-text">{userEmail}</span>
-                                    </span>
-                                </div>
-                                <div className="form-input-container">
-                                    <input 
-                                    type="text" 
-                                    placeholder="Verification Code" 
-                                    className="form-input"
-                                    onClick={() => setVerificationCodeError()}
-                                    onChange={e => setVerificationCode(e.target.value)}
-                                    value={verificationCode}
-                                    />
-                                    <div className="resend-code-container">
-                                        <span>code will expire in 2 minutes</span>
-                                        <span 
-                                        className="code-button bold-text"
-                                        onClick={() => resendEmailVerificationCode()}
-                                        >Resend code</span>
+                                    
+                                    <div>
+                                        <span className="verification-code-note-container">
+                                            verification code is sent to <span className="main-color-text bold-text">{userEmail}</span>
+                                        </span>
                                     </div>
-                                    <div className="red-text align-left">
-                                        <span>{verificationCodeError}</span>
+                                    <div className="form-input-container">
+                                        <input 
+                                        type="text" 
+                                        placeholder="Verification Code" 
+                                        className="form-input"
+                                        onClick={() => setVerificationCodeError()}
+                                        onChange={e => setVerificationCode(e.target.value)}
+                                        value={verificationCode}
+                                        />
+                                        <div className="resend-code-container">
+                                            <span>code will expire in 2 minutes</span>
+                                            <span 
+                                            className="code-button bold-text"
+                                            onClick={() => resendEmailVerificationCode()}
+                                            >Resend code</span>
+                                        </div>
+                                        <div className="red-text align-left">
+                                            <span>{verificationCodeError}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div>
-                            {
-                                isLoading ?
-                                <div className="flex-center">
-                                    <Loading width="30" height="30" />
+                                <div>
+                                {
+                                    isLoading ?
+                                    <div className="flex-center">
+                                        <Loading width="30" height="30" />
+                                    </div>
+                                    :
+                                    <button className="normal-button main-color-bg white-text full-width">
+                                        Submit
+                                    </button>
+                                }
+                                <div>
+                                    <button onClick={() => setIsShowVerificationCode(false)} className="normal-button full-width">Back</button>
                                 </div>
-                                :
-                                <button className="normal-button main-color-bg white-text full-width">
-                                    Submit
-                                </button>
-                            }
-                            <div>
-                                <button onClick={() => setIsShowVerificationCode(false)} className="normal-button full-width">Back</button>
-                            </div>
-                            </div>
+                                </div>
+                            </motion.div>
                         </form>
                         :
-                        <form onSubmit={verifiedEmail === email ? handleGoogleSubmit : handleSubmit}>
+                        <form onSubmit={isExpert ? handleExpertSubmit : verifiedEmail === email ? handleGoogleSubmit : handleSubmit}>
                             <div className="form-input-container">
                                 <input 
                                 type="text" 
@@ -364,34 +441,44 @@ const SignupPage = () => {
                                     <span>{passwordError}</span>
                                 </div>
                             </div>                         
-                        
-                            <div className="form-input-container">
-                                <select 
-                                className="form-select"
-                                onClick={() => setGenderError()}
-                                onChange={e => setGender(e.target.value)}
-                                >
-                                    <option disabled selected>Select Gender</option>
-                                    <option selected={gender === 'MALE' ? true : false} value="MALE">Male</option>
-                                    <option selected={gender === 'FEMALE' ? true : false} value="FEMALE">Female</option>
-                                </select>
-                                <div className="red-text align-left">
-                                    <span>{genderError}</span>
+                            {
+                                isExpert ?
+                                null
+                                :
+                                <div className="form-input-container">
+                                    <select 
+                                    className="form-select"
+                                    onClick={() => setGenderError()}
+                                    onChange={e => setGender(e.target.value)}
+                                    >
+                                        <option disabled selected>Select Gender</option>
+                                        <option selected={gender === 'MALE' ? true : false} value="MALE">Male</option>
+                                        <option selected={gender === 'FEMALE' ? true : false} value="FEMALE">Female</option>
+                                    </select>
+                                    <div className="red-text align-left">
+                                        <span>{genderError}</span>
+                                    </div>
                                 </div>
-                            </div>
-                                
-                            <div className="form-input-container">
-                                <input 
-                                type="date" 
-                                className="form-input"
-                                onClick={() => setDateOfBirthError()}
-                                onChange={e => setDateOfBirth(e.target.value)}
-                                value={dateOfBirth}
-                                />
-                                <div className="red-text align-left">
-                                    <span>{dateOfBirthError}</span>
+                            }   
+                            
+                            {
+                                isExpert ?
+                                null
+                                :
+                                <div className="form-input-container">
+                                    <input 
+                                    type="date" 
+                                    className="form-input"
+                                    onClick={() => setDateOfBirthError()}
+                                    onChange={e => setDateOfBirth(e.target.value)}
+                                    value={dateOfBirth}
+                                    />
+                                    <div className="red-text align-left">
+                                        <span>{dateOfBirthError}</span>
+                                    </div>
                                 </div>
-                            </div>
+                            } 
+                            
                             
                         <div className="form-input-container margin-top-1">
                             {
@@ -414,19 +501,25 @@ const SignupPage = () => {
                         </form>
                     }
                 </div>
-                <div className="margin-top-1">
-                    <GoogleLogin
-                    onSuccess={onGoogleSuccess}
-                    onError={() => {
-                        setEmailError('There was a problem login to your account')
-                    }}
-                    shape={'pill'}
-                    text={'continue_with'}
-                    size={'large'}
-                    theme={'filled_blue'}
-                    useOneTap
-                    />
-                </div>
+                {
+                    isExpert ?
+                    null
+                    :
+                    <div className="margin-top-1">
+                        <GoogleLogin
+                        onSuccess={onGoogleSuccess}
+                        onError={() => {
+                            setEmailError('There was a problem login to your account')
+                        }}
+                        shape={'pill'}
+                        text={'continue_with'}
+                        size={'large'}
+                        theme={'filled_blue'}
+                        useOneTap
+                        />
+                    </div>
+                }
+                
             </div>
         </div>
     </div>
