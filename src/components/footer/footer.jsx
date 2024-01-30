@@ -55,7 +55,7 @@ const Footer = () => {
             </div>
             <div className="footer-links-buttons-container">
                 <NavLink to="/auth/signup" className="normal-button main-color-text main-color-border bold-text">Join as Client</NavLink>
-                <NavLink to={`${SUPPORT_LINK}?text=How to join as a expert`} className="normal-button main-color-text main-color-border bold-text">Join as Expert</NavLink>
+                <NavLink to="/expert-verification" className="normal-button main-color-text main-color-border bold-text">Join as Expert</NavLink>
             </div>
         </div>
     </div>

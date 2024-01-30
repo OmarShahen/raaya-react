@@ -31,6 +31,7 @@ import RefundPage from './pages/policies/refund'
 import AuthorizedLayout from './components/layouts/authorized-layout'
 import PaymentStatusPage from './pages/payments/payment-status'
 import SessionRoomPage from './pages/video-call/session-room'
+import ExpertVerificationPage from './pages/auth/expert-verification'
 
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
               </Route>
             </Route>
 
+            <Route path="/expert-verification" element={<ExpertVerificationPage />} />
             <Route path="/auth/signup" element={<SignupPage />} />
             <Route path="/auth/login" element={<LoginPage />} />
             <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />

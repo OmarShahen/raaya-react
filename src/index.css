@@ -671,6 +671,12 @@ button:hover {
     margin-left: .5rem;
 }
 
+.grid-2-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: .5rem;
+}
+
 @media only screen and (max-width: 900px) {
 
     .both-sides-padded-container {
@@ -700,6 +706,13 @@ button:hover {
 
     .hide-mobile {
         display: none !important;
-    }    
+    }   
+    
+    .grid-2-columns {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 0;
+    }
+    
     
 }

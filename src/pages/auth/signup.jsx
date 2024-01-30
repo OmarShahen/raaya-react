@@ -247,7 +247,7 @@ const SignupPage = () => {
             <div className="auth-form-container">
                 <h1>Sign Up</h1>
                 <div>
-                    <span className="fadded-black-text normal-font sub-header-text">Book appointments with knowledgeable experts in various fields to receive personalized advice and guidance</span>
+                    <span className="fadded-black-text normal-font sub-header-text">Book sessions with knowledgeable experts and receive personalized advice and guidance</span>
                 </div>
                 <div className="margin-top-1">
                     

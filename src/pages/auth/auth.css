@@ -23,6 +23,12 @@
     background-color: #FFF;
 }
 
+.verification-form-container {
+    text-align: center;
+    padding: 1rem 8rem;
+    background-color: #FFF;
+}
+
 .auth-verification-code-container {
     padding-top: 3rem;
 }
@@ -35,10 +41,6 @@
 
     .auth-form-container {
         padding: 2rem;
-    }
-
-    .sub-header-text  {
-        font-size: .78rem !important;
     }
 
     .auth-image-container {
