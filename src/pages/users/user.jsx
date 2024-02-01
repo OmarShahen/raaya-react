@@ -9,16 +9,22 @@ import CardImage from '../../components/images/image'
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined'
 import { projectStorage } from '../../../firebase/config'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import { capitalizeFirstLetter } from '../../utils/formatString'
+import { NavLink } from 'react-router-dom'
 
 
 const UserPage = () => {
 
     const user = useSelector(state => state.user.user)
 
+    const [reload, setReload] = useState(1)
+
     const [isLoading, setIsLoading] = useState(false)
     const [isBankInfoLoading, setIsBankInfoLoading] = useState(false)
     const [isMobileWalletInfoLoading, setIsMobileWalletInfoLoading] = useState(false)
     const [isProfileLoading, setIsProfileLoading] = useState(true)
+
+    const [profileCompletionPercentage, setProfileCompletionPercentage] = useState(0)
     
     const [name, setName] = useState()
     const [email, setEmail] = useState()
@@ -63,7 +69,42 @@ const UserPage = () => {
     const [halfHourPriceError, setHalfHourPriceError] = useState()
     const [hourPriceError, setHourPriceError] = useState()
 
-    //useEffect(() => scroll(0, 0), [])
+    const [missingFields, setMissingFields] = useState([])
+
+    useEffect(() => {
+        scroll(0, 0)
+        document.title = 'User Profile'
+    }, [])
+
+    const getMissingFieldsMessages = (fields) => {
+
+        let messages = []
+
+        const fieldsMessages = [
+            { field: 'profileImageURL', message: 'Profile image is missing' },
+            { field: 'name', message: 'Name is missing' },
+            { field: 'email', message: 'Email is missing' },
+            { field: 'phone', message: 'Phone is missing' },
+            { field: 'dateOfBirth', message: 'Birthday is missing' },
+            { field: 'gender', message: 'Gender is missing' },
+            { field: 'title', message: 'Title is missing' },
+            { field: 'description', message: 'Description is missing' },
+            { field: 'speciality', message: 'Speciality is missing' },
+            { field: 'subSpeciality', message: 'Subspeciality is missing' },
+            { field: 'pricing', message: 'Pricing is missing' },
+            { field: 'paymentInfo', message: 'Payment Information is missing' },
+        ]
+
+        for(let i=0;i<fields.length;i++) {
+            for(let j=0;j<fieldsMessages.length;j++) {
+                if(fields[i] === fieldsMessages[j].field) {
+                    messages.push(fieldsMessages[j].message)
+                }
+            }
+        }
+
+        return messages
+    }
 
     useEffect(() => {
         serverRequest.get(`/v1/users/${user._id}`)
@@ -132,6 +173,19 @@ const UserPage = () => {
         })
     }, [speciality])
 
+    useEffect(() => {
+        serverRequest.get(`/v1/experts/${user._id}/profile-completion-percentage`)
+        .then(response => {
+            setProfileCompletionPercentage(response.data.profileCompletionPercentage?.completionPercentage)
+            const missingFields = response.data.profileCompletionPercentage?.missingFields
+            setMissingFields(getMissingFieldsMessages(missingFields))
+        })
+        .catch(error => {
+            console.error(error)
+            toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+        })
+    }, [reload])
+
     const handleUpdate = () => {
 
         const type = user.type
@@ -149,6 +203,8 @@ const UserPage = () => {
         if(type === 'EXPERT' && !description) return setDescriptionError('Description is required')
 
         if(type === 'EXPERT' && !speciality) return setSpecialityError('Speciality is required')
+
+        if(type === 'EXPERT' && userSubspeciality.length === 0) return setSubspecialityError('Speciality is required')
 
         if(type === 'EXPERT' && !halfHourPrice) return setHalfHourPriceError('30 min duration price is required')
 
@@ -179,6 +235,7 @@ const UserPage = () => {
         serverRequest.put(`/v1/users/${user._id}`, updateData)
         .then(response => {
             setIsLoading(false)
+            setReload(reload + 1)
             toast.success(response.data.message, { duration: 3000, position: 'top-right' })
         })
         .catch(error => {
@@ -218,6 +275,7 @@ const UserPage = () => {
             serverRequest.patch(`/v1/users/${user._id}/profile-image`, { profileImageURL: downloadURL })
             .then(response => {
                 setIsImageUploading(false)
+                setReload(reload + 1)
                 toast.success(response.data.message, { duration: 3000, position: 'top-right' })
             })
             .catch(error => {
@@ -244,6 +302,7 @@ const UserPage = () => {
         serverRequest.patch(`/v1/experts/${user._id}/bank-info`, bankInfoData)
         .then(response => {
             setIsBankInfoLoading(false)
+            setReload(reload + 1)
             toast.success(response.data.message, { duration: 3000, position: 'top-right' })
         })
         .catch(error => {
@@ -264,6 +323,7 @@ const UserPage = () => {
         serverRequest.patch(`/v1/experts/${user._id}/mobile-wallet`, mobileWalletData)
         .then(response => {
             setIsMobileWalletInfoLoading(false)
+            setReload(reload + 1)
             toast.success(response.data.message, { duration: 3000, position: 'top-right' })
         })
         .catch(error => {
@@ -277,16 +337,109 @@ const UserPage = () => {
 
     }
 
-    return <div>
+    return <div className="user-profile-page-layout">
+        <div>
+            <div className="styled-container hide-mobile">
+                <h6 className="no-space large-font">On This Page</h6>
+                <div>
+                    <ul className="user-profile-navigation-links">
+                        <li>
+                            <a href="#account-details" className="fadded-black-text">Account Details</a>
+                        </li>
+                        {
+                            user.type === 'EXPERT' ?
+                            <li>
+                                <a href="#expert-details" className="fadded-black-text">Expert Details</a>
+                            </li>
+                            :
+                            null
+                        }
+                        {
+                            user.type === 'EXPERT' ?
+                            <li>
+                                <a href="#bank-account" className="fadded-black-text">Bank Account</a>
+                            </li>
+                            :
+                            null
+                        }
+                        {
+                            user.type === 'EXPERT' ?
+                            <li>
+                                <a href="#mobile-wallet" className="fadded-black-text">Mobile Wallet</a>
+                            </li>
+                            :
+                            null
+                        }
+                        
+                    </ul>
+                </div>
+            </div> 
+            {
+                user.type === 'EXPERT' ?
+                <div className="styled-container margin-top-1">
+                    <h6 className="no-space large-font">Expert Page URL</h6>
+                    <div className="margin-top-1">
+                        <strong className="main-color-text">
+                            {`${window.location.hostname}/experts/${user._id}`}
+                        </strong>
+                    </div>
+                    <div className="margin-top-1 flex-space-between">
+                        <NavLink className="normal-button main-color-bg white-text center" to={`/experts/${user._id}`}>
+                            View Profile
+                        </NavLink>
+                        <button 
+                        className="normal-button main-color-text bold-text main-color-border"
+                        onClick={() => {
+                            navigator.clipboard.writeText(`${window.location.hostname}/experts/${user._id}`)
+                            .then(() => toast.success('Copied to clipboard', { duration: 3000, position: 'top-right' }))
+                            .catch(error => {
+                                toast.error(error.message)
+                            })
+                        }}
+                        >
+                            Copy Link
+                        </button>
+                    </div>
+                </div>
+                :
+                null
+            }
+            {
+                user.type === 'EXPERT' && profileCompletionPercentage ?
+                <div className="styled-container margin-top-1">
+                    <h6 className="no-space large-font">
+                        Profile Setup
+                    </h6>
+                    <div className="margin-top-1">
+                        <strong className="main-color-text">
+                            {
+                                profileCompletionPercentage === 100 ?
+                                `profile is ${profileCompletionPercentage}% complete`
+                                :
+                                `${100-profileCompletionPercentage}% to complete`
+                            }
+                        </strong>
+                    </div>
+                    <progress className="full-width main-color-bg" max="100" value={profileCompletionPercentage} />
+                    <div className="user-profile-missing-fields">
+                        <ul>
+                            {missingFields.map(missingField => <li key={missingField}>{missingField}</li>)}
+                        </ul>
+                    </div>
+                </div>
+                :
+                null
+            }
+        </div>
         {
             isProfileLoading ?
-            <div className="loading-page-container">
+            <div className="loading-page-container styled-container">
                 <Loading width={50} height={50} />
             </div>
             :
             <div className="user-profile-page-container">
             <div>
-                <div className="styled-container">
+                <div id="account-details" className="styled-container">
                     <h2 className="no-space">Account Details</h2>
                     <div className="profile-form-container">
                     <div className="form-input-container">
@@ -367,9 +520,9 @@ const UserPage = () => {
                             <option selected disabled>Select Gender</option>
                             {['MALE', 'FEMALE'].map((tempGender, index) => {
                                 if(tempGender === gender) {
-                                    return <option key={index} value={tempGender} selected>{tempGender}</option>
+                                    return <option key={index} value={tempGender} selected>{capitalizeFirstLetter(tempGender)}</option>
                                 }
-                                return <option key={index} value={tempGender}>{tempGender}</option>
+                                return <option key={index} value={tempGender}>{capitalizeFirstLetter(tempGender)}</option>
                             })}
                         </select>
                         <span className="red-text">{genderError}</span>
@@ -394,7 +547,7 @@ const UserPage = () => {
             </div>
             {
                 user.type === 'EXPERT' ?
-                <div>
+                <div id="expert-details">
                     <div className="styled-container">
                         <h2 className="no-space">Expert Account</h2>
                         <div className="profile-form-container">
@@ -457,7 +610,7 @@ const UserPage = () => {
                         </div>
                         {
                             userSubspeciality.length !== 0 ?
-                            <div className="tags-container margin-top-1">
+                            <div className="tags-container">
                                 {userSubspeciality.map(special => <span
                                 key={special._id}
                                 className="main-tag"
@@ -531,7 +684,7 @@ const UserPage = () => {
             }
             {
                 user.type === 'EXPERT' ?
-                <div>
+                <div id="bank-account">
                     <div className="styled-container">
                         <h2 className="no-space">Bank Account Information</h2>
                         <div className="profile-form-container">
@@ -593,7 +746,7 @@ const UserPage = () => {
             }
             {
                 user.type === 'EXPERT' ?
-                <div>
+                <div id="mobile-wallet">
                     <div className="styled-container">
                         <h2 className="no-space">Mobile Wallet Information</h2>
                         <div className="profile-form-container">

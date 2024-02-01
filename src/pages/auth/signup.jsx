@@ -83,7 +83,7 @@ const SignupPage = () => {
 
         const signupData = {
             firstName: name,
-            email,
+            email: email.toLowerCase(),
             phone: Number.parseInt(phone),
             password,
             gender,
@@ -136,7 +136,7 @@ const SignupPage = () => {
 
         const signupData = {
             firstName: name,
-            email,
+            email: email.toLowerCase(),
             phone: Number.parseInt(phone),
             password,
             countryCode: 20,
@@ -191,7 +191,7 @@ const SignupPage = () => {
 
         const signupData = {
             firstName: name,
-            email,
+            email: email.toLowerCase(),
             phone: Number.parseInt(phone),
             password,
             gender,

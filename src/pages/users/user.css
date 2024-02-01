@@ -1,5 +1,5 @@
 .user-profile-page-container {
-    padding: 2rem 0rem;
+    padding: 0rem;
     min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr;
@@ -212,7 +212,57 @@ progress {
     border: none;
 }
 
+.user-profile-page-layout {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 1rem;
+    padding: 2rem 0;
+}
+
+.user-profile-navigation-links {
+    padding: 1rem 0;
+    margin: 0;
+}
+
+.user-profile-navigation-links li {
+    list-style-type: none;
+    margin-bottom: .5rem;
+}
+
+.user-profile-navigation-links li:last-child {
+    margin-bottom: 0;
+}
+
+.user-profile-navigation-links li a {
+    text-decoration: none;
+    transition: .2s;
+}
+
+.user-profile-navigation-links li a:hover {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+.user-profile-navigation-links li a:active {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+.user-profile-missing-fields ul {
+    padding: 1rem 0 0 0;
+    margin: 0;
+}
+
+.user-profile-missing-fields ul li {
+    list-style-type: none;
+}
+
 @media only screen and (max-width: 900px) {
+
+    .user-profile-page-layout {
+        grid-template-columns: 1fr;
+        padding: 0;
+    }
 
     .user-profile-page-container {
         display: grid;
