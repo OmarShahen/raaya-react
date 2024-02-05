@@ -11,7 +11,10 @@ const FindExpertPage = () => {
     const [specialities, setSpecialities] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(() => scroll(0, 0), [])
+    useEffect(() => {
+        scroll(0, 0)
+        document.title = 'Find Expert'
+    }, [])
 
     useEffect(() => {
         setIsLoading(true)
@@ -29,7 +32,8 @@ const FindExpertPage = () => {
 
     return <div className="min-height-100 both-sides-padded-container">
         <br />
-        <div className="align-center margin-bottom-1">
+        <br />
+        <div className="align-center">
             <h1 className="no-space">Find Expert</h1>
         </div>
         <br />

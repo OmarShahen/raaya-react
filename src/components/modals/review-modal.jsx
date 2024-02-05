@@ -16,6 +16,10 @@ const ReviewFormModal = ({ setShowFormModal, reload, setReload, expert }) => {
     const [isSubmit, setIsSubmit] = useState(false)
 
     const [rating, setRating] = useState(5)
+    const [commitment, setCommitment] = useState(5)
+    const [communication, setCommunication] = useState(5)
+    const [solutions, setSolutions] = useState(5)
+    const [understanding, setUnderstanding] = useState(5)
     const [note, setNote] = useState()
     const [isRecommend, setIsRecommend] = useState(true)
 
@@ -27,6 +31,10 @@ const ReviewFormModal = ({ setShowFormModal, reload, setReload, expert }) => {
             expertId: expert._id,
             seekerId: user._id,
             rating,
+            commitment,
+            communication,
+            solutions,
+            understanding,
             note,
             isRecommend
         }
@@ -68,11 +76,12 @@ const ReviewFormModal = ({ setShowFormModal, reload, setReload, expert }) => {
             </div>
             <div className="margin-top-1">
                 <div className="modal-body-container">
+                    <div className="cards-2-list-wrapper">
                     <div>
                         <div>
                             1.How would you rate your experience ?
                         </div>
-                        <div className="margin-top-1">
+                        <div>
                             <span>
                             {[1, 2, 3, 4, 5].map((rate, index) => {
                                 return <span className="hoverable" key={index} onClick={() => setRating(index+1)}>
@@ -85,9 +94,79 @@ const ReviewFormModal = ({ setShowFormModal, reload, setReload, expert }) => {
                             </span>
                         </div>
                     </div>
-                    <div className="margin-top-1">
+                    <div>
                         <div>
-                            2.Write something about your experience.
+                            2.Communication ?
+                        </div>
+                        <div>
+                            <span>
+                            {[1, 2, 3, 4, 5].map((rate, index) => {
+                                return <span className="hoverable" key={index} onClick={() => setCommunication(index+1)}>
+                                    <Star 
+                                    key={index}
+                                    isBright={communication >= (index+1) ? true : false} 
+                                    />
+                                </span>
+                            })}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            3.Understanding of the situation ?
+                        </div>
+                        <div>
+                            <span>
+                            {[1, 2, 3, 4, 5].map((rate, index) => {
+                                return <span className="hoverable" key={index} onClick={() => setUnderstanding(index+1)}>
+                                    <Star 
+                                    key={index}
+                                    isBright={understanding >= (index+1) ? true : false} 
+                                    />
+                                </span>
+                            })}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            4.Providing effective solutions ?
+                        </div>
+                        <div>
+                            <span>
+                            {[1, 2, 3, 4, 5].map((rate, index) => {
+                                return <span className="hoverable" key={index} onClick={() => setSolutions(index+1)}>
+                                    <Star 
+                                    key={index}
+                                    isBright={solutions >= (index+1) ? true : false} 
+                                    />
+                                </span>
+                            })}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            5.Commitment from start to end time ?
+                        </div>
+                        <div>
+                            <span>
+                            {[1, 2, 3, 4, 5].map((rate, index) => {
+                                return <span className="hoverable" key={index} onClick={() => setCommitment(index+1)}>
+                                    <Star 
+                                    key={index}
+                                    isBright={commitment >= (index+1) ? true : false} 
+                                    />
+                                </span>
+                            })}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    </div>
+                    <div>
+                        <div>
+                            6.Write something about your experience.
                         </div>
                         <div className="margin-top-1">
                         <textarea
@@ -101,7 +180,7 @@ const ReviewFormModal = ({ setShowFormModal, reload, setReload, expert }) => {
                     </div>
                     <div className="margin-top-1">
                         <div>
-                            3.Would you recommend this expert to others ?
+                            7.Would you recommend this expert to others ?
                         </div>
                         <div className="margin-top-1 review-options-container">
                             <div onClick={() => setIsRecommend(true)}>
@@ -137,7 +216,7 @@ const ReviewFormModal = ({ setShowFormModal, reload, setReload, expert }) => {
                             :
                             <button
                             form="opening-time-form"
-                            className="full-width normal-button main-color-bg white-text margin-top-1"
+                            className="full-width normal-button main-color-bg white-text margin-top-1 bold-text"
                             onClick={handleSubmit}
                             >{'Submit Review'}</button>
                         } 

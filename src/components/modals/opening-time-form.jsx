@@ -138,7 +138,7 @@ const OpeningTimeFormModal = ({ setShowFormModal, reload, setReload, isUpdate, s
                     className="modal-form-container responsive-form body-text" 
                     onSubmit={isUpdate ? handleUpdate : handleSubmit}>
                         <div className="form-input-container">
-                            <label>Day</label>
+                            <label className="bold-text">Day</label>
                             <select 
                             className="form-select"
                             onClick={() => setWeekdayError()}
@@ -155,7 +155,7 @@ const OpeningTimeFormModal = ({ setShowFormModal, reload, setReload, isUpdate, s
                             <span className="red-text">{weekdayError}</span>
                         </div>
                         <div className="form-input-container">
-                            <label>Opening Time</label>
+                            <label className="bold-text">Opening Time</label>
                             <input 
                             type="time" 
                             className="form-input" 
@@ -166,7 +166,7 @@ const OpeningTimeFormModal = ({ setShowFormModal, reload, setReload, isUpdate, s
                             <span className="red-text">{openingTimeError}</span>
                         </div>
                         <div className="form-input-container">
-                            <label>Closing Time</label>
+                            <label className="bold-text">Closing Time</label>
                             <input 
                             type="time" 
                             className="form-input" 

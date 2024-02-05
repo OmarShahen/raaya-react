@@ -7,6 +7,7 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
 import { setIsLogged } from '../../redux/slices/userSlice'
 import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined'
 import { useDispatch } from 'react-redux'
+import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'
 
 
 const BottomBar = () => {
@@ -18,9 +19,9 @@ const BottomBar = () => {
     return <div className="bottom-bar-container show-mobile">
         <ul>
             <li>
-                <NavLink to="https://wa.me/201555415331">
-                    <SupportAgentOutlinedIcon />
-                    Support
+                <NavLink to="/users/services">
+                    <ReceiptLongOutlinedIcon />
+                    Services
                 </NavLink>
             </li>
             <li>

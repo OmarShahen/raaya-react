@@ -6,7 +6,14 @@ import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 
-const DeleteConfirmationModal = ({ isShowModal, setIsShowModal, isLoading, deleteFunction }) => {   
+const DeleteConfirmationModal = ({ 
+    isShowModal, 
+    setIsShowModal, 
+    isLoading, 
+    deleteFunction,
+    title,
+    description
+}) => {   
 
     const modalVariants = {
         hidden: {
@@ -43,10 +50,26 @@ const DeleteConfirmationModal = ({ isShowModal, setIsShowModal, isLoading, delet
                 <div className="confirmation-modal-header">
                     <h3 className="very-large-font bold-text">
                         <ErrorIcon />
-                        Cancel Appointment
+                        {
+                            title ?
+                            title
+                            :
+                            'Cancel Appointment'
+                        }
                     </h3>
-                </div>   
-                <div className="normal-font confirmation-modal-body">
+                </div>  
+                {
+                    description ?
+                    <div className="normal-font confirmation-modal-body">
+                        <p>
+                            Are you sure you want to perform this action ?
+                        </p>
+                        <p>
+                            {description}
+                        </p>
+                    </div>  
+                    :
+                    <div className="normal-font confirmation-modal-body">
                     <p>
                         Are you sure you want to cancel this appointment?
                     </p>
@@ -62,9 +85,15 @@ const DeleteConfirmationModal = ({ isShowModal, setIsShowModal, isLoading, delet
                         <p>
                             By proceeding with the deletion, you acknowledge and accept the refunding terms outlined in our policy.
                         </p>
-                </div>    
+                    </div>  
+                } 
+                  
                 <div className="confirmation-modal-buttons-container">
-                    {
+                    <button 
+                    className="normal-button abort-button"
+                    onClick={() => setIsShowModal(false)}
+                    >Cancel</button>
+                     {
                         isLoading ?
                         <TailSpin width="25" height="25" color="#DE350B" />
                         :
@@ -73,12 +102,8 @@ const DeleteConfirmationModal = ({ isShowModal, setIsShowModal, isLoading, delet
                         onClick={() => {
                             deleteFunction()
                         }}
-                        >Cancel</button>
+                        >Delete</button>
                     }
-                    <button 
-                    className="normal-button abort-button"
-                    onClick={() => setIsShowModal(false)}
-                    >Cancel</button>
                 </div>        
             </div>
         </motion.div>

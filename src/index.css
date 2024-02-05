@@ -681,10 +681,26 @@ button:hover {
     column-gap: .5rem;
 }
 
+.cards-3-list-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.icon-tag svg {
+    margin-right: .4rem;
+    font-size: 1.2rem;
+}
+
 @media only screen and (max-width: 900px) {
 
     .both-sides-padded-container {
         padding: 0;
+    }
+
+    .cards-3-list-wrapper {
+        grid-template-columns: 1fr;
+        row-gap: 1rem;
     }
 
     .styled-container {
@@ -716,6 +732,10 @@ button:hover {
         display: grid;
         grid-template-columns: 1fr;
         column-gap: 0;
+    }
+
+    .cards-2-list-wrapper {
+        grid-template-columns: 1fr;
     }
     
     

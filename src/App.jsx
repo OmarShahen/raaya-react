@@ -5,7 +5,7 @@ import DoctorsPage from './pages/doctors'
 import MainLayout from './components/layouts/main-layout'
 import PagesLayout from './components/layouts/pages-layout'
 import AppointmentLayout from './components/layouts/appointments-layout'
-import ExpertPage from './pages/experts/expert'
+import ExpertPage from './pages/experts/expert-profile'
 import UserPage from './pages/users/user'
 import AppointmentPage from './pages/appointments/appointment'
 import UpcomingAppointments from './pages/appointments/upcoming-appointments'
@@ -32,6 +32,8 @@ import AuthorizedLayout from './components/layouts/authorized-layout'
 import PaymentStatusPage from './pages/payments/payment-status'
 import SessionRoomPage from './pages/video-call/session-room'
 import ExpertVerificationPage from './pages/auth/expert-verification'
+import ServicesPage from './pages/services/services'
+import ExpertBookingPage from './pages/experts/expert-booking'
 
 
 function App() {
@@ -47,6 +49,7 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path="/specialities/:id" element={<DoctorsPage />} />
               <Route path="/experts/:id" element={<ExpertPage />} />
+              <Route path="/experts/:id/booking" element={<ExpertBookingPage />} />
               <Route path="/find-expert" element={<FindExpertPage />} />
               <Route path="/policies/experiences" element={<ExperiencePage />} />
               <Route path="/policies/refund" element={<RefundPage />} />
@@ -56,6 +59,7 @@ function App() {
               <Route path="/appointments/:id" element={<AppointmentPage />} />
               <Route path="/users/profile" element={<UserPage />} />
               <Route path="/users/opening-times" element={<OpeningTimesPage />} />
+              <Route path="/users/services" element={<ServicesPage />} />
               <Route path="/appointments/:id/checkout" element={<CheckoutPage />} />
 
 

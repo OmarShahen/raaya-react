@@ -11,6 +11,8 @@ import { projectStorage } from '../../../firebase/config'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { capitalizeFirstLetter } from '../../utils/formatString'
 import { NavLink } from 'react-router-dom'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 
 
 const UserPage = () => {
@@ -39,6 +41,9 @@ const UserPage = () => {
     const [subspecialties, setSubspecialties] = useState([])
     const [userSubspeciality, setUserSubspeciality] = useState([])
 
+    const [languages, setLanguages] = useState([])
+    const [languagesError, setLanguagesError] = useState()
+
     const [accountNumber, setAccountNumber] = useState()
     const [accountHolderName, setAccountHolderName] = useState()
     const [bankName, setBankName] = useState()
@@ -54,20 +59,16 @@ const UserPage = () => {
     const [descriptionError, setDescriptionError] = useState()
     const [specialityError, setSpecialityError] = useState([])
     const [subspecialityError, setSubspecialityError] = useState()
-    const [halfHourPrice, setHalfHourPrice] = useState()
-    const [hourPrice, setHourPrice] = useState()
     const [imageURL, setImageURL] = useState()
     const [progresspercent, setProgresspercent] = useState(0)
 
     const [isImageUploading, setIsImageUploading] = useState(false)
 
-    const [imageError, setImageError] = useState()
+    const [imageError] = useState()
     const [nameError, setNameError] = useState()
     const [phoneError, setPhoneError] = useState()
     const [dateOfBirthError, setDateOfBirthError] = useState()
     const [genderError, setGenderError] = useState()
-    const [halfHourPriceError, setHalfHourPriceError] = useState()
-    const [hourPriceError, setHourPriceError] = useState()
 
     const [missingFields, setMissingFields] = useState([])
 
@@ -93,6 +94,7 @@ const UserPage = () => {
             { field: 'subSpeciality', message: 'Subspeciality is missing' },
             { field: 'pricing', message: 'Pricing is missing' },
             { field: 'paymentInfo', message: 'Payment Information is missing' },
+            { field: 'languages', message: 'Spoken languages is missing' },
         ]
 
         for(let i=0;i<fields.length;i++) {
@@ -122,12 +124,8 @@ const UserPage = () => {
             setUserSubspeciality(user?.subSpeciality)
             setImageURL(user?.profileImageURL)
 
-            if(user.pricing) {
-                const halfPricingList = user.pricing.filter(price => price.duration === 30)
-                const fullPricingList = user.pricing.filter(price => price.duration === 60)
-
-                halfPricingList.length !== 0 ? setHalfHourPrice(halfPricingList[0].price) : null
-                fullPricingList.length !== 0 ? setHourPrice(fullPricingList[0].price) : null
+            if(user.languages) {
+                setLanguages(user?.languages)
             }
 
             if(user?.paymentInfo?.bankAccount) {
@@ -186,6 +184,10 @@ const UserPage = () => {
         })
     }, [reload])
 
+    const stripHTMLTags = (htmlString) => {
+        return htmlString.replace(/<[^>]*>/g, '');
+    }
+
     const handleUpdate = () => {
 
         const type = user.type
@@ -200,15 +202,14 @@ const UserPage = () => {
 
         if(type === 'EXPERT' && !title) return setTitleError('Title is required')
 
-        if(type === 'EXPERT' && !description) return setDescriptionError('Description is required')
+        if(type === 'EXPERT' && !stripHTMLTags(description)) return setDescriptionError('Description is required')
 
         if(type === 'EXPERT' && !speciality) return setSpecialityError('Speciality is required')
 
         if(type === 'EXPERT' && userSubspeciality.length === 0) return setSubspecialityError('Speciality is required')
 
-        if(type === 'EXPERT' && !halfHourPrice) return setHalfHourPriceError('30 min duration price is required')
+        if(type === 'EXPERT' && languages.length === 0) return setLanguagesError('Languages is required')
 
-        if(type === 'EXPERT' && !hourPrice) return setHourPriceError('60 min duration price is required')
 
         const updateData = {
             firstName: name,
@@ -219,16 +220,7 @@ const UserPage = () => {
             description,
             speciality: [speciality],
             subSpeciality: userSubspeciality.map(special => special._id),
-            pricing: [
-                {
-                    duration: 30,
-                    price: Number.parseInt(halfHourPrice)
-                },
-                {
-                    duration: 60,
-                    price: Number.parseInt(hourPrice)
-                }
-            ]
+            languages
         }
 
         setIsLoading(true)
@@ -337,6 +329,17 @@ const UserPage = () => {
 
     }
 
+    const expertLanguages = [
+        {
+            code: "ar",
+            name: "Arabic"
+        },
+        {
+            code: "en",
+            name: "English"
+        }
+    ]
+
     return <div className="user-profile-page-layout">
         <div>
             <div className="styled-container hide-mobile">
@@ -379,8 +382,8 @@ const UserPage = () => {
                 <div className="styled-container margin-top-1">
                     <h6 className="no-space large-font">Expert Page URL</h6>
                     <div className="margin-top-1">
-                        <strong className="main-color-text">
-                            {`${window.location.hostname}/experts/${user._id}`}
+                        <strong className="main-color-text user-profile-link-container">
+                            {`https://${window.location.hostname}/experts/${user._id}`}
                         </strong>
                     </div>
                     <div className="margin-top-1 flex-space-between">
@@ -390,7 +393,7 @@ const UserPage = () => {
                         <button 
                         className="normal-button main-color-text bold-text main-color-border"
                         onClick={() => {
-                            navigator.clipboard.writeText(`${window.location.hostname}/experts/${user._id}`)
+                            navigator.clipboard.writeText(`https://${window.location.hostname}/experts/${user._id}`)
                             .then(() => toast.success('Copied to clipboard', { duration: 3000, position: 'top-right' }))
                             .catch(error => {
                                 toast.error(error.message)
@@ -516,7 +519,11 @@ const UserPage = () => {
                     </div>
                     <div className="form-input-container">
                         <label className="bold-text">Gender</label>
-                        <select className="form-select">
+                        <select 
+                        className="form-select"
+                        onClick={() => setGenderError()}
+                        onChange={e => setGender(e.target.value)}
+                        >
                             <option selected disabled>Select Gender</option>
                             {['MALE', 'FEMALE'].map((tempGender, index) => {
                                 if(tempGender === gender) {
@@ -527,7 +534,67 @@ const UserPage = () => {
                         </select>
                         <span className="red-text">{genderError}</span>
                     </div>
-                    
+                    {
+                        user.type === 'EXPERT' ?
+                        <div className="form-input-container">
+                            <label className="bold-text">Nationality</label>
+                            <input 
+                            type="text"
+                            disabled 
+                            className="form-input" 
+                            value={'Egypt'}
+                            />
+                        </div>
+                        :
+                        null
+                    }
+                    {
+                        user.type === 'EXPERT' ?
+                        <div className="form-input-container">
+                        <label className="bold-text">Spoken Languages</label>
+                        <select 
+                        className="form-select"
+                        onClick={() => setLanguagesError()}
+                        onChange={e => {
+                            
+                            const registeredLanguage = languages.filter(lang => lang.code === e.target.value)
+                            if(registeredLanguage.length !== 0) {
+                                return
+                            }
+
+                            const spokenLanguage = expertLanguages.filter(lang => lang.code === e.target.value)
+                            setLanguages([...languages, ...spokenLanguage])
+
+                        }}
+                        >
+                            <option selected disabled>Select Languages</option>
+                            {expertLanguages.map(language => <option 
+                            key={language.code} 
+                            value={language.code}>
+                                {language.name}
+                            </option>)}
+                        </select>
+                        <span className="red-text">{languagesError}</span>
+                        {
+                            languages.length !== 0 ?
+                            <div className="tags-container">
+                                {languages.map(language => <span
+                                key={language.code}
+                                className="main-tag"
+                                onClick={() => {
+                                    setLanguages(languages.filter(tempLanguage => tempLanguage.code !== language.code))
+                                }}
+                                >
+                                    <span>{language?.name}</span>
+                                </span>)} 
+                            </div>
+                            :
+                            null
+                        }
+                    </div>
+                        :
+                        null
+                    }
                     </div>
                     <div className="flex-end margin-top-1">
                         {
@@ -625,45 +692,17 @@ const UserPage = () => {
                             null
                         }
                         </div>
-                        <div className="form-input-container margin-top-1">
-                            <label className="bold-text">30 minutes duration price</label>
-                            <input 
-                            type="number" 
-                            className="form-input" 
-                            placeholder='30 min duration price' 
-                            value={halfHourPrice}
-                            onClick={() => setHalfHourPriceError()}
-                            onChange={e => setHalfHourPrice(e.target.value)}
-                            />
-                            <span className="red-text">{halfHourPriceError}</span>
+                        
                         </div>
-                        <div className="form-input-container margin-top-1">
-                            <label className="bold-text">60 minutes duration price</label>
-                            <input 
-                            type="number" 
-                            className="form-input" 
-                            placeholder='60 min duration price' 
-                            value={hourPrice}
-                            onClick={() => setHourPriceError()}
-                            onChange={e => setHourPrice(e.target.value)}
-                            />
-                            <span className="red-text">{hourPriceError}</span>
-                        </div>
-                        <div className="form-input-container">
-                            <label className="bold-text">Description</label>
-                            <textarea 
-                            className="form-textarea" 
-                            placeholder='Description' 
-                            style={{ height: '15rem' }}
+                        <div className="margin-top-1" onClick={() => setDescriptionError()}>
+                            <ReactQuill 
+                            theme="snow"
                             value={description}
-                            onClick={() => setDescriptionError()}
-                            onChange={e => setDescription(e.target.value)}
-                            >
-                            </textarea>
+                            onChange={setDescription}
+                            />
                             <span className="red-text">{descriptionError}</span>
                         </div>
-                        </div>
-                        <div className="flex-end">
+                        <div className="flex-end margin-top-1">
                             {
                                 isLoading ?
                                 <Loading />

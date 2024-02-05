@@ -14,11 +14,11 @@
 @media only screen and (max-width: 900px) {
     
     .find-expert-question-container {
-        font-size: .9rem;
+        font-size: 1rem;
         text-align: center;
     }
 
     .find-expert-tags-container a {
-        font-size: .9rem;
+        font-size: 1rem;
     }
 }

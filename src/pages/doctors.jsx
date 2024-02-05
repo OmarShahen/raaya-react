@@ -16,10 +16,10 @@ const DoctorsPage = () => {
     const [isPaginationLoading, setIsPaginationLoading] = useState(false)
     const [total, setTotal] = useState(0)
     const [experts, setExperts] = useState([])
-    const [sortBy, setSortBy] = useState()
+    const [sortBy] = useState()
 
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(10)
+    const [limit] = useState(10)
 
     const [searchName, setSearchName] = useState()
     const [reload, setReload] = useState(1)
@@ -28,7 +28,10 @@ const DoctorsPage = () => {
     const [speciality, setSpeciality] = useState(specialityId)
     const [subspecial, setSubspecial] = useState()
 
-    useEffect(() => scroll(0, 0), [])
+    useEffect(() => {
+        scroll(0, 0)
+        document.title = 'Our Experts'
+    }, [])
 
     useEffect(() => {
         setIsLoading(true)

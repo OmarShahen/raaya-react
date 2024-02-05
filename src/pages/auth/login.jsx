@@ -32,6 +32,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         scroll(0, 0)
+        document.title = 'Sign in'
         localStorage.setItem('user', null)
         dispatch(setIsLogged(false))
     }, [])

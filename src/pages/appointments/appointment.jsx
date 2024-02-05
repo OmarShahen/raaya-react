@@ -111,6 +111,15 @@ const AppointmentPage = () => {
                                 <strong>User</strong>
                                 <span>{appointment?.seeker?.firstName}</span>
                             </li>
+                            {
+                                appointment?.service ?
+                                <li>
+                                    <strong>Service</strong>
+                                    <span>{appointment?.service?.title}</span>
+                                </li>
+                                :
+                                null
+                            }
                             <li>
                                 <strong>Price</strong>
                                 <span>{formatNumber(appointment.price ? appointment.price : 0)} EGP</span>

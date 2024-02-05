@@ -33,7 +33,10 @@ const CheckoutPage = () => {
     const [walletNumberError, setWalletNumberError] = useState()
     const [paymentMethod, setPaymentMethod] = useState('LOCAL_CARD')
 
-    useEffect(() => scroll(0, 0), [])
+    useEffect(() => {
+        scroll(0, 0)
+        document.title = 'Checkout'
+    }, [])
 
     useEffect(() => {
         serverRequest.get(`/v1/appointments/${appointmentId}`)
@@ -93,7 +96,6 @@ const CheckoutPage = () => {
     }
 
     return <div className="min-height-100">
-        <br />
         <div className="center page-header-container">
             <h1>Checkout</h1>
         </div>
@@ -104,7 +106,76 @@ const CheckoutPage = () => {
             </div>
             :
             <div className="checkout-body-container">
-            
+            <div>
+                <div className="styled-container">
+                    <h3 className="no-space">Details</h3>
+                    <div className="payment-method-summary margin-top-1">
+                        <div className="payment-method-expert-info-container">
+                            <CardImage 
+                            name={appointment?.expert?.firstName}
+                            imageURL={appointment?.expert?.profileImageURL}
+                            width={'3rem'} 
+                            height={'3rem'} 
+                            borderRadius={'50%'} 
+                            />
+                            <div>
+                                <strong>
+                                    {appointment?.expert?.firstName}
+                                </strong>
+                                <span className="main-color-text bold-text">{appointment?.expert?.title}</span>
+                            </div>
+                        </div>
+                        {/*<div className="margin-top-1 margin-bottom-1 coupon-container">
+                            <input 
+                            type="text"
+                            className="form-input"
+                            placeholder="Enter coupon here"
+                            disabled
+                            />
+                            <button className="normal-button main-color-bg white-text">
+                                Apply
+                            </button>
+                        </div>*/}
+                        <ul>
+                            {
+                                appointment.service.title ?
+                                <li>
+                                    <span>Service</span>
+                                    <span>{appointment?.service?.title}</span>
+                                </li>
+                                :
+                                null
+                            }
+                            <li>
+                                <span>Start Date</span>
+                                <span>{format(new Date(appointment?.startTime), 'dd MMMM yyyy')}</span>
+                            </li>
+                            <li>
+                                <span>Time</span>
+                                <span>{format(new Date(appointment?.startTime), 'hh:mm a')}</span>
+                            </li>
+                            <li>
+                                <span>Duration</span>
+                                <span>{appointment.duration ? appointment.duration : 0} minutes</span>
+                            </li>
+                            <li>
+                                <span>Subtotal</span>
+                                <span>{formatNumber(appointment?.price)} EGP</span>
+                            </li>
+                            <li>
+                                <span>Service Fees</span>
+                                <span>{formatNumber(appointment?.price * 0.1)} EGP</span>
+                            </li>
+                            <li>
+                                <span className="bold-text">Total</span>
+                                <span className="bold-text">{formatNumber(getTotalPrice(appointment.price))} EGP</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    
+                </div>
+            </div>
             <div>
                 <div className="styled-container">
                     <h3 className="no-space">Payment Method</h3>
@@ -180,67 +251,7 @@ const CheckoutPage = () => {
                     </div>
                 </div>
             </div>
-            <div>
-                <div className="styled-container">
-                    <h3 className="no-space">Details</h3>
-                    <div className="payment-method-summary margin-top-1">
-                        <div className="payment-method-expert-info-container">
-                            <CardImage 
-                            name={appointment?.expert?.firstName}
-                            imageURL={appointment?.expert?.profileImageURL}
-                            width={'3rem'} 
-                            height={'3rem'} 
-                            borderRadius={'50%'} 
-                            />
-                            <div>
-                                <strong>
-                                    {appointment?.expert?.firstName}
-                                </strong>
-                                <span className="main-color-text bold-text">{appointment?.expert?.title}</span>
-                            </div>
-                        </div>
-                        {/*<div className="margin-top-1 margin-bottom-1 coupon-container">
-                            <input 
-                            type="text"
-                            className="form-input"
-                            placeholder="Enter coupon here"
-                            disabled
-                            />
-                            <button className="normal-button main-color-bg white-text">
-                                Apply
-                            </button>
-                        </div>*/}
-                        <ul>
-                            <li>
-                                <span>Start Date</span>
-                                <span>{format(new Date(appointment?.startTime), 'dd MMMM yyyy')}</span>
-                            </li>
-                            <li>
-                                <span>Time</span>
-                                <span>{format(new Date(appointment?.startTime), 'hh:mm a')}</span>
-                            </li>
-                            <li>
-                                <span>Duration</span>
-                                <span>{appointment.duration ? appointment.duration : 0} minutes</span>
-                            </li>
-                            <li>
-                                <span>Subtotal</span>
-                                <span>{formatNumber(appointment?.price)} EGP</span>
-                            </li>
-                            <li>
-                                <span>Service Fees</span>
-                                <span>{formatNumber(appointment?.price * 0.1)} EGP</span>
-                            </li>
-                            <li>
-                                <span className="bold-text">Total</span>
-                                <span className="bold-text">{formatNumber(getTotalPrice(appointment.price))} EGP</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    
-                </div>
-            </div>
+            
         </div>
         }
 

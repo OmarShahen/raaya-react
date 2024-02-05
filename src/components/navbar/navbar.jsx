@@ -5,6 +5,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import ScheduleOutlinedIcon from '@mui/icons-material/ScheduleOutlined'
 import DuoOutlinedIcon from '@mui/icons-material/DuoOutlined'
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
+import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'
 import { setIsLogged } from '../../redux/slices/userSlice'
 import PermContactCalendarOutlinedIcon from '@mui/icons-material/PermContactCalendarOutlined'
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined'
@@ -41,12 +42,13 @@ const Navbar = () => {
                                     <span>{user.firstName}</span>
                                 </NavLink>
                             </li>
+                            
                             {
                                 user.type === 'EXPERT' ?
                                 <li className="hide-mobile">
-                                    <NavLink to={`/experts/${user._id}`}>
-                                        <PermContactCalendarOutlinedIcon />
-                                        <span>Expert Page</span>
+                                    <NavLink to="/users/services">
+                                        <ReceiptLongOutlinedIcon />
+                                        <span>Services</span>
                                     </NavLink>
                                 </li>
                                 :

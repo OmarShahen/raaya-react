@@ -257,6 +257,11 @@ progress {
     list-style-type: none;
 }
 
+.user-profile-link-container {
+    word-wrap: break-word;
+}
+
+
 @media only screen and (max-width: 900px) {
 
     .user-profile-page-layout {

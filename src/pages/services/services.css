@@ -1,0 +1,31 @@
+.opening-time-row-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.opening-time-row-container div {
+    flex: 1;
+}
+
+.opening-time-row-container:last-child {
+    border: none;
+}
+
+.opening-time-row-container div {
+    padding: 1rem 0;
+}
+
+@media only screen and (max-width: 900px) {
+
+    .opening-time-row-container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .opening-time-row-container div {
+        padding: .5rem 0;
+    }
+    
+}

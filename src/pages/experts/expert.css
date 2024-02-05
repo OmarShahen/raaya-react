@@ -75,11 +75,15 @@
 }
 
 .doctor-appointment-buttons-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
     transition: .2s;
+    padding-top: 1rem;
+}
+
+.doctor-appointment-buttons-container button {
+    width: 100%;
 }
 
 .doctor-stats-container {
@@ -250,6 +254,35 @@
     justify-content: center !important;
 }
 
+.expert-description-container a {
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+.expert-description-container a:hover {
+    text-decoration: underline;
+}
+
+.expert-progress-rating-container {
+    display: flex;
+    align-items: center;
+    padding-bottom: .2rem;
+}
+
+.expert-progress-rating-container progress {
+    margin-right: 1rem;
+}
+
+.expert-social-media-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin-top: 1rem;
+}
+
+.expert-social-media-container div {
+    color: var(--main-color);
+}
+
 @media only screen and (max-width: 900px) {
 
     .doctor-page-container {
@@ -284,6 +317,11 @@
         align-items: center;
         flex-direction: row;
         margin-right: .7rem !important;
+    }
+
+    .doctor-appointment-buttons-container {
+        grid-template-columns: 1fr;
+        row-gap: .5rem;
     }
     
 }

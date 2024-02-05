@@ -58,6 +58,7 @@ const SignupPage = () => {
 
     useEffect(() => {
         scroll(0, 0)
+        document.title = 'Sign up'
         localStorage.setItem('user', null)
         dispatch(setIsLogged(false))
     }, [])
