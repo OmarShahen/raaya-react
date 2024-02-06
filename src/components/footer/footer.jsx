@@ -58,6 +58,17 @@ const Footer = () => {
                 <NavLink to="/expert-verification" className="normal-button main-color-text main-color-border bold-text">Join as Expert</NavLink>
             </div>
         </div>
+        <div id="contact-us">
+            <div className="footer-links-container">
+                <strong>Contact Us</strong>
+                <p>
+                    Email: raayaeg@gmail.com
+                </p>
+                <p className="no-space">
+                    Phone: +201065630331
+                </p>
+            </div>
+        </div>
     </div>
     <div className="home-rights-container center">
         <span>
