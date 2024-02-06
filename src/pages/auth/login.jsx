@@ -44,7 +44,7 @@ const LoginPage = () => {
 
         if(!password) return setPasswordError('Password is required')
 
-        const loginData = { email, password }
+        const loginData = { email: email.toLowerCase(), password }
 
         setIsLoading(true)
         serverRequest.post('/v1/auth/login', loginData)
@@ -153,7 +153,7 @@ const LoginPage = () => {
                                     <Loading width="30" height="30" />
                                 </div>
                                 :
-                                <button className="normal-button main-color-bg white-text full-width">
+                                <button className="bold-text normal-button main-color-bg white-text full-width">
                                     Sign In
                                 </button>
                             }

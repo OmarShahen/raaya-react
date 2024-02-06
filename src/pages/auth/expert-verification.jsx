@@ -48,6 +48,7 @@ const ExpertVerificationPage = () => {
 
     useEffect(() => {
         scroll(0, 0)
+        document.title = 'Expert Verification Request'
         localStorage.setItem('user', null)
         dispatch(setIsLogged(false))
     }, [])
@@ -80,7 +81,7 @@ const ExpertVerificationPage = () => {
 
         const expertVerificationData = {
             name,
-            email,
+            email: email.toLowerCase(),
             phone,
             specialityId: speciality,
             description,
@@ -299,7 +300,7 @@ const ExpertVerificationPage = () => {
                                     <Loading width="30" height="30" />
                                 </div>
                                 :
-                                <button className="normal-button main-color-bg white-text full-width">
+                                <button className="bold-text normal-button main-color-bg white-text full-width">
                                     SUBMIT
                                 </button>
                             }

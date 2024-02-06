@@ -488,7 +488,7 @@ const SignupPage = () => {
                                     <Loading width="30" height="30" />
                                 </div>
                                 :
-                                <button className="normal-button main-color-bg white-text full-width">
+                                <button className="bold-text normal-button main-color-bg white-text full-width">
                                     Create Account
                                 </button>
                             }

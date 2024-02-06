@@ -694,7 +694,8 @@ const UserPage = () => {
                         </div>
                         
                         </div>
-                        <div className="margin-top-1" onClick={() => setDescriptionError()}>
+                        <div className="margin-top-1 form-input-container" onClick={() => setDescriptionError()}>
+                            <label className="bold-text">Description</label>
                             <ReactQuill 
                             theme="snow"
                             value={description}

@@ -122,7 +122,7 @@ const HomePage = () => {
                                     <MarkUnreadChatAltOutlinedIcon />
                                 </div>
                                 <p className="fadded-black-text">
-                                Get a confirmation of your appointment via what'sapp or on the platform.
+                                    Get a confirmation of your appointment via Email or on the platform.
                                 </p>
                             </div>
                             <div className="styled-container">

@@ -244,7 +244,7 @@ const ExpertBookingPage = () => {
                                 <button 
                                 onClick={() => bookAppointment()} 
                                 className="normal-button main-color-bg white-text bold-text">
-                                    {service ? `Book ${service.title}` : 'Book Session'}
+                                    {service ? `Confirm!` : 'Book Session'}
                                 </button>
                             </div>
                         }
