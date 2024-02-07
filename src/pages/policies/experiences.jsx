@@ -11,8 +11,8 @@ const ExperiencePage = () => {
     
     return <div className="min-height-100">
         <br />
-        <div className="center page-header-container">
-            <h1>How To Get The Best Session Experience?</h1>
+        <div className="center large-font margin-bottom-1">
+            <h1>Best Session Experience</h1>
         </div>
         <div className="styled-container policies-container">
             <ol>

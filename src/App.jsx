@@ -34,6 +34,7 @@ import SessionRoomPage from './pages/video-call/session-room'
 import ExpertVerificationPage from './pages/auth/expert-verification'
 import ServicesPage from './pages/services/services'
 import ExpertBookingPage from './pages/experts/expert-booking'
+import PrivacyPage from './pages/policies/privacy'
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
               <Route path="/find-expert" element={<FindExpertPage />} />
               <Route path="/policies/experiences" element={<ExperiencePage />} />
               <Route path="/policies/refund" element={<RefundPage />} />
+              <Route path="/policies/privacy" element={<PrivacyPage />} />
 
             <Route element={<AuthorizedLayout />}>
 
