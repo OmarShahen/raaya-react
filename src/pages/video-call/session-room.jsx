@@ -13,6 +13,7 @@ import axios from 'axios'
 import Peer from "./peers"
 import { toast } from 'react-hot-toast'
 import Timer from '../../components/timer/timer'
+import FlipCameraIosIcon from '@mui/icons-material/FlipCameraIos'
 
 
 const SessionRoomPage = () => {
@@ -86,6 +87,15 @@ const SessionRoomPage = () => {
         })
         .catch(error => {
             console.error(error)
+        })
+    }
+
+    const switchCamera = () => {
+        hmsActions.switchCamera()
+        .then(() => {})
+        .catch(error => {
+            console.error(error)
+            toast.error('There was a problem switching your camera', { duration: 3000, position: 'top-right' })
         })
     }
 
@@ -165,7 +175,10 @@ const SessionRoomPage = () => {
                                     <strong className="hide-mobile">Video on</strong>
                                 </span>
                             }
-                            
+                            <span onClick={switchCamera} className="hoverable">
+                                <FlipCameraIosIcon />
+                                <strong className="hide-mobile">Switch camera</strong>
+                            </span>
 
                         </div>
                         <button
