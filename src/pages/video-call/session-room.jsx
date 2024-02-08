@@ -8,7 +8,13 @@ import { useNavigate } from "react-router-dom"
 import { useSelector } from 'react-redux'
 import { serverRequest } from "../../components/API/request"
 import Loading from "../../components/loading/loading"
-import { useHMSActions, selectPeers, useHMSStore, useAVToggle } from '@100mslive/react-sdk'
+import { 
+    useHMSActions, 
+    selectPeers, 
+    useHMSStore, 
+    useAVToggle, 
+    selectDominantSpeaker,
+ } from '@100mslive/react-sdk'
 import axios from 'axios'
 import Peer from "./peers"
 import { toast } from 'react-hot-toast'
@@ -20,6 +26,7 @@ const SessionRoomPage = () => {
 
     const hmsActions = useHMSActions()
     const peers = useHMSStore(selectPeers)
+    const dominantSpeaker = useHMSStore(selectDominantSpeaker)
 
     const {
         isLocalAudioEnabled,
@@ -143,7 +150,11 @@ const SessionRoomPage = () => {
                             null
                         }
                         {
-                            peers.map(peer => <Peer key={peer.id} peer={peer} />)
+                            peers.map(peer => <Peer 
+                                key={peer.id} 
+                                peer={peer} 
+                                dominantSpeaker={dominantSpeaker}
+                                />)
                         }
                     </div>
                 </div>
