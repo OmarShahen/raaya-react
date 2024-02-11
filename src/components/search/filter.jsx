@@ -14,7 +14,7 @@ const Filters = ({ gender, setGender, setReload, reload, setSubspecial, subspeci
     const [specialities, setSpecialties] = useState([])
 
     useEffect(() => {
-        serverRequest.get(`/v1/specialities`)
+        serverRequest.get(`/v1/specialities?show=TRUE`)
         .then(response => {
             setMainSpecialities(response.data.specialities)
         })

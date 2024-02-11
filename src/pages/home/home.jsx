@@ -21,7 +21,8 @@ const HomePage = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        //scroll(0, 0)
+        scroll(0, 0)
+        document.title = 'Home'
     }, [])
 
     const SUPPORT_LINK = 'https://wa.me/201555415331'

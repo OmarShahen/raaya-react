@@ -75,6 +75,8 @@ const LoginPage = () => {
 
         const { credential } = credentialResponse
 
+        console.log(credential)
+
         serverRequest.post(`/v1/auth/google/login?accessToken=${credential}`)
         .then(response => {
             const data = response.data

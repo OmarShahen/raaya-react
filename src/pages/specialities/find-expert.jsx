@@ -18,7 +18,7 @@ const FindExpertPage = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        serverRequest.get('/v1/specialities')
+        serverRequest.get('/v1/specialities?show=TRUE')
         .then(response => {
             setIsLoading(false)
             setSpecialities(response.data.specialities)

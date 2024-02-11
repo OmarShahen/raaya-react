@@ -135,16 +135,21 @@ const AppointmentPage = () => {
                             </li>
                             <li>
                                 <strong>Start</strong>
-                                <span>{format(new Date(appointment?.startTime), 'dd/MM/yyyy hh:mm a')}</span>
+                                <span>{appointment?.startTime ? format(new Date(appointment?.startTime), 'dd/MM/yyyy hh:mm a') : 'Not Registered'}</span>
                             </li>
                             <li>
                                 <strong>End</strong>
-                                <span>{format(new Date(appointment?.endTime), 'dd/MM/yyyy hh:mm a')}</span>
+                                <span>{appointment?.endTime ? format(new Date(appointment?.endTime), 'dd/MM/yyyy hh:mm a') : 'Not Registered'}</span>
                             </li>
-                            <li>
-                                <strong>Duration</strong>
-                                <span>{getMinutesBetweenDates(new Date(appointment?.startTime), new Date(appointment?.endTime))} minutes</span>
-                            </li>
+                            {
+                                appointment?.startTime && appointment?.endTime ?
+                                <li>
+                                    <strong>Duration</strong>
+                                    <span>{getMinutesBetweenDates(new Date(appointment?.startTime), new Date(appointment?.endTime))} minutes</span>
+                                </li>
+                                :
+                                null
+                            }
                             <li>
                                 <strong>Status</strong>
                                 { 
@@ -171,11 +176,14 @@ const AppointmentPage = () => {
                             appointment?.status === 'CANCELLED' || new Date() > new Date(appointment.endTime) || !appointment.isPaid ?
                             null
                             :
-                            <button 
-                            onClick={() => navigate(`/video-call/appointments/${appointmentId}`)}
+                            <a 
+                            disabled={appointment.meetingLink ? false : true}
+                            href={appointment.meetingLink}
+                            target="_blank"
+                            rel="noreferrer"
                             className="normal-button main-color-bg white-text flex-space-between-center">
                                 Start Meeting
-                            </button>
+                            </a>
                         }
                     </div>
                 </div>

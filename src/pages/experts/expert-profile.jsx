@@ -31,29 +31,21 @@ const ExpertPage = () => {
 
     const user = useSelector(state => state.user.user)
 
-    const [weekday, setWeekday] = useState(WEEK_DAYS[new Date().getDay()])
-    const [duration, setDuration] = useState(30)
-
     const [reload, setReload] = useState(1)
     const [isShowReviewModal, setIsShowReviewModal] = useState(false)
 
     const [isProfileLoading, setIsProfileLoading] = useState(true)
     const [isReviewLoading, setIsReviewLoading] = useState(true)
-    const [isTimesLoading, setIsTimesLoading] = useState(true)
-    const [isBookingLoading, setIsBookingLoading] = useState(false)
 
     const [reviewsStats, setReviewsStats] = useState({})
 
-    const [bookingDate, setBookingDate] = useState(new Date())
-    const [bookingTime, setBookingTime] = useState()
     const [expert, setExpert] = useState({})
     const [reviews, setReviews] = useState([])
-    const [openingTimes, setOpeningTimes] = useState([])
 
     useEffect(() => {
         scroll(0, 0)
-        document.title = `${user.firstName}-Profile`
-    }, [])
+        document.title = `${expert.firstName}-Profile`
+    }, [expert])
 
     useEffect(() => {
         serverRequest.get(`/v1/users/${expertId}/experts`)

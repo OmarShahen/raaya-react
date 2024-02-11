@@ -54,8 +54,8 @@ const ExpertBookingPage = () => {
 
     useEffect(() => {
         scroll(0, 0)
-        document.title = `${user.firstName}-Booking`
-    }, [])
+        document.title = `${expert.firstName}-Booking`
+    }, [expert])
 
     useEffect(() => {
         serverRequest.get(`/v1/users/${expertId}/experts`)
