@@ -182,7 +182,7 @@ const AppointmentPage = () => {
                             target="_blank"
                             rel="noreferrer"
                             className="normal-button main-color-bg white-text flex-space-between-center">
-                                Start Meeting
+                                {appointment.meetingLink ? 'Start Meeting' : 'No Meeting Link Yet!'}
                             </a>
                         }
                     </div>

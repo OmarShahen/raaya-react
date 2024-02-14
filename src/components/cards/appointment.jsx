@@ -27,12 +27,34 @@ const AppointmentCard = ({ appointment }) => {
         }
     }
 
-    return <div onClick={() => navigate(`/appointments/${appointment._id}`)} className="doctor-review-container">
+    const renderAppointmentVerification = (verification) => {
+
+        if (verification === 'REVIEW') {
+            return 'Reviewing'
+        } else if (verification === 'ACCEPTED') {
+            return 'Accepted'
+        } else if (verification === 'REJECTED') {
+            return 'Rejected'
+        }
+    }
+
+    return <div 
+    onClick={() => navigate(appointment?.verification !== 'ACCEPTED' ? `/appointments/${appointment._id}/checkout` : `/appointments/${appointment._id}`)} 
+    className="doctor-review-container hoverable"
+    >
         <div className="doctor-review-info">
             <span className="doctor-review-date-container bold-text">{format(new Date(appointment.startTime), 'eee, MMM dd yyyy')}</span>
             <span>
                 {user.type === 'EXPERT' ? appointment?.seeker?.firstName : appointment?.expert?.firstName}
             </span>
+            { 
+                appointment.verification ?
+                <span className="flex-space-between-center bold-text">
+                    {renderAppointmentVerification(appointment.verification)}
+                </span>
+                : 
+                null 
+            }
             <span>{format(new Date(appointment.startTime), 'hh:mm a')} - {format(new Date(appointment.endTime), 'hh:mm a')}</span>
         </div>
         <div className="doctor-review-status-container">

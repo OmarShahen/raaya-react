@@ -25,7 +25,7 @@ import FindExpertPage from './pages/specialities/find-expert'
 import HomePage from './pages/home/home'
 
 import { useSelector } from 'react-redux'
-import CheckoutPage from './pages/checkout/checkout'
+import CheckoutPage from './pages/checkout/manual-checkout'
 import ExperiencePage from './pages/policies/experiences'
 import RefundPage from './pages/policies/refund'
 import AuthorizedLayout from './components/layouts/authorized-layout'
