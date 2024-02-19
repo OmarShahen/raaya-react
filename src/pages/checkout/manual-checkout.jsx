@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './checkout.css'
 import vodafoneIcon from '../../assets/vodafone_icon.svg'
+import instapayIcon from '../../assets/instapay.png'
 import CardImage from '../../components/images/image'
 import { serverRequest } from '../../components/API/request'
 import { toast } from 'react-hot-toast'
@@ -26,7 +27,11 @@ const CheckoutPage = () => {
     const [isSubmitted, setIsSubmitted] = useState(false)
 
     const [transactionId, setTransactionId] = useState()
+    const [gateway, setGateway] = useState('INSTAPAY')
     const [transactionIdError, setTransactionIdError] = useState()
+
+    const CARD_ID = '4475 7000 0020 4688'
+    const WALLET_NUMBER = '01065630331'
 
     const divAnimation = {
         hidden: { opacity: 0, y: 50 },
@@ -48,6 +53,7 @@ const CheckoutPage = () => {
             if(appointment?.payment?.transactionId) {
                 setIsSubmitted(true)
                 setTransactionId(appointment?.payment?.transactionId)
+                setGateway(appointment?.payment?.gateway)
             }
         })
         .catch(error => {
@@ -79,7 +85,7 @@ const CheckoutPage = () => {
 
             if(!transactionId) return setTransactionIdError('Transaction ID is required') 
             
-            const paymentData = { transactionId, gateway: 'VODAFONE' }
+            const paymentData = { transactionId, gateway }
 
             setIsPayLoading(true)
             await serverRequest.patch(`/v1/appointments/${appointmentId}/payment-verification`, paymentData)
@@ -234,41 +240,52 @@ const CheckoutPage = () => {
                         <div className="styled-container">
                         <div className="flex-space-between-center">
                             <h3 className="no-space">Payment Steps</h3>
-                            <div>
-                                <div className="flex-center">
+                        </div>
+                        <div className="payment-gateway-container">
+                            <div className="payment-gateway-wrapper">
+                                <div
+                                onClick={() => setGateway("VODAFONE")} 
+                                className={gateway === "VODAFONE" ? "payment-gateway-choice-container gateway-shadow" : "payment-gateway-choice-container"}
+                                >
                                     <img src={vodafoneIcon} />
+                                    <strong className="small-font">Vodafone Cash</strong>
+                                </div>
+                                <div 
+                                onClick={() => setGateway("INSTAPAY")} 
+                                className={gateway === "INSTAPAY" ? "payment-gateway-choice-container gateway-shadow" : "payment-gateway-choice-container"}
+                                >
+                                    <img style={{ width: '6rem', height: '6rem' }} src={instapayIcon} />
                                 </div>
                             </div>
                         </div>
-                        <div className="payment-steps-container margin-top-1">
+                        <div className="payment-steps-container">
                             <ul>
                             <li>
-                                    <strong>
-                                        1. Make Payment
-                                    </strong>
-                                    <p className="fadded-black-text">
-                                        To confirm your appointment, please make a payment of <span className="bold-text main-color-text">{formatNumber(getTotalPrice(appointment.price))} EGP</span> to <span className="main-color-text bold-text">01065630331</span> using Vodafone Cash.
-                                    </p>
+                                <strong>
+                                    1. Make Payment
+                                </strong>
+                                <p className="fadded-black-text">
+                                    Please make a payment of <span className="bold-text main-color-text">{formatNumber(getTotalPrice(appointment.price))} EGP</span> to <span className="main-color-text bold-text">{ gateway === 'INSTAPAY' ? CARD_ID : WALLET_NUMBER }</span> using { gateway === 'INSTAPAY' ? 'InstaPay' : 'Vodafone Cash' } to confirm your appointment.
+                                </p>
                             </li>
                             <li>
-                                    <strong>
-                                        2. Get Transaction ID
-                                    </strong>
-                                    <p className="fadded-black-text">
-                                        Once the payment is complete, you'll receive a unique Transaction ID from Vodafone Cash enter this Transaction ID in the space below to proceed.                              
-                                    </p>
+                                <strong>
+                                    2. Get Transaction ID
+                                </strong>
+                                <p className="fadded-black-text">
+                                    Once the payment is complete, you'll receive a unique Transaction ID from Vodafone Cash enter this Transaction ID in the space below to proceed.                              
+                                </p>
                             </li>
                             <li>
-                                    <strong>
-                                        3. Confirm Payment
-                                    </strong>
-                                    <p className="fadded-black-text">
-                                        Once you Click "<span className="main-color-text bold-text">Verify Payment</span>" the Transaction ID will be verified, if it is accepted or rejected you will receive an email about the payment status!                           
-                                    </p>
+                                <strong>
+                                    3. Confirm Payment
+                                </strong>
+                                <p className="fadded-black-text">
+                                    Once you Click "<span className="main-color-text bold-text">Verify Payment</span>" the Transaction ID will be verified, if it is accepted or rejected you will receive an email about the payment status!                           
+                                </p>
                             </li>
                             </ul>
                         </div>
-                    
                         <div>
                             <div className="form-input-container">
                                 <input 

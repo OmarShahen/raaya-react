@@ -87,6 +87,44 @@
     column-gap: 1rem;
 }
 
+.payment-gateway-container {
+    padding: 1rem 0;
+}
+
+.payment-gateway-container div .payment-gateway-choice-container {
+    border: 2px solid #F2F2F2;
+    border-radius: var(--normal-border-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+.payment-gateway-container div .payment-gateway-choice-container:hover {
+    box-shadow: 0 0 4px rgba(93,147,252,.5) !important;
+    border: 1px solid #5d93fc !important;
+    cursor: pointer;
+}
+
+.gateway-shadow {
+    box-shadow: 0 0 4px rgba(93,147,252,.5) !important;
+    border: 1px solid #5d93fc !important;
+    cursor: pointer;
+}
+
+.payment-gateway-container div .payment-gateway-choice-container img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.payment-gateway-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+}
+
+
 @media only screen and (max-width: 900px) {
     .checkout-body-container {
         grid-template-columns: 1fr;
