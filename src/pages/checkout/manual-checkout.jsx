@@ -30,7 +30,7 @@ const CheckoutPage = () => {
     const [gateway, setGateway] = useState('INSTAPAY')
     const [transactionIdError, setTransactionIdError] = useState()
 
-    const CARD_ID = '4475 7000 0020 4688'
+    const CARD_ID = 'raayaeg@instapay'
     const WALLET_NUMBER = '01065630331'
 
     const divAnimation = {
@@ -273,7 +273,7 @@ const CheckoutPage = () => {
                                     2. Get Transaction ID
                                 </strong>
                                 <p className="fadded-black-text">
-                                    Once the payment is complete, you'll receive a unique Transaction ID from Vodafone Cash enter this Transaction ID in the space below to proceed.                              
+                                    Once the payment is complete, you'll receive a unique Transaction or Reference ID from { gateway === 'INSTAPAY' ? 'InstaPay' : 'Vodafone Cash' } enter this ID in the space below to proceed.                              
                                 </p>
                             </li>
                             <li>
