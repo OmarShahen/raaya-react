@@ -39,7 +39,7 @@ const AppointmentCard = ({ appointment }) => {
     }
 
     return <div 
-    onClick={() => navigate(appointment?.verification !== 'ACCEPTED' ? `/appointments/${appointment._id}/checkout` : `/appointments/${appointment._id}`)} 
+    onClick={() => navigate(`/appointments/${appointment._id}`)} 
     className="doctor-review-container hoverable"
     >
         <div className="doctor-review-info">

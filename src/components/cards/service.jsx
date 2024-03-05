@@ -66,7 +66,7 @@ const ServiceCard = ({
         <div className="flex-space-between margin-top-1 services-info-container">
             <span className="bold-text main-color-text flex-center">
                 <PaidOutlinedIcon />
-                {formatNumber(service.price)} EGP
+                {service.price === 0 ? 'Free' : `${formatNumber(service.price)} EGP`}
             </span>
             <span className="bold-text main-color-text flex-center">
                 <AccessAlarmOutlinedIcon />

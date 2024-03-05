@@ -13,6 +13,7 @@ import { capitalizeFirstLetter } from '../../utils/formatString'
 import { NavLink } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
+import Switch from "react-switch"
 
 
 const UserPage = () => {
@@ -40,6 +41,8 @@ const UserPage = () => {
     const [specialties, setSpecialties] = useState([])
     const [subspecialties, setSubspecialties] = useState([])
     const [userSubspeciality, setUserSubspeciality] = useState([])
+    const [isAcceptPromoCodes, setIsAcceptPromoCodes] = useState()
+    const [isOnline, setIsOnline] = useState(false)
 
     const [languages, setLanguages] = useState([])
     const [languagesError, setLanguagesError] = useState()
@@ -61,6 +64,7 @@ const UserPage = () => {
     const [subspecialityError, setSubspecialityError] = useState()
     const [imageURL, setImageURL] = useState()
     const [progresspercent, setProgresspercent] = useState(0)
+    const [promoCodesError, setPromoCodesError] = useState()
 
     const [isImageUploading, setIsImageUploading] = useState(false)
 
@@ -73,7 +77,7 @@ const UserPage = () => {
     const [missingFields, setMissingFields] = useState([])
 
     useEffect(() => {
-        scroll(0, 0)
+        //scroll(0, 0)
         document.title = 'User Profile'
     }, [])
 
@@ -123,6 +127,8 @@ const UserPage = () => {
             setSpeciality(user?.speciality[0]._id)
             setUserSubspeciality(user?.subSpeciality)
             setImageURL(user?.profileImageURL)
+            setIsAcceptPromoCodes(user?.isAcceptPromoCodes)
+            setIsOnline(user.isOnline)
 
             if(user.languages) {
                 setLanguages(user?.languages)
@@ -188,9 +194,8 @@ const UserPage = () => {
         return htmlString.replace(/<[^>]*>/g, '');
     }
 
-    const handleUpdate = () => {
 
-        const type = user.type
+    const handleUpdateUserMainData = () => {
 
         if(!name) return setNameError('Name is required')
 
@@ -200,27 +205,11 @@ const UserPage = () => {
 
         if(!gender) return setGenderError('Gender is required')
 
-        if(type === 'EXPERT' && !title) return setTitleError('Title is required')
-
-        if(type === 'EXPERT' && !stripHTMLTags(description)) return setDescriptionError('Description is required')
-
-        if(type === 'EXPERT' && !speciality) return setSpecialityError('Speciality is required')
-
-        if(type === 'EXPERT' && userSubspeciality.length === 0) return setSubspecialityError('Speciality is required')
-
-        if(type === 'EXPERT' && languages.length === 0) return setLanguagesError('Languages is required')
-
-
         const updateData = {
             firstName: name,
             phone: Number.parseInt(phone),
             dateOfBirth,
             gender,
-            title,
-            description,
-            speciality: [speciality],
-            subSpeciality: userSubspeciality.map(special => special._id),
-            languages
         }
 
         setIsLoading(true)
@@ -236,6 +225,42 @@ const UserPage = () => {
             toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
         })
     }
+
+    const handleUpdateExpertInfo = () => {
+
+        if(!title) return setTitleError('Title is required')
+
+        if(!stripHTMLTags(description)) return setDescriptionError('Description is required')
+
+        if(!speciality) return setSpecialityError('Speciality is required')
+
+        if(userSubspeciality.length === 0) return setSubspecialityError('Speciality is required')
+
+        if(languages.length === 0) return setLanguagesError('Languages is required')
+
+        const updateData = {
+            title,
+            description,
+            speciality: [speciality],
+            subSpeciality: userSubspeciality.map(special => special._id),
+            languages,
+            isAcceptPromoCodes
+        }
+
+        setIsLoading(true)
+        serverRequest.put(`/v1/experts/${user._id}`, updateData)
+        .then(response => {
+            setIsLoading(false)
+            setReload(reload + 1)
+            toast.success(response.data.message, { duration: 3000, position: 'top-right' })
+        })
+        .catch(error => {
+            setIsLoading(false)
+            console.error(error)
+            toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+        })
+    }
+
 
     const handleImageUpload = (e) => {
         e.preventDefault()
@@ -329,6 +354,17 @@ const UserPage = () => {
 
     }
 
+    const updateOnlineStatus = (isOnline) => {
+        serverRequest.patch(`/v1/experts/${user._id}/online`, { isOnline })
+        .then(response => {
+            setIsOnline(response.data.user.isOnline)
+        })
+        .catch(error => {
+            console.error(error)
+            toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+        })
+    }
+
     const expertLanguages = [
         {
             code: "ar",
@@ -387,7 +423,7 @@ const UserPage = () => {
                         </strong>
                     </div>
                     <div className="margin-top-1 flex-space-between">
-                        <NavLink className="normal-button main-color-bg white-text center" to={`/experts/${user._id}`}>
+                        <NavLink className="normal-button bold-text main-color-bg white-text center" to={`/experts/${user._id}`}>
                             View Profile
                         </NavLink>
                         <button 
@@ -402,6 +438,19 @@ const UserPage = () => {
                         >
                             Copy Link
                         </button>
+                    </div>
+                </div>
+                :
+                null
+            }
+            {
+                user.type === 'EXPERT' ?
+                <div className="styled-container margin-top-1">
+                    <h6 className="no-space large-font">Online Status</h6>
+                    <div className="margin-top-1">
+                        <label>
+                            <Switch onChange={() => updateOnlineStatus(!isOnline)} checked={isOnline} />
+                        </label>
                     </div>
                 </div>
                 :
@@ -548,53 +597,7 @@ const UserPage = () => {
                         :
                         null
                     }
-                    {
-                        user.type === 'EXPERT' ?
-                        <div className="form-input-container">
-                        <label className="bold-text">Spoken Languages</label>
-                        <select 
-                        className="form-select"
-                        onClick={() => setLanguagesError()}
-                        onChange={e => {
-                            
-                            const registeredLanguage = languages.filter(lang => lang.code === e.target.value)
-                            if(registeredLanguage.length !== 0) {
-                                return
-                            }
-
-                            const spokenLanguage = expertLanguages.filter(lang => lang.code === e.target.value)
-                            setLanguages([...languages, ...spokenLanguage])
-
-                        }}
-                        >
-                            <option selected disabled>Select Languages</option>
-                            {expertLanguages.map(language => <option 
-                            key={language.code} 
-                            value={language.code}>
-                                {language.name}
-                            </option>)}
-                        </select>
-                        <span className="red-text">{languagesError}</span>
-                        {
-                            languages.length !== 0 ?
-                            <div className="tags-container">
-                                {languages.map(language => <span
-                                key={language.code}
-                                className="main-tag"
-                                onClick={() => {
-                                    setLanguages(languages.filter(tempLanguage => tempLanguage.code !== language.code))
-                                }}
-                                >
-                                    <span>{language?.name}</span>
-                                </span>)} 
-                            </div>
-                            :
-                            null
-                        }
-                    </div>
-                        :
-                        null
-                    }
+                    
                     </div>
                     <div className="flex-end margin-top-1">
                         {
@@ -603,7 +606,7 @@ const UserPage = () => {
                             :
                             <button 
                             className="normal-button main-color-bg white-text"
-                            onClick={() => handleUpdate()}
+                            onClick={() => handleUpdateUserMainData()}
                             >
                                 Update
                             </button>
@@ -692,7 +695,55 @@ const UserPage = () => {
                             null
                         }
                         </div>
-                        
+                        <div className="form-input-container">
+                        <label className="bold-text">Spoken Languages</label>
+                        <select 
+                        className="form-select"
+                        onClick={() => setLanguagesError()}
+                        onChange={e => {
+                            
+                            const registeredLanguage = languages.filter(lang => lang.code === e.target.value)
+                            if(registeredLanguage.length !== 0) {
+                                return
+                            }
+
+                            const spokenLanguage = expertLanguages.filter(lang => lang.code === e.target.value)
+                            setLanguages([...languages, ...spokenLanguage])
+
+                        }}
+                        >
+                            <option selected disabled>Select Languages</option>
+                            {expertLanguages.map(language => <option 
+                            key={language.code} 
+                            value={language.code}>
+                                {language.name}
+                            </option>)}
+                        </select>
+                        <span className="red-text">{languagesError}</span>
+                        {
+                            languages.length !== 0 ?
+                            <div className="tags-container">
+                                {languages.map(language => <span
+                                key={language.code}
+                                className="main-tag"
+                                onClick={() => {
+                                    setLanguages(languages.filter(tempLanguage => tempLanguage.code !== language.code))
+                                }}
+                                >
+                                    <span>{language?.name}</span>
+                                </span>)} 
+                            </div>
+                            :
+                            null
+                        }
+                        </div>
+                        </div>
+                        <div className="form-input-container">
+                            <label className="bold-text">Accept Coupons</label>
+                            <Switch onChange={() => setIsAcceptPromoCodes(!isAcceptPromoCodes)} checked={isAcceptPromoCodes} />
+                            <div>
+                                <span className="red-text">{promoCodesError}</span>
+                            </div>
                         </div>
                         <div className="margin-top-1 form-input-container" onClick={() => setDescriptionError()}>
                             <label className="bold-text">Description</label>
@@ -710,7 +761,7 @@ const UserPage = () => {
                                 :
                                 <button 
                                 className="normal-button main-color-bg white-text"
-                                onClick={() => handleUpdate()}
+                                onClick={() => handleUpdateExpertInfo()}
                                 >
                                     Update
                                 </button>

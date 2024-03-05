@@ -6,8 +6,11 @@ import Loading from '../../components/loading/loading'
 import { toast } from 'react-hot-toast'
 import { formatNumber } from '../../utils/numbers'
 import { getMinutesBetweenDates } from '../../utils/time'
-import { useNavigate } from 'react-router-dom'
 import DeleteConfirmationModal from '../../components/modals/confirmation/delete-confirmation'
+import { useSelector } from 'react-redux'
+import { textShortener } from '../../utils/formatString'
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined'
+import MeetingLinkFormModal from '../../components/modals/meeting-link-form'
 
 
 const AppointmentPage = () => {
@@ -15,16 +18,20 @@ const AppointmentPage = () => {
     const pagePath = window.location.pathname
     const appointmentId = pagePath.split('/')[2]
 
-    const navigate = useNavigate()
+    const user = useSelector(state => state.user.user)
 
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
     const [isDeleteLoading, setIsDeleteLoading] = useState(false)
 
     const [appointment, setAppointment] = useState({})
     const [isLoading, setIsLoading] = useState(true)
+    const [isShowMeetingForm, setIsShowMeetingForm] = useState(false)
     const [reload, setReload] = useState(1)
 
-    useEffect(() => scroll(0, 0), [])
+    useEffect(() => {
+        //scroll(0, 0)
+        document.title = 'Session Page'
+    }, [])
 
 
     useEffect(() => {
@@ -72,14 +79,41 @@ const AppointmentPage = () => {
         })
     }
 
+    const cancelFreeAppointment = () => {
+        setIsDeleteLoading(true)
+        serverRequest.patch(`/v1/appointments/${appointmentId}/status/cancellation/free`)
+        .then(response => {
+            setIsDeleteLoading(false)
+            setIsShowDeleteModal(false)
+            toast.success(response.data.message, { duration: 3000, position: 'top-right' })
+            setReload(reload + 1)
+        })
+        .catch(error => {
+            setIsDeleteLoading(false)
+            console.error(error)
+            toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+        })
+    }
+
     return <div>
+        {
+            isShowMeetingForm ?
+            <MeetingLinkFormModal 
+            setShowFormModal={setIsShowMeetingForm}
+            reload={reload}
+            setReload={setReload}
+            appointment={appointment}
+            />
+            :
+            null
+        }
         {
             isShowDeleteModal ?
             <DeleteConfirmationModal
             isShowModal={isShowDeleteModal}
             setIsShowModal={setIsShowDeleteModal}
             isLoading={isDeleteLoading}
-            deleteFunction={cancelAppointment}
+            deleteFunction={appointment.price === 0 ? cancelFreeAppointment : cancelAppointment}
             />
             :
             null
@@ -94,7 +128,7 @@ const AppointmentPage = () => {
             <div className="appointment-page-container">
                 <div className="styled-container">
                     <div className="appointment-header-container">
-                        <h2>Appointment Details</h2>   
+                        <h2>Appointment Details</h2>
                     </div>  
                     <div>
                         <div className="appointment-body-container">
@@ -159,12 +193,27 @@ const AppointmentPage = () => {
                                     renderAppointmentStatus(appointment.startTime)
                                 }
                             </li>
+                            {
+                                user.type === 'EXPERT' ?
+                                <li>
+                                    <strong className="flex-center">
+                                        Meeting Link
+                                        <span onClick={() => setIsShowMeetingForm(true)} style={{ marginLeft: '.5rem' }} className="hoverable">
+                                            <CreateOutlinedIcon />
+                                        </span>
+                                    </strong>
+                                    <span>{appointment.meetingLink ? textShortener(appointment.meetingLink, 20) : 'No meeting link yet'}</span>
+                                </li>
+                                :
+                                null
+                            }
+                            
                         </ul>
                         </div>
                     </div>
                     <div className="margin-top-1 flex-end">
                         {
-                            appointment?.status === 'CANCELLED' || new Date() > new Date(appointment.startTime) ?
+                            appointment?.status === 'CANCELLED' || new Date() > new Date(appointment.startTime) || !appointment.isPaid ?
                             null
                             :
                             <button 
@@ -189,6 +238,7 @@ const AppointmentPage = () => {
                 </div>
             </div>
         }
+        <br />
     </div>
 }
 

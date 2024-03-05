@@ -6,9 +6,26 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined'
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined'
 import { serverRequest } from '../API/request'
+import LoyaltyOutlinedIcon from '@mui/icons-material/LoyaltyOutlined'
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import AvTimerIcon from '@mui/icons-material/AvTimer'
 
 
-const Filters = ({ gender, setGender, setReload, reload, setSubspecial, subspecial, speciality, setSpeciality }) => {
+const Filters = ({ 
+    gender, 
+    setGender, 
+    setReload, 
+    reload, 
+    setSubspecial, 
+    subspecial, 
+    speciality, 
+    setSpeciality,
+    isAcceptPromoCodes,
+    setIsAcceptPromoCodes,
+    setIsShowFilter,
+    isOnline,
+    setIsOnline
+ }) => {
 
     const [mainSpecialities, setMainSpecialities] = useState([])
     const [specialities, setSpecialties] = useState([])
@@ -34,11 +51,36 @@ const Filters = ({ gender, setGender, setReload, reload, setSubspecial, subspeci
     }, [speciality])
 
     return <div className="styled-container">
+        
         <div className="filters-header-container large-font bold-text">
-            <span>Filter</span>
-            <FilterAltOutlinedIcon />
+            <span>Filters</span>
+            {
+                setIsShowFilter ?
+                <span className="hoverable" onClick={() => setIsShowFilter(false)}><CloseOutlinedIcon /></span>
+                :
+                <FilterAltOutlinedIcon />
+            }
+            
         </div>
         <br />
+        <div className="filters-body-container">
+            <div className="filters-section-header">
+                <div>
+                    <AvTimerIcon />
+                    <span className="small-font bold-text">Availability</span>
+                </div>
+            </div>
+            <div className="filters-sections-options">
+                <ul>
+                    <li onClick={() => setIsOnline('TRUE')} className={isOnline === 'TRUE' ? 'active-option' : ''}>
+                        <span className="bold-text">Online</span>
+                    </li>
+                    <li onClick={() => setIsOnline()} className={!isOnline ? 'active-option' : ''}>
+                        <span className="bold-text">This Week</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <div className="filters-body-container">
             <div className="filters-section-header">
                 <div>
@@ -47,7 +89,7 @@ const Filters = ({ gender, setGender, setReload, reload, setSubspecial, subspeci
                 </div>
             </div>
             <select 
-            className="form-select"
+            className="form-select bold-text"
             onChange={e => {
                 setSpeciality(e.target.value)
                 setSubspecial([])
@@ -70,7 +112,7 @@ const Filters = ({ gender, setGender, setReload, reload, setSubspecial, subspeci
                 </div>
             </div>
             <select 
-            className="form-select"
+            className="form-select bold-text"
             onChange={e => setSubspecial(e.target.value)}
             >
                 <option selected value="">All</option>
@@ -112,18 +154,35 @@ const Filters = ({ gender, setGender, setReload, reload, setSubspecial, subspeci
             <div className="filters-sections-options">
                 <ul>
                     <li onClick={() => setGender('MALE')} className={gender === 'MALE' ? 'active-option' : ''}>
-                        <span>Male</span>
+                        <span className="bold-text">Male</span>
                     </li>
                     <li onClick={() => setGender('FEMALE')} className={gender === 'FEMALE' ? 'active-option' : ''}>
-                        <span>Female</span>
+                        <span className="bold-text">Female</span>
                     </li>
                     <li onClick={() => setGender()} className={gender ? '' : "active-option"}>
-                        <span>Any</span>
+                        <span className="bold-text">Any</span>
                     </li>
                 </ul>
             </div>
         </div>
-
+        <div className="filters-body-container">
+            <div className="filters-section-header">
+                <div>
+                    <LoyaltyOutlinedIcon />
+                    <span className="small-font bold-text">Accept promocodes</span>
+                </div>
+            </div>
+            <div className="filters-sections-options">
+                <ul>
+                    <li onClick={() => setIsAcceptPromoCodes('TRUE')} className={isAcceptPromoCodes === 'TRUE' ? 'active-option' : ''}>
+                        <span className="bold-text">Yes</span>
+                    </li>
+                    <li onClick={() => setIsAcceptPromoCodes('FALSE')} className={isAcceptPromoCodes === 'FALSE' ? 'active-option' : ''}>
+                        <span className="bold-text">No</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
         {/*
             <div className="filters-body-container">
             <div className="filters-section-header">
@@ -154,12 +213,18 @@ const Filters = ({ gender, setGender, setReload, reload, setSubspecial, subspeci
                 onClick={() => {
                     setGender()
                     setSubspecial()
+                    setIsAcceptPromoCodes()
+                    setIsOnline()
                     setReload(reload + 1)
+                    setIsShowFilter ? setIsShowFilter(false) : null
                 }}
-                className="normal-button action-color-border main-color-text">Clear All</button>
+                className="normal-button action-color-border main-color-text bold-text">Clear All</button>
                 <button 
-                className="normal-button main-color-bg white-text"
-                onClick={() => setReload(reload + 1)}
+                className="normal-button main-color-bg white-text bold-text"
+                onClick={() => {
+                    setReload(reload + 1)
+                    setIsShowFilter ? setIsShowFilter(false) : null
+                }}
                 >Apply
                 </button>
             </div>

@@ -1,0 +1,9 @@
+.expert-profile-image-container {
+    position: relative;   
+}
+
+.expert-profile-image-container span {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}

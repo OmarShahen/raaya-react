@@ -81,11 +81,6 @@
     margin-left: .5rem;
 }
 
-.coupon-container {
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    column-gap: 1rem;
-}
 
 .payment-gateway-container {
     padding: 1rem 0;

@@ -11,7 +11,6 @@ import Loading from '../../components/loading/loading'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { motion } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
-import { capitalizeFirstLetter } from '../../utils/formatString'
 
 
 const CheckoutPage = () => {
@@ -29,6 +28,10 @@ const CheckoutPage = () => {
     const [transactionId, setTransactionId] = useState()
     const [gateway, setGateway] = useState('INSTAPAY')
     const [transactionIdError, setTransactionIdError] = useState()
+
+    const [promoCode, setPromoCode] = useState()
+    const [promoCodeError, setPromoCodeError] = useState()
+    const [isCouponLoading, setIsCouponLoading] = useState(false)
 
     const CARD_ID = 'raayaeg@instapay'
     const WALLET_NUMBER = '01065630331'
@@ -54,6 +57,10 @@ const CheckoutPage = () => {
                 setIsSubmitted(true)
                 setTransactionId(appointment?.payment?.transactionId)
                 setGateway(appointment?.payment?.gateway)
+            }
+
+            if(appointment.promoCode) {
+                setPromoCode(appointment.promoCode.code)
             }
         })
         .catch(error => {
@@ -102,6 +109,43 @@ const CheckoutPage = () => {
 
     }
 
+    const handlePromoCodeSubmit = (e) => {
+        e.preventDefault()
+
+        if(!promoCode) return setPromoCodeError('Coupon is required')
+
+        setIsCouponLoading(true)
+        serverRequest.patch(`/v1/appointments/${appointmentId}/promo-codes/apply`, { promoCode })
+        .then(response => {
+            setIsCouponLoading(false)
+            toast.success(response.data.message, { duration: 3000, position: 'top-right' })
+            setReload(reload + 1)
+        })
+        .catch(error => {
+            setIsCouponLoading(false)
+            console.error(error)
+            setPromoCodeError(error?.response?.data?.message)
+        })
+    }
+
+    const removePromoCode = (e) => {
+        e.preventDefault()
+
+        setIsCouponLoading(true)
+        serverRequest.patch(`/v1/appointments/${appointmentId}/promo-codes/remove`)
+        .then(response => {
+            setIsCouponLoading(false)
+            toast.success(response.data.message, { duration: 3000, position: 'top-right' })
+            setPromoCode('')
+            setReload(reload + 1)
+        })
+        .catch(error => {
+            setIsCouponLoading(false)
+            console.error(error)
+            setPromoCodeError(error?.response?.data?.message)
+        })
+    }
+
     return <div className="min-height-100">
         <br />
         <div className="center page-header-container">
@@ -139,17 +183,6 @@ const CheckoutPage = () => {
                                 <span className="main-color-text bold-text">{appointment?.expert?.title}</span>
                             </div>
                         </div>
-                        {/*<div className="margin-top-1 margin-bottom-1 coupon-container">
-                            <input 
-                            type="text"
-                            className="form-input"
-                            placeholder="Enter coupon here"
-                            disabled
-                            />
-                            <button className="normal-button main-color-bg white-text">
-                                Apply
-                            </button>
-                        </div>*/}
                         <ul>
                             {
                                 appointment.service.title ?
@@ -185,6 +218,15 @@ const CheckoutPage = () => {
                                 <span>Subtotal</span>
                                 <span>{formatNumber(appointment?.price)} EGP</span>
                             </li>
+                            {
+                                appointment.promoCodeId ? 
+                                <li>
+                                    <span>Discount ({appointment.discountPercentage * 100}%)</span>
+                                    <span>{formatNumber(appointment.originalPrice - appointment.price)} EGP</span>
+                                </li> 
+                                : 
+                                null
+                            } 
                             <li>
                                 <span>Service Fees</span>
                                 <span>{formatNumber(appointment?.price * 0.1)} EGP</span>
@@ -194,9 +236,35 @@ const CheckoutPage = () => {
                                 <span className="bold-text">{formatNumber(getTotalPrice(appointment.price))} EGP</span>
                             </li>
                         </ul>
-                    </div>
-                    
-                    
+                    </div>  
+                    <hr />   
+                    <div className="coupon-container ">
+                        <div className="form-input-container">
+                            <label className="bold-text">Coupon</label>
+                            <input 
+                            type="text"
+                            className="form-input bold-text"
+                            placeholder="Enter coupon here..."
+                            value={promoCode}
+                            onChange={e => setPromoCode(e.target.value)}
+                            onClick={() => setPromoCodeError()}
+                            />
+                            <span className="red-text">{promoCodeError}</span>
+                        </div>
+                        <div className="align-right">
+                            {
+                                isCouponLoading ?
+                                <div className="flex-space-between">
+                                    <div></div>
+                                    <Loading />
+                                </div>
+                                :
+                                <button onClick={appointment?.promoCodeId ? removePromoCode : handlePromoCodeSubmit} className="normal-button main-color-bg white-text">
+                                    { appointment?.promoCodeId ? 'Remove Coupon' : 'Apply Coupon' }
+                                </button>
+                            }
+                        </div> 
+                    </div>    
                 </div>
                 </motion.div>
             </div>
@@ -290,7 +358,7 @@ const CheckoutPage = () => {
                             <div className="form-input-container">
                                 <input 
                                 type="text"
-                                className="form-input"
+                                className="form-input bold-text"
                                 placeholder='Enter Transaction ID'
                                 value={transactionId}
                                 onClick={() => setTransactionIdError()}

@@ -5,6 +5,7 @@ import { serverRequest } from '../components/API/request'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 import Loading from '../components/loading/loading'
 import EmptySection from '../components/sections/empty/empty'
+import ExpertsOnlineBanner from '../components/sections/banners/experts-online-banner'
 
 
 const DoctorsPage = () => {
@@ -16,7 +17,10 @@ const DoctorsPage = () => {
     const [isPaginationLoading, setIsPaginationLoading] = useState(false)
     const [total, setTotal] = useState(0)
     const [experts, setExperts] = useState([])
+    const [onlineExperts, setOnlineExperts] = useState([])
     const [sortBy] = useState()
+    const [isAcceptPromoCodes, setIsAcceptPromoCodes] = useState()
+    const [isOnline, setIsOnline] = useState()
 
     const [page, setPage] = useState(1)
     const [limit] = useState(10)
@@ -27,6 +31,8 @@ const DoctorsPage = () => {
 
     const [speciality, setSpeciality] = useState(specialityId)
     const [subspecial, setSubspecial] = useState()
+
+    const [isShowFilter, setIsShowFilter] = useState(false)
 
     useEffect(() => {
         scroll(0, 0)
@@ -41,7 +47,9 @@ const DoctorsPage = () => {
             sortBy, 
             subSpecialityId: subspecial,
             limit,
-            page
+            page,
+            isAcceptPromoCodes,
+            isOnline
         }
 
         serverRequest.get(`/v1/experts/specialities/${speciality}`, { params: query })
@@ -56,6 +64,17 @@ const DoctorsPage = () => {
         })
     }, [reload])
 
+    useEffect(() => {
+
+        const query = { isOnline: 'TRUE' }
+        serverRequest.get(`/v1/experts/specialities/${speciality}`, { params: query })
+        .then(response => {
+            setOnlineExperts(response.data.experts)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }, [])
 
     const loadPagination = (page) => {
 
@@ -81,6 +100,10 @@ const DoctorsPage = () => {
 
     const searchExperts = () => {
 
+        if(!searchName) {
+            return
+        }
+
         setIsLoading(true)
         serverRequest.get(`/v1/experts/specialities/${speciality}/name/${searchName}`)
         .then(response => {
@@ -94,13 +117,32 @@ const DoctorsPage = () => {
         })
     }
 
+    const onlineExpertBannerFunction = () => {
+        setIsOnline('TRUE')
+        setGender()
+        setSubspecial()
+        setIsAcceptPromoCodes()
+        setReload(reload + 1)
+    }
+
     return <div className="min-height-100">
         <br />
+        {
+            onlineExperts.length !== 0 ?
+            <div className="hide-mobile">
+                <ExpertsOnlineBanner 
+                totalExperts={onlineExperts.length} 
+                actionFunction={onlineExpertBannerFunction}
+                />
+            </div>
+            :
+            null
+        }
         <div className="center page-header-container">
             <h1>Our Experts</h1>
         </div>
         <div className="page-search-filter-layout">
-            <div className="page-filter-container">
+            <div className="page-filter-container hide-mobile">
                 <Filters 
                 speciality={speciality}
                 setSpeciality={setSpeciality}
@@ -110,26 +152,63 @@ const DoctorsPage = () => {
                 reload={reload}
                 setSubspecial={setSubspecial}
                 subspecial={subspecial}
+                isAcceptPromoCodes={isAcceptPromoCodes}
+                setIsAcceptPromoCodes={setIsAcceptPromoCodes}
+                isOnline={isOnline}
+                setIsOnline={setIsOnline}
                 />
             </div>
+            {
+                isShowFilter ?
+                <div className="page-filter-container">
+                    <Filters 
+                    speciality={speciality}
+                    setSpeciality={setSpeciality}
+                    gender={gender}
+                    setGender={setGender}
+                    setReload={setReload}
+                    reload={reload}
+                    setSubspecial={setSubspecial}
+                    subspecial={subspecial}
+                    isAcceptPromoCodes={isAcceptPromoCodes}
+                    setIsAcceptPromoCodes={setIsAcceptPromoCodes}
+                    setIsShowFilter={setIsShowFilter}
+                    isOnline={isOnline}
+                    setIsOnline={setIsOnline}
+                    />
+                </div>
+                :
+                null
+            }
             <div className="items-page-container">
                 
-                <form onClick={e => e.preventDefault()} id="search-btn" className="items-search-container">
+                <div onClick={e => e.preventDefault()} className="items-search-container">
                     <div className="password-container">
                         <input 
                         type="search"
-                        className="form-input" 
-                        placeholder="Search Expert names..."
+                        className="form-input bold-text" 
+                        placeholder="Start Typing Expert's Name to Search..."
                         onChange={e => setSearchName(e.target.value)} 
                         />
                         <span className="password-icon"><SearchOutlinedIcon /></span>
                     </div>
+                    <div className="search-and-filter-buttons-container">
                         <button 
-                        className="normal-button main-color-bg white-text"
+                        className="normal-button show-mobile full-width main-color-border main-color-text bold-text flex-center"
+                        onClick={() => setIsShowFilter(true)}
+                        form="search-btn"
+                        >
+                            Filters
+                        </button>
+                        <button 
+                        className="normal-button bold-text full-width main-color-bg white-text flex-center"
                         onClick={() => searchExperts()}
                         form="search-btn"
-                        >Search</button>
-                </form>
+                        >
+                            Search
+                        </button>
+                    </div>
+                </div>
                 
                 <div>
                     { isLoading ?

@@ -77,6 +77,15 @@ export const getMinutesBetweenDates = (date1, date2) => {
     return Math.floor(diffInMilliseconds / (1000 * 60))
 }
 
+export const addMinutesToDate = (inputDate, minutesToAdd) => {
+
+    const newDate = new Date(inputDate)
+  
+    newDate.setMinutes(newDate.getMinutes() + minutesToAdd)
+  
+    return newDate
+}
+
 export const WEEK_DAYS = [
     'SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'
 ]

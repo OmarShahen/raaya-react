@@ -1,0 +1,51 @@
+.expert-online-banner-container {
+    color: #FFF;
+    background-color: #60A899;
+    border-radius: var(--normal-border-radius);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.3rem;
+}
+
+.experts-online-banner-container {
+    color: #4D4D4F;
+    background-color: #FFF;
+    border-radius: var(--normal-border-radius);
+    padding: 2rem;
+}
+
+.experts-online-banner-container strong {
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+.experts-online-banner-info-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.experts-online-banner-info-container span {
+    margin-left: .5rem;
+    font-size: 1.1rem;
+}
+
+@media only screen and (max-width: 900px) {
+    .expert-online-banner-container {
+        flex-direction: column;
+        font-size: 1rem;
+    }
+
+    .expert-online-banner-container span {
+        font-size: 1.2rem;
+    }
+
+    .expert-online-banner-container div {
+        margin-top: .5rem;
+        display: flex !important;
+        align-items: flex-end !important;
+        justify-content: flex-end !important;
+    }
+}

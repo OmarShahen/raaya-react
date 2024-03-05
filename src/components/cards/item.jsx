@@ -20,7 +20,8 @@ const ItemCard = ({ expert }) => {
                 <div>
                     <CardImage 
                     name={expert.firstName} 
-                    imageURL={expert.profileImageURL} 
+                    imageURL={expert.profileImageURL}
+                    isOnline={expert.isOnline}
                     borderRadius={50}
                     width={'4rem'}
                     height={'4rem'}
@@ -55,7 +56,7 @@ const ItemCard = ({ expert }) => {
                     }
                 </div>
             </div>
-            <div className="cards-2-list-wrapper">
+            <div className="cards-2-list-wrapper-no-responsive">
                 <button 
                 onClick={() => navigate(`/experts/${expert._id}`)} 
                 className="normal-button main-color-bg white-text full-width margin-top-1 bold-text">
@@ -63,15 +64,15 @@ const ItemCard = ({ expert }) => {
                 </button>
                 <button 
                 onClick={() => navigate(`/experts/${expert._id}/booking`)} 
-                className="normal-button main-color-text main-color-border hide-mobile full-width margin-top-1 bold-text">
+                className="normal-button main-color-text main-color-border full-width margin-top-1 bold-text">
                     Book Session
                 </button>
             </div>
         </div>
-        
+    
         <div className="expert-booking-container">
             <div className="expert-book-container">
-                 <div className="small-font bold-text">Description</div>
+                <div className="small-font bold-text">Description</div>
                 <div className="fadded-black-text small-font">
                     {textShortener(stripHTMLTags(expert.description), 200)}
                 </div>

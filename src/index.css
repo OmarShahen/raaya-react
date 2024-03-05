@@ -274,11 +274,10 @@ button {
     position: relative !important;
 }
 
-.cards-2-list-wrapper {
+.cards-2-list-wrapper, .cards-2-list-wrapper-no-responsive {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 1rem;
-
 }
 
 .password-icon {
@@ -692,10 +691,25 @@ button:hover {
     font-size: 1.2rem;
 }
 
+.search-and-filter-buttons-container {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
 @media only screen and (max-width: 900px) {
 
     .both-sides-padded-container {
         padding: 0;
+    }
+
+    .search-and-filter-buttons-container {
+        grid-template-columns: 1fr 1fr;
+        column-gap: .5rem;
+    }
+
+    .items-search-container {
+        grid-template-columns: 1fr;
+        row-gap: .5rem;
     }
 
     .cards-3-list-wrapper {
@@ -716,8 +730,21 @@ button:hover {
         grid-template-columns: 1fr;
     }
 
+    .padding-top-1 {
+        padding-top: 1rem;
+    }
+
+    .padding-bottom-1 {
+        padding-bottom: 1rem;
+    }
+
     .page-filter-container {
-        display: none;
+        position: fixed;
+        z-index: 100;
+        width: 90%;
+        top: 11vh;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .show-mobile {
