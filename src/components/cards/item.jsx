@@ -23,8 +23,8 @@ const ItemCard = ({ expert }) => {
                     imageURL={expert.profileImageURL}
                     isOnline={expert.isOnline}
                     borderRadius={50}
-                    width={'4rem'}
-                    height={'4rem'}
+                    width={'4.5rem'}
+                    height={'4.5rem'}
                     />
                 </div>
                 <div>

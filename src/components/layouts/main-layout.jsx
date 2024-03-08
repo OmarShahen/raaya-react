@@ -17,7 +17,6 @@ const MainLayout = () => {
             { modal.isShowExpertModal ? <ExpertSignupFormModal /> : null }
             <Outlet />
         </div>
-        <div className="bottom-page-padding show-mobile"></div>
     </div>
 }
 
