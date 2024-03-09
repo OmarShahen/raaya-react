@@ -40,7 +40,7 @@ const FindExpertPage = () => {
         <div className="margin-top-1">
             <div className="styled-container find-expert-container">
                 <h6 className="find-expert-question-container center fadded-black-text no-space">
-                    Please choose area of expertise to find the right experts for your needs!
+                Choose a Category to Begin!
                 </h6>
                 <div>
                 {
