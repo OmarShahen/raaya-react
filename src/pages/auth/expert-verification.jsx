@@ -9,6 +9,7 @@ import { setIsLogged } from '../../redux/slices/userSlice'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { motion } from 'framer-motion'
+import { onAnalytics } from '../../../google-analytics/analytics'
 
 
 const ExpertVerificationPage = () => {
@@ -96,6 +97,7 @@ const ExpertVerificationPage = () => {
         .then(() => {
             setIsLoading(false)
             setIsSubmitted(true)
+            onAnalytics('expert_verification_submitted', { event_category: 'Authentication', event_label: 'Expert Verification Request Submission' })
         })
         .catch(error => {
             setIsLoading(false)

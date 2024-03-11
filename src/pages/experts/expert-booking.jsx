@@ -23,6 +23,7 @@ import FemaleIcon from '@mui/icons-material/Female'
 import { capitalizeFirstLetter } from '../../utils/formatString'
 import EmptySection from '../../components/sections/empty-section'
 import { addMinutesToDate } from '../../utils/time'
+import { onAnalytics } from '../../../google-analytics/analytics'
 
 
 const ExpertBookingPage = () => {
@@ -159,6 +160,7 @@ const ExpertBookingPage = () => {
         .then(response => {
             setIsBookingLoading(false)
             const appointment = response.data.appointment
+            onAnalytics('appointment_created', { event_category: 'Appointment', event_label: 'Appointment Created' })
             navigate(appointment.isPaid ? `/appointments/${response.data.appointment._id}` : `/appointments/${response.data.appointment._id}/checkout`)
         })
         .catch(error => {

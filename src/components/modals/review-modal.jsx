@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import Star from '../../components/stars/star'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
+import { onAnalytics } from '../../../google-analytics/analytics'
 
 
 const ReviewFormModal = ({ setShowFormModal, reload, setReload, expert }) => {
@@ -44,6 +45,7 @@ const ReviewFormModal = ({ setShowFormModal, reload, setReload, expert }) => {
         .then(response => {
             setIsSubmit(false)
             const data = response.data
+            onAnalytics('feedback_submitted', { event_category: 'Feedback', event_label: 'Feedback Submitted' })
             toast.success(data.message, { position: 'top-right', duration: 3000 })
             reload ? setReload(reload + 1) : null
             setShowFormModal ? setShowFormModal(false) : null

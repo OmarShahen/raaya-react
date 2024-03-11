@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import Loading from '../loading/loading'
 import { serverRequest } from '../API/request'
 import { toast } from 'react-hot-toast'
+import { onAnalytics } from '../../../google-analytics/analytics'
 
 
 const ReviewCard = ({ review, setReload, reload }) => {
@@ -35,6 +36,7 @@ const ReviewCard = ({ review, setReload, reload }) => {
             setIsDeleting(false)
             setReload(reload + 1)
             toast.success(response.data.message, { duration: 3000, position: 'top-right' })
+            onAnalytics('feedback_deleted', { event_category: 'Feedback', event_label: 'Feedback Deleted' })
         })
         .catch(error => {
             setIsDeleting(false)

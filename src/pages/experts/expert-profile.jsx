@@ -20,6 +20,7 @@ import MaleIcon from '@mui/icons-material/Male'
 import FemaleIcon from '@mui/icons-material/Female'
 import { capitalizeFirstLetter } from '../../utils/formatString'
 import ExpertOnlineBanner from '../../components/sections/banners/expert-online-banner'
+import { onAnalytics } from '../../../google-analytics/analytics'
 
 
 const ExpertPage = () => {
@@ -52,6 +53,7 @@ const ExpertPage = () => {
         .then(response => {
             setIsProfileLoading(false)
             setExpert(response.data.user)
+            onAnalytics('expert_profile_viewed', { event_category: 'Interaction', event_label: 'Expert Profile Viewed' })
         })
         .catch(error => {
             setIsProfileLoading(false)

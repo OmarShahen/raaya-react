@@ -16,6 +16,7 @@ import { format } from 'date-fns'
 import { formatNumber } from '../../utils/numbers'
 import { useSelector } from 'react-redux'
 import Loading from '../../components/loading/loading'
+import { onAnalytics } from '../../../google-analytics/analytics'
 
 
 const CheckoutPage = () => {
@@ -96,6 +97,7 @@ const CheckoutPage = () => {
                 return toast.error(payment.data.message, { duration: 3000, position: 'top-right' })
             }
 
+            onAnalytics('appointment_checkout', { event_category: 'Appointment', event_label: 'Appointment Checkout' })
             location.href = paymentMethod === 'MOBILE_WALLET' ? payment.data.redirectURL : payment.data.iFrameURL
 
         } catch(error) {
@@ -117,6 +119,7 @@ const CheckoutPage = () => {
         .then(() => {
             setIsCouponLoading(false)
             setReload(reload + 1)
+            onAnalytics('promocode_applied', { event_category: 'Marketing', event_label: 'Promocode Applied' })
         })
         .catch(error => {
             setIsCouponLoading(false)
@@ -134,6 +137,7 @@ const CheckoutPage = () => {
             setIsCouponLoading(false)
             setPromoCode('')
             setReload(reload + 1)
+            onAnalytics('promocode_removed', { event_category: 'Marketing', event_label: 'Promocode Removed' })
         })
         .catch(error => {
             setIsCouponLoading(false)

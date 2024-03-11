@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import { textShortener } from '../../utils/formatString'
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined'
 import MeetingLinkFormModal from '../../components/modals/meeting-link-form'
+import { onAnalytics } from '../../../google-analytics/analytics'
 
 
 const AppointmentPage = () => {
@@ -30,7 +31,7 @@ const AppointmentPage = () => {
 
     useEffect(() => {
         //scroll(0, 0)
-        document.title = 'Session Page'
+        document.title = 'Appointment Details'
     }, [])
 
 
@@ -71,6 +72,7 @@ const AppointmentPage = () => {
             setIsShowDeleteModal(false)
             toast.success(response.data.message, { duration: 3000, position: 'top-right' })
             setReload(reload + 1)
+            onAnalytics('appointment_cancelled', { event_category: 'Appointment', event_label: 'Appointment Cancelled' })
         })
         .catch(error => {
             setIsDeleteLoading(false)
@@ -87,6 +89,7 @@ const AppointmentPage = () => {
             setIsShowDeleteModal(false)
             toast.success(response.data.message, { duration: 3000, position: 'top-right' })
             setReload(reload + 1)
+            onAnalytics('appointment_cancelled', { event_category: 'Appointment', event_label: 'Appointment Cancelled' })
         })
         .catch(error => {
             setIsDeleteLoading(false)
@@ -228,6 +231,7 @@ const AppointmentPage = () => {
                             <a 
                             disabled={appointment.meetingLink ? false : true}
                             href={appointment.meetingLink}
+                            onClick={() => onAnalytics('video_call_started', { event_category: 'Interaction', event_label: 'Video Call Started' })}
                             target="_blank"
                             rel="noreferrer"
                             className="normal-button main-color-bg white-text flex-space-between-center">

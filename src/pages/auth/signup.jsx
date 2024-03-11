@@ -13,6 +13,7 @@ import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google'
 import axios from 'axios'
 import { motion } from 'framer-motion'
+import { onAnalytics } from '../../../google-analytics/analytics'
 
 
 const SignupPage = () => {
@@ -211,6 +212,7 @@ const SignupPage = () => {
             user.accessToken = data.token
             localStorage.setItem('user', JSON.stringify({ ...user, isLogged: true }))
             dispatch(setUser({ ...user, isLogged: true }))
+            onAnalytics('seeker_google_registered', { event_category: 'Authentication', event_label: 'Seeker Google Registered' })
             navigate('/find-expert')
         })
         .catch(error => {
@@ -246,7 +248,13 @@ const SignupPage = () => {
             user.accessToken = data.token
             localStorage.setItem('user', JSON.stringify({ ...user, isLogged: true }))
             dispatch(setUser({ ...user, isLogged: true }))
+
+            const eventName = isExpert ? 'expert_registered' : 'seeker_registered'
+            const eventLabel = isExpert ? 'Expert Registered' : 'Seeker Registered'
+            onAnalytics(eventName, { event_category: 'Authentication', event_label: eventLabel })
+            
             isExpert ? navigate('/users/profile') : navigate('/find-expert')
+
         })
         .catch(error => {
             setIsLoading(false)

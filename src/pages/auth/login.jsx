@@ -11,6 +11,7 @@ import { setUser, setIsLogged } from '../../redux/slices/userSlice'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google'
 import { useSearchParams } from "react-router-dom"
+import { onAnalytics } from '../../../google-analytics/analytics'
 
 
 const LoginPage = () => {
@@ -55,7 +56,7 @@ const LoginPage = () => {
             user.accessToken = data.token
             localStorage.setItem('user', JSON.stringify({ ...user, isLogged: true }))
             dispatch(setUser({ ...user, isLogged: true }))
-
+            onAnalytics('user_login', { event_category: 'Authentication', event_label: 'User Login' })
             isReturnBack ? navigate(-1) : navigate('/appointments/status/upcoming')
         })
         .catch(error => {
@@ -82,7 +83,7 @@ const LoginPage = () => {
             user.accessToken = data.token
             localStorage.setItem('user', JSON.stringify({ ...user, isLogged: true }))
             dispatch(setUser({ ...user, isLogged: true }))
-
+            onAnalytics('google_login', { event_category: 'Authentication', event_label: 'Google Login' })
             isReturnBack ? navigate(-1) : navigate('/appointments/status/upcoming')
         })
         .catch(error => {
