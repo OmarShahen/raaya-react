@@ -421,6 +421,14 @@ const UserPage = () => {
                         {
                             user.type === 'EXPERT' ?
                             <li>
+                                <a href="#activity-account" className="fadded-black-text">Activity and Visibility</a>
+                            </li>
+                            :
+                            null
+                        }
+                        {
+                            user.type === 'EXPERT' ?
+                            <li>
                                 <a href="#bank-account" className="fadded-black-text">Bank Account</a>
                             </li>
                             :
