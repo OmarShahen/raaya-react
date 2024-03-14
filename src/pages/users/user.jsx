@@ -43,6 +43,8 @@ const UserPage = () => {
     const [userSubspeciality, setUserSubspeciality] = useState([])
     const [isAcceptPromoCodes, setIsAcceptPromoCodes] = useState()
     const [isOnline, setIsOnline] = useState(false)
+    const [isDeactivated, setIsDeactivated] = useState(false)
+    const [isShow, setIsShow] = useState(false)
 
     const [languages, setLanguages] = useState([])
     const [languagesError, setLanguagesError] = useState()
@@ -129,6 +131,8 @@ const UserPage = () => {
             setImageURL(user?.profileImageURL)
             setIsAcceptPromoCodes(user?.isAcceptPromoCodes)
             setIsOnline(user.isOnline)
+            setIsDeactivated(user.isDeactivated)
+            setIsShow(user.isShow)
 
             if(user.languages) {
                 setLanguages(user?.languages)
@@ -191,7 +195,7 @@ const UserPage = () => {
     }, [reload])
 
     const stripHTMLTags = (htmlString) => {
-        return htmlString.replace(/<[^>]*>/g, '');
+        return htmlString.replace(/<[^>]*>/g, '')
     }
 
 
@@ -260,7 +264,6 @@ const UserPage = () => {
             toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
         })
     }
-
 
     const handleImageUpload = (e) => {
         e.preventDefault()
@@ -358,6 +361,28 @@ const UserPage = () => {
         serverRequest.patch(`/v1/experts/${user._id}/online`, { isOnline })
         .then(response => {
             setIsOnline(response.data.user.isOnline)
+        })
+        .catch(error => {
+            console.error(error)
+            toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+        })
+    }
+
+    const updateAccountActivity = (isDeactivated) => {
+        serverRequest.patch(`/v1/users/${user._id}/activation`, { isDeactivated })
+        .then(response => {
+            setIsDeactivated(response.data.user.isDeactivated)
+        })
+        .catch(error => {
+            console.error(error)
+            toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+        })
+    }
+
+    const updateAccountVisibility = (isShow) => {
+        serverRequest.patch(`/v1/users/${user._id}/visibility`, { isShow })
+        .then(response => {
+            setIsShow(response.data.user.isShow)
         })
         .catch(error => {
             console.error(error)
@@ -768,6 +793,37 @@ const UserPage = () => {
                             }
                             
                         </div>
+                    </div>
+                </div>
+                :
+                null
+            }
+            {
+                user.type === 'EXPERT' ?
+                <div className="cards-2-list-wrapper">
+                    <div id="activity-account">
+                    <div className="styled-container">
+                        <h2 className="no-space">Activity</h2>
+                        <div className="cards-2-list-wrapper margin-top-1">
+                            <div>
+                                <label>
+                                    <Switch onChange={() => updateAccountActivity(!isDeactivated)} checked={!isDeactivated} />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div id="activity-account">
+                    <div className="styled-container">
+                        <h2 className="no-space">Visibility</h2>
+                        <div className="cards-2-list-wrapper margin-top-1">
+                            <div>
+                                <label>
+                                    <Switch onChange={() => updateAccountVisibility(!isShow)} checked={isShow} />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
                 :

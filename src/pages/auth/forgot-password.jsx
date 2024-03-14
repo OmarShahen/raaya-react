@@ -17,6 +17,73 @@ const ForgotPasswordPage = () => {
 
     const [emailError, setEmailError] = useState()
 
+    const SCOPES = "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar"
+
+    const [events, setEvents] = useState(null);
+
+    const openSignInPopup = () => {
+        window.gapi.auth2.authorize(
+        { client_id: "823843444953-k02cgn3g6qi9gehp5kedgmf5mun30vru.apps.googleusercontent.com", scope: SCOPES },
+        (res) => {
+            if (res) {
+            if (res.access_token)
+                localStorage.setItem("access_token", res.access_token);
+
+            // Load calendar events after authentication
+            //window.gapi.client.load("calendar", "v3", listUpcomingEvents);
+            }
+        }
+        );
+    }  
+
+    const initClient = () => {
+        if (!localStorage.getItem("access_token")) {
+          openSignInPopup();
+        } else {
+          // Get events if access token is found without sign in popup
+          fetch(
+         `https://www.googleapis.com/calendar/v3/calendars/primary/events?key=${'AIzaSyBkZhQqk9M1urlVMolt8FkR_5kTllthkb4'}&orderBy=startTime&singleEvents=true`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+              },
+            }
+          )
+            .then((res) => {
+              // Check if unauthorized status code is return open sign in popup
+              if (res.status !== 401) {
+                return res.json();
+              } else {
+                localStorage.removeItem("access_token");
+    
+                openSignInPopup();
+              }
+            })
+            .then((data) => {
+              if (data?.items) {
+                //setEvents(formatEvents(data.items));
+              }
+            });
+        }
+      }
+
+    const handleClientLoad = () => {
+        window.gapi.load("client:auth2", initClient);
+    }
+
+    useEffect(() => {
+        const script = document.createElement("script");
+        script.async = true;
+        script.defer = true;
+        script.src = "https://apis.google.com/js/api.js"
+
+        document.body.appendChild(script);
+
+        script.addEventListener("load", () => {
+            if (window.gapi) handleClientLoad();
+        })
+    }, [])
+
     useEffect(() => {
         scroll(0, 0)
     }, [])

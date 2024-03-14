@@ -35,6 +35,7 @@ import ExpertVerificationPage from './pages/auth/expert-verification'
 import ServicesPage from './pages/services/services'
 import ExpertBookingPage from './pages/experts/expert-booking'
 import PrivacyPage from './pages/policies/privacy'
+import TestingPage from './pages/testing'
 
 
 function App() {
@@ -84,6 +85,7 @@ function App() {
 
           <Route element={<PagesLayout />}>
             <Route path="/payments/status" element={<PaymentStatusPage />} />
+            <Route path="/testing" element={<TestingPage />} />
           </Route>
 
           <Route element={<AuthorizedLayout />}>
