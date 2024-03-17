@@ -1,0 +1,32 @@
+.search-questions-container {
+    position: fixed;
+    min-height: 100%;
+    width: 100vw;
+    background: #091E428A;
+    z-index: 100;
+}
+
+.search-questions-close-container-text {
+    font-size: 1rem;
+}
+
+.search-questions-popular-container h4 {
+    font-size: 1.2rem;
+    color: #222B45;
+    font-weight: normal;
+    margin: 0 0 .5rem 0;
+    padding: 0;
+}
+
+.search-questions-results-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f2f2f2;
+    padding: .5rem;
+}
+
+.search-questions-results-row:hover {
+    cursor: pointer;
+    background-color: #F8F8F8;
+}

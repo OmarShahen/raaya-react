@@ -6,12 +6,15 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 import Loading from '../components/loading/loading'
 import EmptySection from '../components/sections/empty/empty'
 import ExpertsOnlineBanner from '../components/sections/banners/experts-online-banner'
+import { useParams } from 'react-router-dom'
 
 
 const DoctorsPage = () => {
 
     const pagePath = window.location.pathname
     const specialityId = pagePath.split('/')[2]
+
+    const { id } = useParams()
 
     const [isLoading, setIsLoading] = useState(true)
     const [isPaginationLoading, setIsPaginationLoading] = useState(false)
@@ -40,6 +43,10 @@ const DoctorsPage = () => {
     }, [])
 
     useEffect(() => {
+        setSpeciality(id)
+    }, [id])
+
+    useEffect(() => {
         setIsLoading(true)
 
         const query = { 
@@ -62,7 +69,7 @@ const DoctorsPage = () => {
             setIsLoading(false)
             console.error(error)
         })
-    }, [reload])
+    }, [reload, speciality])
 
     useEffect(() => {
 
@@ -74,7 +81,7 @@ const DoctorsPage = () => {
         .catch(error => {
             console.error(error)
         })
-    }, [])
+    }, [speciality])
 
     const loadPagination = (page) => {
 
@@ -186,7 +193,7 @@ const DoctorsPage = () => {
                     <div className="password-container">
                         <input 
                         type="search"
-                        className="form-input bold-text" 
+                        className="form-input" 
                         placeholder="Start Typing Expert's Name to Search..."
                         onChange={e => setSearchName(e.target.value)} 
                         />

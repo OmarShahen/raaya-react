@@ -5,7 +5,6 @@ import ScheduleOutlinedIcon from '@mui/icons-material/ScheduleOutlined'
 import DuoOutlinedIcon from '@mui/icons-material/DuoOutlined'
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
 import { setIsLogged } from '../../redux/slices/userSlice'
-import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined'
 import { useDispatch } from 'react-redux'
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'
 

@@ -51,7 +51,6 @@ const Filters = ({
     }, [speciality])
 
     return <div className="styled-container">
-        
         <div className="filters-header-container large-font bold-text">
             <span>Filters</span>
             {
