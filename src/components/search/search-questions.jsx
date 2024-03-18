@@ -24,8 +24,8 @@ const SearchQuestionsSection = ({ searchName, setSearchName, results=[], setIsSh
     }, [])
 
     return <div className="search-questions-container">
-        <div className="white-bg search-questions-wrapper">
-            <div className="page-body">
+        <div className="white-bg">
+            <div className="page-body search-questions-wrapper">
                 <div className="flex-end">
                     <span
                     onClick={() => setIsShow(false)}
@@ -33,23 +33,28 @@ const SearchQuestionsSection = ({ searchName, setSearchName, results=[], setIsSh
                         <CloseOutlinedIcon style={{ color: "grey", fontSize: "1.7rem", marginTop: ".5rem" }} />
                     </span>
                 </div>
-                <div className="search-questions-popular-container">
-                    <h4>
-                        Examples
-                    </h4>
-                    <div className="tags-container find-expert-tags-container">
-                        {questions.map(question => <NavLink 
-                        to={`/specialities/${question.specialityId}`} 
-                        onClick={() => {
-                            setIsShow(false)
-                            setSearchName(question.name)
-                        }} 
-                        key={question._id} 
-                        className="main-tag no-decoration margin-right-1 bold-text normal-font">
-                            {capitalizeFirstLetter(question.name)}
-                        </NavLink>)}
+                {
+                    questions.length !== 0 ?
+                    <div className="search-questions-popular-container">
+                        <h4>
+                            Examples
+                        </h4>
+                        <div className="tags-container find-expert-tags-container">
+                            {questions.map(question => <NavLink 
+                            to={`/specialities/${question.specialityId}`} 
+                            onClick={() => {
+                                setIsShow(false)
+                                setSearchName(question.name)
+                            }} 
+                            key={question._id} 
+                            className="main-tag no-decoration margin-right-1 bold-text normal-font">
+                                {capitalizeFirstLetter(question.name)}
+                            </NavLink>)}
+                        </div>
                     </div>
-                </div>
+                    :
+                    null
+                }
                 <div className="search-questions-popular-container margin-top-1">
                     <h4 className="no-space">
                         Results for "{searchName}"

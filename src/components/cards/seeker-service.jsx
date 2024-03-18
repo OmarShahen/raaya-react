@@ -7,16 +7,14 @@ import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined'
 import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined'
 
 
-const ServiceCard = ({ 
+const SeekerServiceCard = ({ 
     service, 
     isShowStatus=true, 
     isShowButton=true, 
-    isShowDelete, 
     buttonText="", 
     buttonAction,
-    deleteAction,
-    isUpdate,
-    updateAction
+    price,
+    currency
 }) => {
 
     return <CardTransition>
@@ -50,15 +48,6 @@ const ServiceCard = ({
             <h5 className="no-space large-font">
                 {service.title}
             </h5>
-            {
-                isUpdate ?
-                <span onClick={() => updateAction(service)} className="edite-icon-container hoverable">
-                    <CreateOutlinedIcon />
-                </span>
-                :
-                null
-            }
-            
         </div>
         <div className="margin-top-1">
             <p className="fadded-black-text no-space">
@@ -68,35 +57,15 @@ const ServiceCard = ({
         <div className="flex-space-between margin-top-1 services-info-container">
             <span className="bold-text main-color-text flex-center">
                 <PaidOutlinedIcon />
-                {service.price === 0 ? 'Free' : `${formatNumber(service.price)} EGP`}
+                {price === 0 ? 'Free' : `${formatNumber(price)} ${currency}`}
             </span>
-            {/*<span className="bold-text main-color-text flex-center">
-                <PublicOutlinedIcon />
-                { service.internationalPrice ? `${formatNumber(service.internationalPrice)} EGP` : `${formatNumber(service.price)} EGP` }
-            </span>*/}
             <span className="bold-text main-color-text flex-center">
                 <AccessAlarmOutlinedIcon />
                 {service.duration} minutes
             </span>
         </div>
         <div className="flex-space-between">
-        {
-            isShowDelete ? 
-            <div className="margin-top-1">
-                <button 
-                className="normal-button red-bg white-text"
-                onClick={() => deleteAction(service)}
-                >Delete</button>
-            </div>
-            :
-            null
-        }
-        {
-            isShowDelete ?
-            null
-            :
-            <div></div>
-        }
+        <div></div>
         {
             isShowButton ?
             <div className="margin-top-1 align-right">
@@ -114,4 +83,4 @@ const ServiceCard = ({
     </CardTransition>
 }
 
-export default ServiceCard
+export default SeekerServiceCard

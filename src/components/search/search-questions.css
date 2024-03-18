@@ -1,9 +1,15 @@
 .search-questions-container {
-    position: fixed;
-    min-height: 100%;
-    width: 100vw;
+    position: relative;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
     background: #091E428A;
     z-index: 100;
+}
+
+.search-questions-wrapper {
+    height: 100vh;
+    overflow-y: scroll;
 }
 
 .search-questions-close-container-text {

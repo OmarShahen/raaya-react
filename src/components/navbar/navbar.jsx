@@ -42,7 +42,7 @@ const Navbar = () => {
         })
     }
 
-    return <div>
+    return <div className="navbar-parent-container">
         <div className="navbar-container border-line">
             <div className="flex-start">
                 <h2 

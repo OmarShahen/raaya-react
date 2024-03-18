@@ -9,7 +9,11 @@
     background-color: #FFF;
     color: #000;
     margin: 0;
-    border-bottom: 1px solid #F2F2F2;
+    border-bottom: 1px solid #F2F2F2;    
+}
+
+.navbar-search-container {
+    position: absolute;
 }
 
 .navbar-links-container ul {
@@ -134,11 +138,15 @@
     position: relative;
 }
 
+.navbar-search-container input {
+    padding-left: 2.7rem;
+}
+
 .navbar-search-container svg {
     position: absolute;
-    top: 50%;
+    top: 45%;
     transform: translateY(-50%);
-    right: 10px;
+    left: 7px;
     width: 1.7rem; /* Adjust size of the icon */
     height: 1.7rem; /* Adjust size of the icon */
     fill: #666; /* Adjust icon color */

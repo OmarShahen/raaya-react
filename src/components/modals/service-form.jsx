@@ -17,11 +17,14 @@ const ServiceFormModal = ({ setShowFormModal, reload, setReload, isUpdate, setIs
     const [description, setDescription] = useState(isUpdate ? service.description : '')
     const [duration, setDuration] = useState(isUpdate ? service.duration : '')
     const [price, setPrice] = useState(isUpdate ? service.price : '')
+    const [internationalPrice, setInternationalPrice] = useState(isUpdate ? service.internationalPrice : '')
 
     const [titleError, setTitleError] = useState()
     const [descriptionError, setDescriptionError] = useState()
     const [durationError, setDurationError] = useState()
     const [priceError, setPriceError] = useState()
+    const [internationalPriceError, setInternationalPriceError] = useState()
+
     
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -32,6 +35,8 @@ const ServiceFormModal = ({ setShowFormModal, reload, setReload, isUpdate, setIs
 
         if(!price) return setPriceError('Price is required')
 
+        if(!internationalPrice) return setInternationalPriceError('Outside Egypt Price is required')
+
         if(!description) return setDescriptionError('Description is required')
 
         const serviceData = {
@@ -39,6 +44,7 @@ const ServiceFormModal = ({ setShowFormModal, reload, setReload, isUpdate, setIs
             title,
             duration: Number.parseInt(duration),
             price: Number.parseInt(price),
+            internationalPrice: Number.parseInt(internationalPrice),
             description
         }
 
@@ -85,12 +91,15 @@ const ServiceFormModal = ({ setShowFormModal, reload, setReload, isUpdate, setIs
 
         if(!price) return setPriceError('Price is required')
 
+        if(!internationalPrice) return setInternationalPriceError('Outside Egypt Price is required')
+
         if(!description) return setDescriptionError('Description is required')
 
         const serviceData = {
             title,
             duration: Number.parseInt(duration),
             price: Number.parseInt(price),
+            internationalPrice: Number.parseInt(internationalPrice),
             description
         }
 
@@ -205,6 +214,17 @@ const ServiceFormModal = ({ setShowFormModal, reload, setReload, isUpdate, setIs
                             onClick={() => setPriceError()}
                             />
                             <span className="red-text">{priceError}</span>
+                        </div>
+                        <div className="form-input-container">
+                            <label className="bold-text">Outside Egypt Price</label>
+                            <input 
+                            type="number" 
+                            className="form-input" 
+                            value={internationalPrice}
+                            onChange={e => setInternationalPrice(e.target.value)}
+                            onClick={() => setInternationalPriceError()}
+                            />
+                            <span className="red-text">{internationalPriceError}</span>
                         </div>
                     </form>
                 </div>
