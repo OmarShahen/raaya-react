@@ -820,6 +820,7 @@ const UserPage = () => {
                             </div>
                         </div>
                     </div>
+                    <div className="show-mobile margin-top-1"></div>
                     </div>
                     <div id="activity-account">
                     <div className="styled-container">
@@ -939,7 +940,7 @@ const UserPage = () => {
             }
         </div>
         }
-        
+        <br />
     </div>
 }
 
