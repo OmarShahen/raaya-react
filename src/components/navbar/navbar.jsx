@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './navbar.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, NavLink } from 'react-router-dom'
@@ -14,6 +14,7 @@ import { serverRequest } from '../API/request'
 import SearchIcon from '@mui/icons-material/Search'
 import MenuIcon from '@mui/icons-material/Menu'
 import MobileMenu from './mobile-menu'
+import { setSettings } from '../../redux/slices/settingsSlice'
 
 
 const Navbar = () => {
@@ -27,6 +28,16 @@ const Navbar = () => {
     const [results, setResults] = useState([])
     const [isShow, setIsShow] = useState(false)
     const [isShowMobileMenu, setIsShowMobileMenu] = useState(false)
+
+    useEffect(() => {
+        serverRequest.get('/v1/settings/users/seekers')
+        .then(response => {
+            dispatch(setSettings(response.data.settings))
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }, [])
 
     const searchQuestions = (value) => {
         if(!value) {

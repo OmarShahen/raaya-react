@@ -159,7 +159,7 @@ const AppointmentPage = () => {
                             }
                             <li>
                                 <strong>Price</strong>
-                                <span>{formatNumber(appointment.price ? appointment.price : 0)} EGP</span>
+                                <span>{formatNumber(appointment.price ? appointment.price/appointment.currencyPrice : 0)} {appointment.currency}</span>
                             </li>
                             <li>
                                 <strong>Payment</strong>

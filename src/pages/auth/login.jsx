@@ -19,8 +19,8 @@ const LoginPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [searchParams, setSearchParams] = useSearchParams()
-    const [isReturnBack, setIsReturnBack] = useState(searchParams.get('back') === 'true' ? true : false)
+    const [searchParams] = useSearchParams()
+    const [isReturnBack] = useState(searchParams.get('back') === 'true' ? true : false)
     
     const [isLoading, setIsLoading] = useState(false)
     const [isShowPassword, setIsShowPassword] = useState(false)

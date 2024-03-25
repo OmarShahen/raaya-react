@@ -24,6 +24,8 @@ import { capitalizeFirstLetter } from '../../utils/formatString'
 import EmptySection from '../../components/sections/empty-section'
 import { addMinutesToDate } from '../../utils/time'
 import { onAnalytics } from '../../../google-analytics/analytics'
+import SeekerServiceCard from '../../components/cards/seeker-service'
+import { formatServiceInternationalPrice } from '../../utils/formatValue'
 
 
 const ExpertBookingPage = () => {
@@ -36,6 +38,7 @@ const ExpertBookingPage = () => {
     const [searchParams] = useSearchParams()
 
     const user = useSelector(state => state.user.user)
+    const settings = useSelector(state => state.settings.settings)
 
     const [weekday, setWeekday] = useState(WEEK_DAYS[new Date().getDay()])
     const [duration, setDuration] = useState()
@@ -119,7 +122,9 @@ const ExpertBookingPage = () => {
         setBookingTime()
         setService(service)
         setDuration(service.duration)
-        setPrice(service.price)
+        setPrice(user.nationCode === 'EG' ? 
+        service.price : service.internationalPrice ? 
+        service.internationalPrice : service.price)
     }
     
     const bookAppointment = () => {
@@ -152,9 +157,10 @@ const ExpertBookingPage = () => {
             startTime,
             price: Number.parseFloat(price),
             duration: Number.parseInt(duration),
-            isOnlineBooking
+            isOnlineBooking,
+            currency: user.currency,
+            currencyPrice: user.nationCode ? user.nationCode === 'EG' ? 1 : settings.currencyPriceUSD : 1
         }
-
         setIsBookingLoading(true)
         serverRequest.post('/v1/appointments', appointmentData)
         .then(response => {
@@ -221,7 +227,7 @@ const ExpertBookingPage = () => {
                             <div className="tags-container">
                                 <span className="status-btn pending flex-center bold-text icon-tag">
                                     <PublicOutlinedIcon />
-                                    {expert.nationality ? expert.nationality : 'Egypt'}
+                                    {expert.nationality ? capitalizeFirstLetter(expert.nationality) : 'Egypt'}
                                 </span>
                                 {
                                     expert.gender === 'MALE' ?
@@ -275,10 +281,11 @@ const ExpertBookingPage = () => {
                                     <EmptySection text={'There is no service registered with the expert yet :('} />
                                 </div>
                                 :
-                                
                                 services.map(tempService => <div className="margin-bottom-1" key={tempService._id}>
-                                    <ServiceCard
+                                    <SeekerServiceCard
                                     service={tempService}
+                                    price={user.nationCode === 'EG' ? tempService.price : formatServiceInternationalPrice(tempService, settings.currencyPriceUSD)}
+                                    currency={user.nationCode === 'EG' ? 'EGP' : user.currency }
                                     buttonText={tempService._id === service?._id ? 'Selected!' : 'Select'}
                                     buttonAction={selectService}
                                     />

@@ -9,3 +9,10 @@ export const formatValue = (value) => {
         return false
     }
 }
+
+export const formatServiceInternationalPrice = (service, currencyPrice) => {
+
+    const price = service.internationalPrice ? service.internationalPrice : service.price
+
+    return price / currencyPrice
+}

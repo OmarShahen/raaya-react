@@ -70,10 +70,10 @@ const ServiceCard = ({
                 <PaidOutlinedIcon />
                 {service.price === 0 ? 'Free' : `${formatNumber(service.price)} EGP`}
             </span>
-            {/*<span className="bold-text main-color-text flex-center">
+            <span className="bold-text main-color-text flex-center">
                 <PublicOutlinedIcon />
                 { service.internationalPrice ? `${formatNumber(service.internationalPrice)} EGP` : `${formatNumber(service.price)} EGP` }
-            </span>*/}
+            </span>
             <span className="bold-text main-color-text flex-center">
                 <AccessAlarmOutlinedIcon />
                 {service.duration} minutes

@@ -155,7 +155,7 @@ const ExpertPage = () => {
                             <div className="tags-container">
                                 <span className="status-btn pending flex-center bold-text icon-tag">
                                     <PublicOutlinedIcon />
-                                    {expert.nationality ? expert.nationality : 'Egypt'}
+                                    {expert.nationality ? capitalizeFirstLetter(expert.nationality) : 'Egypt'}
                                 </span>
                                 {
                                     expert.gender === 'MALE' ?

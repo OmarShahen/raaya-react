@@ -27,12 +27,18 @@ export const userSlice = createSlice({
             state.user.lastName = action.payload.lastName
             state.user.gender = action.payload.gender
             state.user.dateOfBirth = action.payload.dateOfBirth
+        },
+        setUserInternationalDetails: (state, action) => {
+            state.user.nationality = action.payload.nationality
+            state.user.nationCode = action.payload.nationCode
+            state.user.currency = action.payload.currency
+            state.user.currencyName = action.payload.currencyName
         }
     }
 })
 
 const { actions, reducer } = userSlice
 
-export const { setUser, setIsLogged, setAccessToken, setUserSpeciality, setUserDetails } = actions
+export const { setUser, setIsLogged, setAccessToken, setUserSpeciality, setUserDetails, setUserInternationalDetails } = actions
 
 export default reducer

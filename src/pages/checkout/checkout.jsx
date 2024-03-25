@@ -25,10 +25,12 @@ const CheckoutPage = () => {
     const appointmentId = pagePath.split('/')[2]
 
     const user = useSelector(state => state.user.user)
+    const settings = useSelector(state => state.settings.settings)
 
     const [reload, setReload] = useState(1)
     
     const [appointment, setAppointment] = useState()
+    const [price, setPrice] = useState(0)
     const [isPayLoading, setIsPayLoading] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
@@ -56,6 +58,10 @@ const CheckoutPage = () => {
             if(appointment?.promoCode) {
                 setPromoCode(appointment.promoCode.code)
             }
+
+            console.log(appointment)
+
+            setPrice(appointment.price/appointment.currencyPrice)
         })
         .catch(error => {
             setIsLoading(false)
@@ -65,7 +71,7 @@ const CheckoutPage = () => {
     }, [reload])
 
     const getTotalPrice = (price) => {
-        return price + (price * 0.1)
+        return price + (price * settings.paymentCommission)
     }
 
     const handleSubmit = async (e) => {
@@ -200,58 +206,63 @@ const CheckoutPage = () => {
                             </li>
                             <li>
                                 <span>Subtotal</span>
-                                <span>{formatNumber(appointment?.price)} EGP</span>
+                                <span>{formatNumber(price)} {appointment.currency}</span>
                             </li>
                             {
                                 appointment.promoCodeId ? 
                                 <li>
                                     <span>Discount ({appointment.discountPercentage * 100}%)</span>
-                                    <span>{formatNumber(appointment.originalPrice - appointment.price)} EGP</span>
+                                    <span>{formatNumber(appointment.originalPrice - price)} {appointment.currency}</span>
                                 </li> 
                                 : 
                                 null
                             } 
                             <li>
                                 <span>Service Fees</span>
-                                <span>{formatNumber(appointment?.price * 0.1)} EGP</span>
+                                <span>{formatNumber(price * settings.paymentCommission)} {appointment.currency}</span>
                             </li>
                             <li>
                                 <span className="bold-text">Total</span>
-                                <span className="bold-text">{formatNumber(getTotalPrice(appointment.price))} EGP</span>
+                                <span className="bold-text">{formatNumber(getTotalPrice(price))} {appointment.currency}</span>
                             </li>
                         </ul>
                     </div>
                     
                     <hr />   
-                    <div className="coupon-container ">
-                        <div className="form-input-container">
-                            <label className="bold-text">Coupon</label>
-                            <input 
-                            type="text"
-                            className="form-input bold-text"
-                            placeholder="Enter coupon here..."
-                            value={promoCode}
-                            onChange={e => setPromoCode(e.target.value)}
-                            onClick={() => setPromoCodeError()}
-                            />
-                            <span className="red-text">{promoCodeError}</span>
-                        </div>
-                        <div className="align-right">
-                            {
-                                isCouponLoading ?
-                                <div className="flex-space-between">
-                                    <div></div>
-                                    <Loading />
-                                </div>
-                                :
-                                <button 
-                                onClick={appointment?.promoCodeId ? removePromoCode : handlePromoCodeSubmit} 
-                                className="normal-button main-color-bg white-text bold-text">
-                                    { appointment?.promoCodeId ? 'Remove Coupon' : 'Apply Coupon' }
-                                </button>
-                            }
-                        </div> 
-                    </div>    
+                    {
+                        appointment.currency === 'EGP' ?
+                        <div className="coupon-container ">
+                            <div className="form-input-container">
+                                <label className="bold-text">Coupon</label>
+                                <input 
+                                type="text"
+                                className="form-input bold-text"
+                                placeholder="Enter coupon here..."
+                                value={promoCode}
+                                onChange={e => setPromoCode(e.target.value)}
+                                onClick={() => setPromoCodeError()}
+                                />
+                                <span className="red-text">{promoCodeError}</span>
+                            </div>
+                            <div className="align-right">
+                                {
+                                    isCouponLoading ?
+                                    <div className="flex-space-between">
+                                        <div></div>
+                                        <Loading />
+                                    </div>
+                                    :
+                                    <button 
+                                    onClick={appointment?.promoCodeId ? removePromoCode : handlePromoCodeSubmit} 
+                                    className="normal-button main-color-bg white-text bold-text">
+                                        { appointment?.promoCodeId ? 'Remove Coupon' : 'Apply Coupon' }
+                                    </button>
+                                }
+                            </div> 
+                        </div>    
+                        :
+                        null
+                    }
                 </div>
             </div>
             <div>
@@ -323,13 +334,12 @@ const CheckoutPage = () => {
                             <Loading />
                             :
                             <button onClick={handleSubmit} className="bold-text normal-button main-color-bg white-text full-width">
-                                Continue {formatNumber(getTotalPrice(appointment.price))} EGP
+                                Continue {formatNumber(getTotalPrice(price))} {appointment.currency}
                             </button>
                         }
                     </div>
                 </div>
             </div>
-            
         </div>
         }
     <br />

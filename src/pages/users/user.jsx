@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './user.css'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { serverRequest } from '../../components/API/request'
 import { format } from 'date-fns'
 import { toast } from 'react-hot-toast'
@@ -14,10 +14,13 @@ import { NavLink } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import Switch from "react-switch"
+import axios from 'axios'
+import { setUserInternationalDetails } from '../../redux/slices/userSlice'
 
 
 const UserPage = () => {
 
+    const dispatch = useDispatch()
     const user = useSelector(state => state.user.user)
 
     const [reload, setReload] = useState(1)
@@ -34,6 +37,12 @@ const UserPage = () => {
     const [phone, setPhone] = useState()
     const [dateOfBirth, setDateOfBirth] = useState()
     const [gender, setGender] = useState()
+    const [countries, setCountries] = useState([])
+    const [contriesNames, setCountriesNames] = useState([])
+    const [nationality, setNationality] = useState()
+    const [nationCode, setNationCode] = useState()
+    const [currencyName, setCurrencyName] = useState('POUND')
+    const [currency, setCurrency] = useState('EGP')
 
     const [title, setTitle] = useState()
     const [description, setDescription] = useState()
@@ -66,7 +75,7 @@ const UserPage = () => {
     const [subspecialityError, setSubspecialityError] = useState()
     const [imageURL, setImageURL] = useState()
     const [progresspercent, setProgresspercent] = useState(0)
-    const [promoCodesError, setPromoCodesError] = useState()
+    const [promoCodesError] = useState()
 
     const [isImageUploading, setIsImageUploading] = useState(false)
 
@@ -75,6 +84,7 @@ const UserPage = () => {
     const [phoneError, setPhoneError] = useState()
     const [dateOfBirthError, setDateOfBirthError] = useState()
     const [genderError, setGenderError] = useState()
+    const [countriesError, setCountriesError] = useState()
 
     const [missingFields, setMissingFields] = useState([])
 
@@ -126,13 +136,20 @@ const UserPage = () => {
             user.dateOfBirth ? setDateOfBirth(format(new Date(user.dateOfBirth), 'yyyy-MM-dd')) : null
             setTitle(user.title)
             setDescription(user.description)
-            setSpeciality(user?.speciality[0]._id)
+            if(user?.speciality.length !== 0) {
+                setSpeciality(user?.speciality[0]._id)
+            }
             setUserSubspeciality(user?.subSpeciality)
             setImageURL(user?.profileImageURL)
             setIsAcceptPromoCodes(user?.isAcceptPromoCodes)
             setIsOnline(user.isOnline)
             setIsDeactivated(user.isDeactivated)
             setIsShow(user.isShow)
+
+            setNationality(user.nationality)
+            setNationCode(user.nationCode)
+            setCurrency(user.currency)
+            setCurrencyName(user.currencyName)
 
             if(user.languages) {
                 setLanguages(user?.languages)
@@ -194,6 +211,20 @@ const UserPage = () => {
         })
     }, [reload])
 
+    useEffect(() => {
+        axios.get('https://restcountries.com/v3.1/all')
+        .then(response => {
+            let countries = response.data.map(country => country.name.common)
+            countries = countries.filter(country => country !== 'Israel')
+            countries.sort()
+            setCountries(response.data)
+            setCountriesNames(countries)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }, [])
+
     const stripHTMLTags = (htmlString) => {
         return htmlString.replace(/<[^>]*>/g, '')
     }
@@ -209,11 +240,17 @@ const UserPage = () => {
 
         if(!gender) return setGenderError('Gender is required')
 
+        if(!nationality) return setCountriesError('Country is required')
+
         const updateData = {
             firstName: name,
             phone: Number.parseInt(phone),
             dateOfBirth,
             gender,
+            nationality,
+            nationCode,
+            currency,
+            currencyName
         }
 
         setIsLoading(true)
@@ -221,6 +258,14 @@ const UserPage = () => {
         .then(response => {
             setIsLoading(false)
             setReload(reload + 1)
+            const userData = response.data.user
+            const userInternationalData = {
+                nationality: userData.nationality,
+                nationCode: userData.nationCode,
+                currency: userData.currency,
+                currencyName: userData.currencyName
+            }
+            dispatch(setUserInternationalDetails(userInternationalData))
             toast.success(response.data.message, { duration: 3000, position: 'top-right' })
         })
         .catch(error => {
@@ -616,21 +661,36 @@ const UserPage = () => {
                         </select>
                         <span className="red-text">{genderError}</span>
                     </div>
-                    {
-                        user.type === 'EXPERT' ?
-                        <div className="form-input-container">
-                            <label className="bold-text">Nationality</label>
-                            <input 
-                            type="text"
-                            disabled 
-                            className="form-input" 
-                            value={'Egypt'}
-                            />
-                        </div>
-                        :
-                        null
-                    }
-                    
+                    <div className="form-input-container">
+                        <label className="bold-text">Country</label>
+                        <select
+                        className="form-select"
+                        onClick={() => setCountriesError()}
+                        onChange={e => {
+                            const countryName = e.target.value
+                            const targetCountryList = countries.filter(country => country.name.common === countryName)
+                            const targetCountry = targetCountryList[0]
+
+                            const nationality = targetCountry.name.common.toUpperCase()
+                            const nationCode = targetCountry.cca2
+
+                            setNationality(nationality)
+                            setNationCode(nationCode)
+                            setCurrency(nationCode === 'EG' ? 'EGP' : 'USD')
+                            setCurrencyName(nationCode === 'EG' ? 'POUND' : 'DOLLAR')
+
+                        }}
+                        >
+                            <option disabled selected>Select Country</option>
+                            {contriesNames.map((countryName, index) => {
+                                if(countryName.toUpperCase() === nationality?.toUpperCase()) {
+                                    return <option selected key={index} value={countryName}>{countryName}</option>
+                                }
+                                return <option key={index} value={countryName}>{countryName}</option>
+                            })}
+                        </select>
+                        <span className="red">{countriesError}</span>
+                    </div>
                     </div>
                     <div className="flex-end margin-top-1">
                         {

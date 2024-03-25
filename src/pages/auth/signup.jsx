@@ -43,6 +43,10 @@ const SignupPage = () => {
     const [password, setPassword] = useState()
     const [verificationCode, setVerificationCode] = useState()
     const [profileImageURL, setProfileImageURL] = useState()
+    const [nationality, setNationality] = useState('EGYPT')
+    const [nationCode, setNationCode] = useState('EG')
+    const [currency, setCurrency] = useState('EGP')
+    const [currencyName, setCurrencyName] = useState('POUND')
 
     const [emailError, setEmailError] = useState()
     const [phoneError, setPhoneError] = useState()
@@ -62,6 +66,19 @@ const SignupPage = () => {
         document.title = 'Sign up'
         localStorage.setItem('user', null)
         dispatch(setIsLogged(false))
+    }, [])
+
+    useEffect(() => {
+        axios.get('https://ipapi.co/json')
+        .then(response => {
+            setCurrencyName(response.data.currency_name.toUpperCase())
+            setCurrency(response.data.currency)
+            setNationCode(response.data.country)
+            setNationality(response.data.country_name.toUpperCase())
+        })
+        .catch(error => {
+            console.error(error)
+        })
     }, [])
 
     const handleSubmit = (e) => {
@@ -92,7 +109,11 @@ const SignupPage = () => {
             dateOfBirth,
             countryCode: 20,
             timeZone: getTimeZone(),
-            type: 'SEEKER'
+            type: 'SEEKER',
+            nationality,
+            nationCode,
+            currency,
+            currencyName
         }
 
         setIsLoading(true)
@@ -200,7 +221,11 @@ const SignupPage = () => {
             dateOfBirth,
             countryCode: 20,
             timeZone: getTimeZone(),
-            profileImageURL
+            profileImageURL,
+            nationality,
+            nationCode,
+            currency,
+            currencyName
         }
 
         setIsLoading(true)
@@ -299,6 +324,7 @@ const SignupPage = () => {
             setVerifiedEmail(email)
             setEmail(email)
             setProfileImageURL(picture)
+            setIsShowVerificationCode(false)
             
         })
         .catch(error => {
