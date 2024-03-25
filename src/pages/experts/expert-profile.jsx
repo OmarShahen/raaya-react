@@ -142,15 +142,13 @@ const ExpertPage = () => {
                             </div>
                         </div>    
                         <div>
-                            
                             <div className="tags-container">
                                 {
                                     expert?.languages?.map(language => <span key={language.code} className="status-btn pending flex-center bold-text icon-tag">
                                         <TranslateOutlinedIcon />
                                         {language.name}
                                     </span>)
-                                }
-                                
+                                }       
                             </div>
                             <div className="tags-container">
                                 <span className="status-btn pending flex-center bold-text icon-tag">

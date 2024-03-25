@@ -285,7 +285,7 @@ const ExpertBookingPage = () => {
                                     <SeekerServiceCard
                                     service={tempService}
                                     price={user.nationCode === 'EG' ? tempService.price : formatServiceInternationalPrice(tempService, settings.currencyPriceUSD)}
-                                    currency={user.nationCode === 'EG' ? 'EGP' : user.currency }
+                                    currency={user.nationCode === 'EG' ? 'EGP' : 'USD' }
                                     buttonText={tempService._id === service?._id ? 'Selected!' : 'Select'}
                                     buttonAction={selectService}
                                     />
