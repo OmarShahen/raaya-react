@@ -574,16 +574,18 @@ const UserPage = () => {
                     <div className="profile-form-container">
                     <div className="form-input-container">
                         <label className="bold-text">Profile Image</label>
-                        <div className="flex-space-between">
-                            <CardImage name={user.firstName} imageURL={imageURL} borderRadius={50} width={'4rem'} height={'4rem'} />
-                            <input 
-                            type="file"
-                            accept="image/*"
-                            id="profile-image-input"
-                            onChange={handleImageUpload}
-                            />
+                            <div className="flex-space-between">
+                                <CardImage name={user.firstName} imageURL={imageURL} borderRadius={50} width={'4rem'} height={'4rem'} />
+                                <input 
+                                type="file"
+                                accept="image/*"
+                                id="profile-image-input"
+                                onChange={handleImageUpload}
+                                />
                             <div>
-                            <label for="profile-image-input" className="normal-button main-color-bg white-text flex-space-between-center">
+                            <label 
+                            for="profile-image-input" 
+                            className="normal-button main-color-bg white-text flex-space-between-center">
                                 <FileUploadOutlinedIcon />
                                 Upload Image
                             </label>
