@@ -186,7 +186,8 @@ const ServiceFormModal = ({ setShowFormModal, reload, setReload, isUpdate, setIs
                             <label className="bold-text">Title</label>
                             <input 
                             type="text" 
-                            className="form-input" 
+                            className="form-input"
+                            placeholder="e.g.  consultation, followup, etc." 
                             value={title}
                             onChange={e => setTitle(e.target.value)}
                             onClick={() => setTitleError()}
@@ -194,10 +195,11 @@ const ServiceFormModal = ({ setShowFormModal, reload, setReload, isUpdate, setIs
                             <span className="red-text">{titleError}</span>
                         </div>
                         <div className="form-input-container">
-                            <label className="bold-text">Duration</label>
+                            <label className="bold-text">Duration (minutes)</label>
                             <input 
                             type="number" 
-                            className="form-input" 
+                            className="form-input"
+                            placeholder="e.g.  60" 
                             value={duration}
                             onChange={e => setDuration(e.target.value)}
                             onClick={() => setDurationError()}
@@ -205,10 +207,11 @@ const ServiceFormModal = ({ setShowFormModal, reload, setReload, isUpdate, setIs
                             <span className="red-text">{durationError}</span>
                         </div>
                         <div className="form-input-container">
-                            <label className="bold-text">Price</label>
+                            <label className="bold-text">Price (EGP)</label>
                             <input 
                             type="number" 
-                            className="form-input" 
+                            className="form-input"
+                            placeholder="e.g.  400" 
                             value={price}
                             onChange={e => setPrice(e.target.value)}
                             onClick={() => setPriceError()}
@@ -216,11 +219,12 @@ const ServiceFormModal = ({ setShowFormModal, reload, setReload, isUpdate, setIs
                             <span className="red-text">{priceError}</span>
                         </div>
                         <div className="form-input-container">
-                            <label className="bold-text">Outside Egypt Price</label>
+                            <label className="bold-text">Outside Egypt Price (EGP)</label>
                             <input 
                             type="number" 
                             className="form-input" 
                             value={internationalPrice}
+                            placeholder="e.g.  800" 
                             onChange={e => setInternationalPrice(e.target.value)}
                             onClick={() => setInternationalPriceError()}
                             />
@@ -233,6 +237,7 @@ const ServiceFormModal = ({ setShowFormModal, reload, setReload, isUpdate, setIs
                     <textarea
                     className="form-textarea"
                     rows="5"
+                    placeholder="What benefits will attendees gain by choosing this service?" 
                     value={description}
                     onChange={e => setDescription(e.target.value)}
                     onClick={() => setDescriptionError()}
