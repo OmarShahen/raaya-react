@@ -34,6 +34,7 @@ const SearchQuestionsSection = ({ searchName, setSearchName, results=[], setIsSh
                     </span>
                 </div>
                 {
+                    !searchName ?
                     questions.length !== 0 ?
                     <div className="search-questions-popular-container">
                         <h4>
@@ -52,6 +53,8 @@ const SearchQuestionsSection = ({ searchName, setSearchName, results=[], setIsSh
                             </NavLink>)}
                         </div>
                     </div>
+                    :
+                    null
                     :
                     null
                 }

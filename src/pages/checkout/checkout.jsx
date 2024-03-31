@@ -59,8 +59,6 @@ const CheckoutPage = () => {
                 setPromoCode(appointment.promoCode.code)
             }
 
-            console.log(appointment)
-
             setPrice(appointment.price/appointment.currencyPrice)
         })
         .catch(error => {

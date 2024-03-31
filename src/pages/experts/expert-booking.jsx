@@ -17,7 +17,7 @@ import ServiceCard from '../../components/cards/service'
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined'
 import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined'
 import EventAvailableOutlinedIcon from '@mui/icons-material/EventAvailableOutlined'
-import { formatDistance  } from 'date-fns'
+import { format, formatDistance  } from 'date-fns'
 import MaleIcon from '@mui/icons-material/Male'
 import FemaleIcon from '@mui/icons-material/Female'
 import { capitalizeFirstLetter } from '../../utils/formatString'
@@ -160,14 +160,21 @@ const ExpertBookingPage = () => {
             isOnlineBooking,
             currency: user.currency,
             currencyPrice: user.nationCode ? user.nationCode === 'EG' ? 1 : settings.currencyPriceUSD : 1
-        }
+        }        
+
         setIsBookingLoading(true)
         serverRequest.post('/v1/appointments', appointmentData)
         .then(response => {
             setIsBookingLoading(false)
             const appointment = response.data.appointment
+            const startDate = format(new Date(appointment.startTime), 'MMMM d yyyy')
+            const startTime = format(new Date(appointment.startTime), 'hh:mm a')
+            const price = (appointment.price + (appointment.price * settings.paymentCommission)) * appointment.currencyPrice
             onAnalytics('appointment_created', { event_category: 'Appointment', event_label: 'Appointment Created' })
-            navigate(appointment.isPaid ? `/appointments/${response.data.appointment._id}` : `/appointments/${response.data.appointment._id}/checkout`)
+            const message = `Appointment Confirmation\n\nHi ${user.firstName},\n\nThank you for scheduling your appointment with RA'AYA. Your booking has been registered!\n\nAppointment Details:\n\nID: #${appointment.appointmentId}\nDate: ${startDate}\nTime: ${startTime}\n\nTo confirm your appointment, please proceed with the payment of *${price} ${appointment.currency}* using the following payments methods:\n\n-Instapay (01006615471)\n-Vodafone Cash (01065630331)\n\nOnce payment is completed, please send us a screenshot of the payment confirmation.\n\nIf you have any questions or need assistance with payment, feel free to contact us using the provided contact information.\n\nPlease keep this receipt for your records. We look forward to meeting you!`
+            const encodedMessage = encodeURIComponent(message)
+            window.location.href = `https://wa.me/201065630331?text=${encodedMessage}`
+            //navigate(appointment.isPaid ? `/appointments/${response.data.appointment._id}` : `/appointments/${response.data.appointment._id}/checkout`)
         })
         .catch(error => {
             setIsBookingLoading(false)

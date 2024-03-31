@@ -45,6 +45,7 @@ const UserPage = () => {
     const [currency, setCurrency] = useState('EGP')
 
     const [title, setTitle] = useState()
+    const [meetingLink, setMeetingLink] = useState()
     const [description, setDescription] = useState()
     const [speciality, setSpeciality] = useState()
     const [specialties, setSpecialties] = useState([])
@@ -70,12 +71,13 @@ const UserPage = () => {
     const [walletNumberError, setWalletNumberError] = useState()
 
     const [titleError, setTitleError] = useState()
+    const [meetingLinkError, setMeetingLinkError] = useState()
     const [descriptionError, setDescriptionError] = useState()
     const [specialityError, setSpecialityError] = useState([])
     const [subspecialityError, setSubspecialityError] = useState()
     const [imageURL, setImageURL] = useState()
     const [progresspercent, setProgresspercent] = useState(0)
-    const [promoCodesError] = useState()
+    const [promoCodesError, setPromoCodesError] = useState()
 
     const [isImageUploading, setIsImageUploading] = useState(false)
 
@@ -89,7 +91,7 @@ const UserPage = () => {
     const [missingFields, setMissingFields] = useState([])
 
     useEffect(() => {
-        //scroll(0, 0)
+        scroll(0, 0)
         document.title = 'User Profile'
     }, [])
 
@@ -135,6 +137,7 @@ const UserPage = () => {
             setGender(user.gender)
             user.dateOfBirth ? setDateOfBirth(format(new Date(user.dateOfBirth), 'yyyy-MM-dd')) : null
             setTitle(user.title)
+            setMeetingLink(user.meetingLink)
             setDescription(user.description)
             if(user?.speciality.length !== 0) {
                 setSpeciality(user?.speciality[0]._id)
@@ -271,7 +274,21 @@ const UserPage = () => {
         .catch(error => {
             setIsLoading(false)
             console.error(error)
-            toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+            try {
+                const errorResponse = error.response.data
+
+                if(errorResponse.field === 'firstName') return setNameError(errorResponse.message)
+
+                if(errorResponse.field === 'phone') return setPhoneError(errorResponse.message)
+
+                if(errorResponse.field === 'dateOfBirth') return setDateOfBirthError(errorResponse.message)
+
+                if(errorResponse.field === 'gender') return setGenderError(errorResponse.message)
+
+                if(errorResponse.field === 'nationality') return setCountriesError(errorResponse.message)
+
+                toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+            } catch(error) {}
         })
     }
 
@@ -287,13 +304,16 @@ const UserPage = () => {
 
         if(languages.length === 0) return setLanguagesError('Languages is required')
 
+        if(!meetingLink) return setMeetingLinkError('Meeting link is required')
+
         const updateData = {
             title,
             description,
             speciality: [speciality],
             subSpeciality: userSubspeciality.map(special => special._id),
             languages,
-            isAcceptPromoCodes
+            isAcceptPromoCodes,
+            meetingLink
         }
 
         setIsLoading(true)
@@ -306,7 +326,25 @@ const UserPage = () => {
         .catch(error => {
             setIsLoading(false)
             console.error(error)
-            toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+            try {
+                const errorResponse = error.response.data
+
+                if(errorResponse.field === 'title') return setTitleError(errorResponse.message)
+
+                if(errorResponse.field === 'speciality') return setSpecialityError(errorResponse.message)
+
+                if(errorResponse.field === 'subSpeciality') return setSubspecialityError(errorResponse.message)
+
+                if(errorResponse.field === 'languages') return setLanguagesError(errorResponse.message)
+
+                if(errorResponse.field === 'isAcceptPromoCodes') return setPromoCodesError(errorResponse.message)
+
+                if(errorResponse.field === 'meetingLink') return setMeetingLinkError(errorResponse.message)
+
+                if(errorResponse.field === 'description') return setDescriptionError(errorResponse.message)
+
+                toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+            } catch(error) {}
         })
     }
 
@@ -373,7 +411,17 @@ const UserPage = () => {
         .catch(error => {
             setIsBankInfoLoading(false)
             console.error(error)
-            toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+            try {
+                const errorResponse = error.response.data
+
+                if(errorResponse.field === 'bankName') return setBankNameError(errorResponse.message)
+
+                if(errorResponse.field === 'accountHolderName') return setAccountHolderNameError(errorResponse.message)
+
+                if(errorResponse.field === 'accountNumber') return setAccountNumberError(errorResponse.message)
+
+                toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+            } catch(error) {}
         })
 
     }
@@ -839,6 +887,18 @@ const UserPage = () => {
                             <div>
                                 <span className="red-text">{promoCodesError}</span>
                             </div>
+                        </div>
+                        <div className="form-input-container">
+                            <label className="bold-text">Meeting Link</label>
+                            <input 
+                            type="url"
+                            className="form-input"
+                            onClick={() => setMeetingLinkError()}
+                            onChange={e => setMeetingLink(e.target.value)}
+                            value={meetingLink}
+                            placeholder="Put Google Meet link or Zoom link for your sessions"
+                            />
+                            <span className="red-text">{meetingLinkError}</span>
                         </div>
                         <div className="margin-top-1 form-input-container" onClick={() => setDescriptionError()}>
                             <label className="bold-text">Description</label>
