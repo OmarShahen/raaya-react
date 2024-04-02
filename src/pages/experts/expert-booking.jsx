@@ -167,14 +167,8 @@ const ExpertBookingPage = () => {
         .then(response => {
             setIsBookingLoading(false)
             const appointment = response.data.appointment
-            const startDate = format(new Date(appointment.startTime), 'MMMM d yyyy')
-            const startTime = format(new Date(appointment.startTime), 'hh:mm a')
-            const price = (appointment.price + (appointment.price * settings.paymentCommission)) * appointment.currencyPrice
             onAnalytics('appointment_created', { event_category: 'Appointment', event_label: 'Appointment Created' })
-            const message = `Appointment Confirmation\n\nHi ${user.firstName},\n\nThank you for scheduling your appointment with RA'AYA. Your booking has been registered!\n\nAppointment Details:\n\nID: #${appointment.appointmentId}\nDate: ${startDate}\nTime: ${startTime}\n\nTo confirm your appointment, please proceed with the payment of *${price} ${appointment.currency}* using the following payments methods:\n\n-Instapay (01006615471)\n-Vodafone Cash (01065630331)\n\nOnce payment is completed, please send us a screenshot of the payment confirmation.\n\nIf you have any questions or need assistance with payment, feel free to contact us using the provided contact information.\n\nPlease keep this receipt for your records. We look forward to meeting you!`
-            const encodedMessage = encodeURIComponent(message)
-            window.location.href = `https://wa.me/201555415331?text=${encodedMessage}`
-            //navigate(appointment.isPaid ? `/appointments/${response.data.appointment._id}` : `/appointments/${response.data.appointment._id}/checkout`)
+            navigate(appointment.isPaid ? `/appointments/${response.data.appointment._id}` : `/appointments/${response.data.appointment._id}/checkout`)
         })
         .catch(error => {
             setIsBookingLoading(false)

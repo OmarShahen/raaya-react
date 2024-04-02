@@ -17,6 +17,7 @@ import { formatNumber } from '../../utils/numbers'
 import { useSelector } from 'react-redux'
 import Loading from '../../components/loading/loading'
 import { onAnalytics } from '../../../google-analytics/analytics'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 
 
 const CheckoutPage = () => {
@@ -36,7 +37,7 @@ const CheckoutPage = () => {
 
     const [walletNumber, setWalletNumber] = useState()
     const [walletNumberError, setWalletNumberError] = useState()
-    const [paymentMethod, setPaymentMethod] = useState('LOCAL_CARD')
+    const [paymentMethod, setPaymentMethod] = useState('WHATSAPP')
 
     const [promoCode, setPromoCode] = useState()
     const [promoCodeError, setPromoCodeError] = useState()
@@ -72,10 +73,26 @@ const CheckoutPage = () => {
         return price + (price * settings.paymentCommission)
     }
 
+    const whatsappPayment = () => {
+        setIsPayLoading(true)
+        const startDate = format(new Date(appointment.startTime), 'MMMM d yyyy')
+        const startTime = format(new Date(appointment.startTime), 'hh:mm a')
+        const price = (appointment.price + (appointment.price * settings.paymentCommission)) * appointment.currencyPrice
+        onAnalytics('appointment_checkout', { event_category: 'Appointment', event_label: 'Appointment Checkout' })
+        const message = `Appointment Confirmation\n\nHi ${appointment.seeker.firstName},\n\nThank you for scheduling your appointment with RA'AYA. Your booking has been registered!\n\nAppointment Details:\n\nID: #${appointment.appointmentId}\nDate: ${startDate}\nTime: ${startTime}\n\nTo confirm your appointment, please proceed with the payment of *${price} ${appointment.currency}* using the following payments methods:\n\n-Instapay (01006615471)\n-Vodafone Cash (01065630331)\n\nOnce payment is completed, please send us a screenshot of the payment confirmation.\n\nIf you have any questions or need assistance with payment, feel free to contact us using the provided contact information.\n\nPlease keep this receipt for your records. We look forward to meeting you!`
+        const encodedMessage = encodeURIComponent(message)
+        window.location.href = `https://wa.me/201555415331?text=${encodedMessage}`
+        setIsPayLoading(false)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
+
+            if(paymentMethod === 'WHATSAPP') {
+                return whatsappPayment()
+            }
 
             if(paymentMethod === 'MOBILE_WALLET' && !walletNumber) return setWalletNumberError('Phone number is required') 
             
@@ -268,7 +285,7 @@ const CheckoutPage = () => {
                     <h3 className="no-space">Payment Method</h3>
                     <div className="payment-method-container margin-top-1">
                         <ul>
-                            <li className="margin-bottom-1 hoverable" onClick={() => setPaymentMethod('LOCAL_CARD')}>
+                            {/*<li className="margin-bottom-1 hoverable" onClick={() => setPaymentMethod('LOCAL_CARD')}>
                                 <div>
                                     <span>
                                         {
@@ -304,8 +321,23 @@ const CheckoutPage = () => {
                                     <img src={orangeIcon} />
                                     <img src={vodafoneIcon} />
                                 </div>
+                            </li>*/}
+                            <li className="hoverable" onClick={() => setPaymentMethod('WHATSAPP')}>
+                                <div>
+                                    <span>
+                                        {
+                                            paymentMethod === 'WHATSAPP' ?
+                                            <RadioButtonCheckedOutlinedIcon />
+                                            :
+                                            <RadioButtonUncheckedIcon style={{ color: 'grey' }} />
+                                        }
+                                    </span>
+                                    <span className="normal-font bold-text">What'sapp</span>
+                                </div>
+                                <div>
+                                    <WhatsAppIcon style={{ color: 'green' }} />
+                                </div>
                             </li>
-                            
                         </ul>
                     </div>
                     {
