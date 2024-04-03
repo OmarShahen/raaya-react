@@ -45,6 +45,7 @@ const UserPage = () => {
     const [currency, setCurrency] = useState('EGP')
 
     const [title, setTitle] = useState()
+    const [sessionPrice, setSessionPrice] = useState()
     const [meetingLink, setMeetingLink] = useState()
     const [description, setDescription] = useState()
     const [speciality, setSpeciality] = useState()
@@ -71,6 +72,7 @@ const UserPage = () => {
     const [walletNumberError, setWalletNumberError] = useState()
 
     const [titleError, setTitleError] = useState()
+    const [sessionPriceError, setSessionPriceError] = useState()
     const [meetingLinkError, setMeetingLinkError] = useState()
     const [descriptionError, setDescriptionError] = useState()
     const [specialityError, setSpecialityError] = useState([])
@@ -91,7 +93,7 @@ const UserPage = () => {
     const [missingFields, setMissingFields] = useState([])
 
     useEffect(() => {
-        scroll(0, 0)
+        //scroll(0, 0)
         document.title = 'User Profile'
     }, [])
 
@@ -137,6 +139,7 @@ const UserPage = () => {
             setGender(user.gender)
             user.dateOfBirth ? setDateOfBirth(format(new Date(user.dateOfBirth), 'yyyy-MM-dd')) : null
             setTitle(user.title)
+            setSessionPrice(user.sessionPrice)
             setMeetingLink(user.meetingLink)
             setDescription(user.description)
             if(user?.speciality.length !== 0) {
@@ -306,6 +309,8 @@ const UserPage = () => {
 
         if(!meetingLink) return setMeetingLinkError('Meeting link is required')
 
+        if(!sessionPrice) return setSessionPriceError('Session price is required')
+
         const updateData = {
             title,
             description,
@@ -313,7 +318,8 @@ const UserPage = () => {
             subSpeciality: userSubspeciality.map(special => special._id),
             languages,
             isAcceptPromoCodes,
-            meetingLink
+            meetingLink,
+            sessionPrice: Number.parseInt(sessionPrice)
         }
 
         setIsLoading(true)
@@ -748,7 +754,7 @@ const UserPage = () => {
                             <Loading />
                             :
                             <button 
-                            className="normal-button main-color-bg white-text"
+                            className="normal-button main-color-bg white-text bold-text"
                             onClick={() => handleUpdateUserMainData()}
                             >
                                 Update
@@ -880,13 +886,25 @@ const UserPage = () => {
                             null
                         }
                         </div>
-                        </div>
                         <div className="form-input-container">
                             <label className="bold-text">Accept Coupons</label>
                             <Switch onChange={() => setIsAcceptPromoCodes(!isAcceptPromoCodes)} checked={isAcceptPromoCodes} />
                             <div>
                                 <span className="red-text">{promoCodesError}</span>
                             </div>
+                        </div>
+                        <div className="form-input-container">
+                            <label className="bold-text">Session Price</label>
+                            <input 
+                            type="number"
+                            className="form-input"
+                            value={sessionPrice}
+                            onClick={() => setSessionPriceError()}
+                            onChange={e => setSessionPrice(e.target.value)}
+                            placeholder="Session price"
+                            />
+                            <span className="red-text">{sessionPriceError}</span>
+                        </div>
                         </div>
                         <div className="form-input-container">
                             <label className="bold-text">Meeting Link</label>
@@ -915,7 +933,7 @@ const UserPage = () => {
                                 <Loading />
                                 :
                                 <button 
-                                className="normal-button main-color-bg white-text"
+                                className="normal-button main-color-bg white-text bold-text"
                                 onClick={() => handleUpdateExpertInfo()}
                                 >
                                     Update
@@ -1009,7 +1027,7 @@ const UserPage = () => {
                                 <Loading />
                                 :
                                 <button 
-                                className="normal-button main-color-bg white-text"
+                                className="normal-button main-color-bg white-text bold-text"
                                 onClick={() => handleBankInfo()}
                                 >
                                     Update
@@ -1047,7 +1065,7 @@ const UserPage = () => {
                                 <Loading />
                                 :
                                 <button 
-                                className="normal-button main-color-bg white-text"
+                                className="normal-button main-color-bg white-text bold-text"
                                 onClick={() => handleMobileWalletInfo()}
                                 >
                                     Update

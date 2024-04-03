@@ -5,6 +5,8 @@ import { textShortener } from '../../utils/formatString'
 import { formatNumber } from '../../utils/numbers'
 import './cards.css'
 import CardImage from '../images/image'
+import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined'
+
 
 const ItemCard = ({ expert }) => {
 
@@ -56,15 +58,26 @@ const ItemCard = ({ expert }) => {
                     }
                 </div>
             </div>
+            {
+                expert.sessionPrice ?
+                <div className="flex-end margin-bottom-1">
+                    <span className="status-btn pending">
+                        <CreditCardOutlinedIcon style={{ fontSize: '1.1rem', marginRight: '.2rem', color: '#0A66C2' }} />
+                        <span className="main-color-text bold-text">{formatNumber(expert.sessionPrice)} EGP</span>
+                    </span>
+                </div>
+                :
+                null
+            }
             <div className="cards-2-list-wrapper-no-responsive">
                 <button 
                 onClick={() => navigate(`/experts/${expert._id}`)} 
-                className="normal-button main-color-bg white-text full-width margin-top-1 bold-text">
+                className="normal-button main-color-bg white-text full-width bold-text">
                     View Profile
                 </button>
                 <button 
                 onClick={() => navigate(`/experts/${expert._id}/booking`)} 
-                className="normal-button main-color-text main-color-border full-width margin-top-1 bold-text">
+                className="normal-button main-color-text main-color-border full-width bold-text">
                     Book Session
                 </button>
             </div>

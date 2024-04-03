@@ -24,6 +24,8 @@ const DoctorsPage = () => {
     const [sortBy] = useState()
     const [isAcceptPromoCodes, setIsAcceptPromoCodes] = useState()
     const [isOnline, setIsOnline] = useState()
+    const [maxPrice, setMaxPrice] = useState(5000)
+    const [minPrice, setMinPrice] = useState(50)
 
     const [page, setPage] = useState(1)
     const [limit] = useState(10)
@@ -56,7 +58,9 @@ const DoctorsPage = () => {
             limit,
             page,
             isAcceptPromoCodes,
-            isOnline
+            isOnline,
+            maxPrice,
+            minPrice
         }
 
         serverRequest.get(`/v1/experts/specialities/${speciality}`, { params: query })
@@ -163,6 +167,10 @@ const DoctorsPage = () => {
                 setIsAcceptPromoCodes={setIsAcceptPromoCodes}
                 isOnline={isOnline}
                 setIsOnline={setIsOnline}
+                maxPrice={maxPrice}
+                setMaxPrice={setMaxPrice}
+                minPrice={minPrice}
+                setMinPrice={setMinPrice}
                 />
             </div>
             {
@@ -182,6 +190,10 @@ const DoctorsPage = () => {
                     setIsShowFilter={setIsShowFilter}
                     isOnline={isOnline}
                     setIsOnline={setIsOnline}
+                    maxPrice={maxPrice}
+                    setMaxPrice={setMaxPrice}
+                    minPrice={minPrice}
+                    setMinPrice={setMinPrice}
                     />
                 </div>
                 :

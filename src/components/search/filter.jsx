@@ -9,6 +9,8 @@ import { serverRequest } from '../API/request'
 import LoyaltyOutlinedIcon from '@mui/icons-material/LoyaltyOutlined'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import AvTimerIcon from '@mui/icons-material/AvTimer'
+import Slider from '@mui/material/Slider'
+import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined'
 
 
 const Filters = ({ 
@@ -24,7 +26,11 @@ const Filters = ({
     setIsAcceptPromoCodes,
     setIsShowFilter,
     isOnline,
-    setIsOnline
+    setIsOnline,
+    maxPrice,
+    setMaxPrice,
+    minPrice,
+    setMinPrice
  }) => {
 
     const [mainSpecialities, setMainSpecialities] = useState([])
@@ -180,6 +186,29 @@ const Filters = ({
                         <span className="bold-text">No</span>
                     </li>
                 </ul>
+            </div>
+        </div>
+        <div className="filters-body-container">
+            <div className="filters-section-header">
+                <div>
+                    <MonetizationOnOutlinedIcon />
+                    <span className="small-font bold-text">Session Fees</span>
+                </div>
+            </div>
+            <div className="filters-sections-options">
+                <Slider 
+                    value={[minPrice, maxPrice]} 
+                    onChange={(event, newValue) => {
+                        setMinPrice(newValue[0])
+                        setMaxPrice(newValue[1])
+                    }} 
+                    min={50}
+                    step={50}
+                    max={5000}
+                    valueLabelDisplay="auto"
+                    getAriaValueText={(value) => <span className="bold-text">{value}</span>}
+                    marks={[{ value: 50, label: '50' }, { value: 5000, label: '5k' }]}
+                /> 
             </div>
         </div>
         {/*
