@@ -51,6 +51,7 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path="/specialities/:id" element={<DoctorsPage />} />
               <Route path="/experts/:id" element={<ExpertPage />} />
+              <Route path="/experts/:id/:name" element={<ExpertPage />} />
               <Route path="/experts/:id/booking" element={<ExpertBookingPage />} />
               <Route path="/find-expert" element={<FindExpertPage />} />
               <Route path="/policies/experiences" element={<ExperiencePage />} />

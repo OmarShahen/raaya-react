@@ -93,7 +93,7 @@ const UserPage = () => {
     const [missingFields, setMissingFields] = useState([])
 
     useEffect(() => {
-        //scroll(0, 0)
+        scroll(0, 0)
         document.title = 'User Profile'
     }, [])
 
@@ -551,17 +551,17 @@ const UserPage = () => {
                     <h6 className="no-space large-font">Expert Page URL</h6>
                     <div className="margin-top-1">
                         <strong className="main-color-text user-profile-link-container">
-                            {`https://${window.location.hostname}/experts/${user._id}`}
+                            {`https://${window.location.hostname}/experts/${user._id}/${user.firstName}`}
                         </strong>
                     </div>
                     <div className="margin-top-1 flex-space-between">
-                        <NavLink className="normal-button bold-text main-color-bg white-text center" to={`/experts/${user._id}`}>
+                        <NavLink className="normal-button bold-text main-color-bg white-text center" to={`/experts/${user._id}/${user.firstName}`}>
                             View Profile
                         </NavLink>
                         <button 
                         className="normal-button main-color-text bold-text main-color-border"
                         onClick={() => {
-                            navigator.clipboard.writeText(`https://${window.location.hostname}/experts/${user._id}`)
+                            navigator.clipboard.writeText(`https://${window.location.hostname}/experts/${user._id}/${user.firstName}`)
                             .then(() => toast.success('Copied to clipboard', { duration: 3000, position: 'top-right' }))
                             .catch(error => {
                                 toast.error(error.message)

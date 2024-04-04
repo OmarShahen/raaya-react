@@ -179,7 +179,7 @@ const ExpertPage = () => {
                             <button 
                             className="normal-button main-color-text main-color-border bold-text flex-center icon-tag"
                             onClick={() => {
-                                navigator.clipboard.writeText(`https://${window.location.hostname}/experts/${expertId}`)
+                                navigator.clipboard.writeText(`https://${window.location.hostname}/experts/${expertId}/${expert.firstName}`)
                                 .then(() => toast.success('Copied to clipboard', { duration: 3000, position: 'top-right' }))
                                 .catch(error => {
                                     toast.error(error.message)
