@@ -202,7 +202,7 @@ const ExpertBookingPage = () => {
                                     <strong>{expert?.firstName}</strong>
                                     <span className="bold-text main-color-text">{expert?.title}</span>
                                 </div>
-                                {/*<div className="ratings-start-container flex-space-between">
+                                <div className="ratings-start-container flex-space-between">
                                     <div className="ratings-stars-container">
                                         {[1, 2, 3, 4, 5].map((rate, index) => {
                                         return <Star key={index} isBright={expert?.rating >= (index+1) ? true : false} />
@@ -213,7 +213,7 @@ const ExpertBookingPage = () => {
                                 </div>
                                 <div className="tags-container">
                                     {expert?.speciality?.map((special, index) => <span key={index} className="status-btn done">{special?.name}</span>)}
-                                </div>*/}
+                                </div>
                             </div>
                         </div>
                         {/*<div> 

@@ -283,6 +283,22 @@
     color: var(--main-color);
 }
 
+.expert-stats-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.expert-stats-container div span {
+    display: block;
+}
+
+.expert-stats-container div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 @media only screen and (max-width: 900px) {
 
     .doctor-page-container {

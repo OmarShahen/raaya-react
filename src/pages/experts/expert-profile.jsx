@@ -84,6 +84,15 @@ const ExpertPage = () => {
         })
     }, [reload])
 
+    useEffect(() => {
+        const viewData = { seekerId: user._id, expertId }
+        serverRequest.post(`/v1/views`, viewData)
+        .then(() => {})
+        .catch(error => {
+            console.error(error)
+        })
+    }, [])
+
     
 
     return <div>
@@ -194,6 +203,22 @@ const ExpertPage = () => {
                             </button>
                         </div>
 
+                        </div>
+                        <div className="styled-container margin-top-1">
+                            <div className="expert-stats-container">
+                                <div>
+                                    <span className="bold-text main-color-text">{formatNumber(expert.views)}</span>
+                                    <span className="grey-text bold-text">views</span>
+                                </div>
+                                <div>
+                                    <span className="bold-text main-color-text">{formatNumber(expert.totalAppointments)}</span>
+                                    <span className="grey-text bold-text">sessions</span>
+                                </div>
+                                <div>
+                                    <span className="bold-text main-color-text">{expert.rating ? expert?.rating.toFixed(1) : 5}</span>
+                                    <span className="grey-text bold-text">rating</span>
+                                </div>
+                            </div>
                         </div>
                         <div className="styled-container margin-top-1">
                             <h4 className="remove-spacing">Description</h4>
