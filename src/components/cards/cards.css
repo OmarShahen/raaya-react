@@ -141,7 +141,7 @@
 }
 
 .doctor-review-container .doctor-review-info span {
-    padding-bottom: .5rem;
+    padding-bottom: .3rem !important;
     color: #000 !important;
     font-size: .9rem !important;
 }

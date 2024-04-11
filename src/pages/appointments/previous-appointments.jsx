@@ -11,6 +11,7 @@ const PreviousAppointments = () => {
 
     const user = useSelector(state => state.user.user)
 
+    const [reload, setReload] = useState(1)
     const [isLoading, setIsLoading] = useState(true)
     const [appointments, setAppointments] = useState([])
 
@@ -19,9 +20,9 @@ const PreviousAppointments = () => {
     useEffect(() => {
 
         const endpointURL = user.type === 'EXPERT' ?
-        `/v1/appointments/experts/${user._id}/status/PREVIOUS/payments/paid`
+        `/v1/appointments/experts/${user._id}/status/PREVIOUS`
         :
-        `/v1/appointments/seekers/${user._id}/status/PREVIOUS/payments/paid`
+        `/v1/appointments/seekers/${user._id}/status/PREVIOUS`
 
         serverRequest.get(endpointURL)
         .then(response => {
@@ -33,7 +34,7 @@ const PreviousAppointments = () => {
             console.error(error)
             toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
         })
-    }, [])
+    }, [reload])
 
     return <div className="margin-top-1">
 
@@ -46,7 +47,12 @@ const PreviousAppointments = () => {
             appointments.length === 0 ?
             <EmptySection />
             :
-            appointments.map(appointment => <AppointmentCard key={appointment._id} appointment={appointment} />)
+            appointments.map(appointment => <AppointmentCard 
+                key={appointment._id} 
+                appointment={appointment}
+                reload={reload}
+                setReload={setReload} 
+                />)
         }
     </div>
 }

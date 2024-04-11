@@ -202,7 +202,7 @@ const ExpertBookingPage = () => {
                                     <strong>{expert?.firstName}</strong>
                                     <span className="bold-text main-color-text">{expert?.title}</span>
                                 </div>
-                                <div className="ratings-start-container flex-space-between">
+                                {/*<div className="ratings-start-container flex-space-between">
                                     <div className="ratings-stars-container">
                                         {[1, 2, 3, 4, 5].map((rate, index) => {
                                         return <Star key={index} isBright={expert?.rating >= (index+1) ? true : false} />
@@ -211,12 +211,12 @@ const ExpertBookingPage = () => {
                                     </div>
                                     <span className="small-font fadded-black-color">{expert?.rating.toFixed(2)} ({formatNumber(expert?.totalReviews)} Reviews)</span>
                                 </div>
-                                {/*<div className="tags-container">
+                                <div className="tags-container">
                                     {expert?.speciality?.map((special, index) => <span key={index} className="status-btn done">{special?.name}</span>)}
                                 </div>*/}
                             </div>
                         </div>
-                        <div> 
+                        {/*<div> 
                             <div className="tags-container">
                                 {
                                     expert?.languages?.map(language => <span key={language.code} className="status-btn pending flex-center bold-text icon-tag">
@@ -249,7 +249,7 @@ const ExpertBookingPage = () => {
                                     Joining Date: {formatDistance(new Date(expert.createdAt), new Date(), { addSuffix: true })}
                                 </span>
                             </div>
-                        </div>
+                        </div>*/}
                         <div className="doctor-appointment-buttons-container">
                             <div>
                             </div>
@@ -304,6 +304,9 @@ const ExpertBookingPage = () => {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar 
                             onChange={value => {
+                                if(!service) {
+                                    return toast.error('Please select a service first', { duration: 3000, position: 'top-right' })
+                                }
                                 setWeekday(WEEK_DAYS[value.$W])
                                 setBookingDate(value.$d)
                             }} 

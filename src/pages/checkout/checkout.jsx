@@ -77,11 +77,28 @@ const CheckoutPage = () => {
         setIsPayLoading(true)
         const startDate = format(new Date(appointment.startTime), 'MMMM d yyyy')
         const startTime = format(new Date(appointment.startTime), 'hh:mm a')
-        const price = (appointment.price + (appointment.price * settings.paymentCommission)) * appointment.currencyPrice
+        const price = appointment.price
+        const walletNumber = appointment.expert?.paymentInfo?.mobileWallet?.walletNumber
         onAnalytics('appointment_checkout', { event_category: 'Appointment', event_label: 'Appointment Checkout' })
-        const message = `Appointment Confirmation\n\nHi ${appointment.seeker.firstName},\n\nThank you for scheduling your appointment with RA'AYA. Your booking has been registered!\n\nAppointment Details:\n\nID: #${appointment.appointmentId}\nDate: ${startDate}\nTime: ${startTime}\n\nTo confirm your appointment, please proceed with the payment of *${price} ${appointment.currency}* using the following payments methods:\n\n-Instapay (01006615471)\n-Vodafone Cash (01065630331)\n\nOnce payment is completed, please send us a screenshot of the payment confirmation.\n\nIf you have any questions or need assistance with payment, feel free to contact us using the provided contact information.\n\nPlease keep this receipt for your records. We look forward to meeting you!`
+        const message = `Appointment Confirmation\n\nHi ${appointment.seeker.firstName},\n\nThank you for scheduling your appointment with ${appointment.expert.firstName}. Your booking has been registered!\n\nAppointment Details:\n\nID: #${appointment.appointmentId}\nDate: ${startDate}\nTime: ${startTime}\n\nTo confirm your appointment, please proceed with the payment of *${price} EGP* using the following payments methods:\n\n-Mobile Wallet (${walletNumber})\n\nOnce payment is completed, please send us a screenshot of the payment confirmation.\n\nIf you have any questions or need assistance with payment, feel free to contact us using the provided contact information.\n\nPlease keep this receipt for your records. We look forward to meeting you!`
         const encodedMessage = encodeURIComponent(message)
-        window.location.href = `https://wa.me/201555415331?text=${encodedMessage}`
+        const paymentPhoneNumber = appointment.expert.whatsappPaymentNumber ? appointment.expert.whatsappPaymentNumber : '201555415331'
+        const customerData = {
+            seekerId: appointment.seekerId,
+            expertId: appointment.expertId
+        }
+        setIsPayLoading(true)
+        serverRequest.post(`/v1/customers`, customerData)
+        .then(() => {
+            setIsPayLoading(false)
+            window.location.href = `https://wa.me/${paymentPhoneNumber}?text=${encodedMessage}`
+        })
+        .catch(error => {
+            setIsPayLoading(false)
+            console.error(error)
+            window.location.href = `https://wa.me/${paymentPhoneNumber}?text=${encodedMessage}`
+        })
+
         setIsPayLoading(false)
     }
 
@@ -232,13 +249,13 @@ const CheckoutPage = () => {
                                 : 
                                 null
                             } 
-                            <li>
+                            {/*<li>
                                 <span>Service Fees</span>
                                 <span>{formatNumber(price * settings.paymentCommission)} {appointment.currency}</span>
-                            </li>
+                            </li>*/}
                             <li>
                                 <span className="bold-text">Total</span>
-                                <span className="bold-text">{formatNumber(getTotalPrice(price))} {appointment.currency}</span>
+                                <span className="bold-text">{/*formatNumber(getTotalPrice(price))*/ formatNumber(price)} {appointment.currency}</span>
                             </li>
                         </ul>
                     </div>
@@ -364,7 +381,7 @@ const CheckoutPage = () => {
                             <Loading />
                             :
                             <button onClick={handleSubmit} className="bold-text normal-button main-color-bg white-text full-width">
-                                Continue {formatNumber(getTotalPrice(price))} {appointment.currency}
+                                Continue {/*formatNumber(getTotalPrice(price))*/formatNumber(price)} {appointment.currency}
                             </button>
                         }
                     </div>

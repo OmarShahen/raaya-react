@@ -2,9 +2,11 @@ import { formatNumber } from '../../utils/numbers'
 import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { serverRequest } from '../API/request'
+import { toast } from 'react-hot-toast'
 
 
-const AppointmentCard = ({ appointment }) => {
+const AppointmentCard = ({ appointment, setReload, reload }) => {
 
     const navigate = useNavigate()
 
@@ -27,34 +29,37 @@ const AppointmentCard = ({ appointment }) => {
         }
     }
 
-    const renderAppointmentVerification = (verification) => {
-
-        if (verification === 'REVIEW') {
-            return 'Reviewing'
-        } else if (verification === 'ACCEPTED') {
-            return 'Accepted'
-        } else if (verification === 'REJECTED') {
-            return 'Rejected'
-        }
-    }
+   const updateAppointmentPaymentStatus = (isPaid) => {
+        toast.loading('updating...', { duration: 1000, position: 'top-right' })
+        serverRequest.patch(`/v1/appointments/${appointment._id}/payment`, { isPaid })
+        .then(response => {
+            setReload(reload + 1)
+            toast.success(response.data.message, { duration: 3000, position: 'top-right' })
+        })
+        .catch(error => {
+            console.error(error)
+            toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+        })
+   }
 
     return <div 
     onClick={() => navigate(`/appointments/${appointment._id}`)} 
     className="doctor-review-container hoverable"
     >
         <div className="doctor-review-info">
-            <span className="doctor-review-date-container bold-text">{format(new Date(appointment.startTime), 'eee, MMM dd yyyy')}</span>
+            <span className="doctor-review-date-container bold-text">{format(new Date(appointment.startTime), 'eee, MMM dd yyyy')} - #{appointment.appointmentId}</span>
             <span>
-                {user.type === 'EXPERT' ? appointment?.seeker?.firstName : appointment?.expert?.firstName}
+                {user.type === 'EXPERT' ? appointment?.seeker?.firstName : appointment?.expert?.firstName} (+{appointment.seeker.countryCode}{appointment.seeker.phone})
             </span>
-            { 
-                appointment.verification ?
-                <span className="flex-space-between-center bold-text">
-                    {renderAppointmentVerification(appointment.verification)}
-                </span>
-                : 
-                null 
-            }
+            <span className="flex-start bold-text">
+                {formatNumber(appointment.price/appointment.currencyPrice)} {appointment.currency}
+                {
+                    appointment.isPaid ?
+                    <strong className="status-btn done margin-left-1">Paid</strong>
+                    :
+                    <strong className="status-btn grey-bg white-text margin-left-1">Unpaid</strong>
+                }
+            </span> 
             <span>{format(new Date(appointment.startTime), 'hh:mm a')} - {format(new Date(appointment.endTime), 'hh:mm a')}</span>
         </div>
         <div className="doctor-review-status-container">
@@ -65,7 +70,22 @@ const AppointmentCard = ({ appointment }) => {
                 renderAppointmentStatus(appointment.startTime)   
             }
             <br />
-            <span className="doctor-review-status-number flex-end">#{formatNumber(appointment?.appointmentId)}</span>
+            {
+                !appointment.isPaid ?
+                <button 
+                onClick={e => {
+                    e.stopPropagation()
+                    updateAppointmentPaymentStatus(!appointment.isPaid)
+                }} 
+                className="normal-button main-color-bg white-text bold-text">confirm</button>
+                :
+                <button 
+                onClick={e => {
+                    e.stopPropagation()
+                    updateAppointmentPaymentStatus(!appointment.isPaid)
+                }} 
+                className="normal-button red-bg white-text bold-text">cancel</button>
+            }
         </div>
     </div>
 }

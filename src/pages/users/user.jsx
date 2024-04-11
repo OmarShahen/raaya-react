@@ -45,6 +45,7 @@ const UserPage = () => {
     const [currency, setCurrency] = useState('EGP')
 
     const [title, setTitle] = useState()
+    const [whatsappPaymentNumber, setWhatsappPaymentNumber] = useState()
     const [sessionPrice, setSessionPrice] = useState()
     const [meetingLink, setMeetingLink] = useState()
     const [description, setDescription] = useState()
@@ -72,6 +73,7 @@ const UserPage = () => {
     const [walletNumberError, setWalletNumberError] = useState()
 
     const [titleError, setTitleError] = useState()
+    const [whatsappPaymentNumberError, setWhatsappPaymentNumberError] = useState()
     const [sessionPriceError, setSessionPriceError] = useState()
     const [meetingLinkError, setMeetingLinkError] = useState()
     const [descriptionError, setDescriptionError] = useState()
@@ -115,6 +117,8 @@ const UserPage = () => {
             { field: 'pricing', message: 'Pricing is missing' },
             { field: 'paymentInfo', message: 'Payment Information is missing' },
             { field: 'languages', message: 'Spoken languages is missing' },
+            { field: 'meetingLink', message: 'Meeting link is missing' },
+            { field: 'sessionPrice', message: 'Session price is missing' },
         ]
 
         for(let i=0;i<fields.length;i++) {
@@ -139,6 +143,7 @@ const UserPage = () => {
             setGender(user.gender)
             user.dateOfBirth ? setDateOfBirth(format(new Date(user.dateOfBirth), 'yyyy-MM-dd')) : null
             setTitle(user.title)
+            setWhatsappPaymentNumber(user.whatsappPaymentNumber)
             setSessionPrice(user.sessionPrice)
             setMeetingLink(user.meetingLink)
             setDescription(user.description)
@@ -307,9 +312,11 @@ const UserPage = () => {
 
         if(languages.length === 0) return setLanguagesError('Languages is required')
 
-        if(!meetingLink) return setMeetingLinkError('Meeting link is required')
+        if(!whatsappPaymentNumber) return setWhatsappPaymentNumberError('Payment phone number is required')
 
         if(!sessionPrice) return setSessionPriceError('Session price is required')
+
+        if(!meetingLink) return setMeetingLinkError('Meeting link is required')
 
         const updateData = {
             title,
@@ -319,7 +326,8 @@ const UserPage = () => {
             languages,
             isAcceptPromoCodes,
             meetingLink,
-            sessionPrice: Number.parseInt(sessionPrice)
+            sessionPrice: Number.parseInt(sessionPrice),
+            whatsappPaymentNumber
         }
 
         setIsLoading(true)
@@ -525,14 +533,14 @@ const UserPage = () => {
                             :
                             null
                         }
-                        {
+                        {/*
                             user.type === 'EXPERT' ?
                             <li>
                                 <a href="#bank-account" className="fadded-black-text">Bank Account</a>
                             </li>
                             :
                             null
-                        }
+                        */}
                         {
                             user.type === 'EXPERT' ?
                             <li>
@@ -887,11 +895,16 @@ const UserPage = () => {
                         }
                         </div>
                         <div className="form-input-container">
-                            <label className="bold-text">Accept Coupons</label>
-                            <Switch onChange={() => setIsAcceptPromoCodes(!isAcceptPromoCodes)} checked={isAcceptPromoCodes} />
-                            <div>
-                                <span className="red-text">{promoCodesError}</span>
-                            </div>
+                            <label className="bold-text">What'sapp Number</label>
+                            <input 
+                            type="text"
+                            className="form-input"
+                            value={whatsappPaymentNumber}
+                            onClick={() => setWhatsappPaymentNumberError()}
+                            onChange={e => setWhatsappPaymentNumber(e.target.value)}
+                            placeholder="e.g. 201065630331"
+                            />
+                            <span className="red-text">{whatsappPaymentNumberError}</span>
                         </div>
                         <div className="form-input-container">
                             <label className="bold-text">Session Price</label>
@@ -917,6 +930,13 @@ const UserPage = () => {
                             placeholder="Put Google Meet link or Zoom link for your sessions"
                             />
                             <span className="red-text">{meetingLinkError}</span>
+                        </div>
+                        <div className="form-input-container">
+                            <label className="bold-text">Accept Coupons</label>
+                            <Switch onChange={() => setIsAcceptPromoCodes(!isAcceptPromoCodes)} checked={isAcceptPromoCodes} />
+                            <div>
+                                <span className="red-text">{promoCodesError}</span>
+                            </div>
                         </div>
                         <div className="margin-top-1 form-input-container" onClick={() => setDescriptionError()}>
                             <label className="bold-text">Description</label>
@@ -978,7 +998,7 @@ const UserPage = () => {
                 :
                 null
             }
-            {
+            {/*
                 user.type === 'EXPERT' ?
                 <div id="bank-account">
                     <div className="styled-container">
@@ -1039,7 +1059,7 @@ const UserPage = () => {
                 </div>
                 :
                 null
-            }
+            */}
             {
                 user.type === 'EXPERT' ?
                 <div id="mobile-wallet">

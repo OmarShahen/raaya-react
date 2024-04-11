@@ -11,6 +11,7 @@ const UpcomingAppointments = () => {
 
     const user = useSelector(state => state.user.user)
 
+    const [reload, setReload] = useState(1)
     const [isLoading, setIsLoading] = useState(true)
     const [appointments, setAppointments] = useState([])
 
@@ -19,9 +20,9 @@ const UpcomingAppointments = () => {
     useEffect(() => {
 
         const endpointURL = user.type === 'EXPERT' ?
-        `/v1/appointments/experts/${user._id}/status/UPCOMING/payments/paid`
+        `/v1/appointments/experts/${user._id}/status/UPCOMING`
         :
-        `/v1/appointments/seekers/${user._id}/status/UPCOMING/payments/paid`
+        `/v1/appointments/seekers/${user._id}/status/UPCOMING`
 
         serverRequest.get(endpointURL)
         .then(response => {
@@ -33,21 +34,59 @@ const UpcomingAppointments = () => {
             console.error(error)
             toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
         })
-    }, [])
+    }, [reload])
+
+    const searchAppointments = (e) => {
+        const value = e.target.value
+        if(!value) {
+            return setReload(reload + 1)
+        }
+        setIsLoading(true)
+        serverRequest.get(`/v1/appointments/experts/${user._id}/search/name?name=${value}`)
+        .then(response => {
+            setIsLoading(false)
+            setAppointments(response.data.appointments)
+        })
+        .catch(error => {
+            setIsLoading(false)
+            console.error(error)
+            toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
+        })
+    }
 
     return <div className="margin-top-1">
+        <div>
+            {
+                user.type === 'EXPERT' ?
+                <div className="margin-bottom-1">
+                <input 
+                type="search" 
+                className="form-input" 
+                placeholder="Search with seeker name..."
+                onChange={searchAppointments}
+                />
+                </div>
+                :
+                null
+            }
 
-        {
-            isLoading ?
-            <div className="flex-center">
-                <Loading />
-            </div>
-            :
-            appointments.length === 0 ?
-            <EmptySection />
-            :
-            appointments.map(appointment => <AppointmentCard key={appointment._id} appointment={appointment} />)
-        }
+            {
+                isLoading ?
+                <div className="flex-center">
+                    <Loading />
+                </div>
+                :
+                appointments.length === 0 ?
+                <EmptySection />
+                :
+                appointments.map(appointment => <AppointmentCard 
+                key={appointment._id} 
+                appointment={appointment} 
+                setReload={setReload}
+                reload={reload}
+                />)
+            }
+        </div>
     </div>
 }
 

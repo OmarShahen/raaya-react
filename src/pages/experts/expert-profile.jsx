@@ -135,9 +135,9 @@ const ExpertPage = () => {
                                     {[1, 2, 3, 4, 5].map((rate, index) => {
                                     return <Star key={index} isBright={expert?.rating >= (index+1) ? true : false} />
                                     })}
-                                    <span>({expert?.rating.toFixed(1)})</span>
+                                    <span>({expert.rating ? expert?.rating.toFixed(1) : null})</span>
                                 </div>
-                                <span className="small-font fadded-black-color">{expert?.rating.toFixed(1)} ({formatNumber(expert?.totalReviews)} Reviews)</span>
+                                <span className="small-font fadded-black-color">{expert.rating ? expert?.rating.toFixed(1) : null} ({formatNumber(expert?.totalReviews)} Reviews)</span>
                             </div>
                             </div>
                         </div>    
@@ -218,9 +218,9 @@ const ExpertPage = () => {
                                 {[1, 2, 3, 4, 5].map((rate, index) => {
                                 return <Star key={index} isBright={expert?.rating >= (index+1) ? true : false} />
                                 })}
-                                <span>({expert?.rating.toFixed(1)})</span>
+                                <span>({expert.rating ? expert?.rating.toFixed(1) : null})</span>
                             </div>
-                            <span className="small-font fadded-black-color">{expert?.rating.toFixed(1)} ({formatNumber(expert?.totalReviews)} Reviews)</span>
+                            <span className="small-font fadded-black-color">{expert.rating ? expert?.rating.toFixed(1) : null} ({formatNumber(expert?.totalReviews)} Reviews)</span>
                         </div>
                             <div className="margin-top-1">
                                 <span className="bold-text fadded-black-text">Communication</span>
