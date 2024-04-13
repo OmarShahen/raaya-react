@@ -212,7 +212,7 @@ const ExpertBookingPage = () => {
                                     <span className="small-font fadded-black-color">{expert?.rating.toFixed(2)} ({formatNumber(expert?.totalReviews)} Reviews)</span>
                                 </div>
                                 <div className="tags-container">
-                                    {expert?.speciality?.map((special, index) => <span key={index} className="status-btn done">{special?.name}</span>)}
+                                    {expert?.speciality?.map((special, index) => <span key={index} className="status-btn done bold-text">{special?.name}</span>)}
                                 </div>
                             </div>
                         </div>

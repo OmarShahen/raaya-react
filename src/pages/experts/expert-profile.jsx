@@ -85,6 +85,9 @@ const ExpertPage = () => {
     }, [reload])
 
     useEffect(() => {
+        if(user._id === expertId) {
+            return
+        }
         const viewData = { seekerId: user._id, expertId }
         serverRequest.post(`/v1/views`, viewData)
         .then(() => {})
@@ -92,8 +95,6 @@ const ExpertPage = () => {
             console.error(error)
         })
     }, [])
-
-    
 
     return <div>
         {
