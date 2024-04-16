@@ -1,0 +1,26 @@
+.filters-section-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 1rem;
+    padding: 0 0 0rem 0;
+}
+
+.filters-section-container div label {
+    display: block;
+    font-size: .8rem;
+    margin-bottom: .2rem;
+    font-weight: bold; 
+}
+
+.filters-section-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+    
+    .filters-section-container {
+        grid-template-columns: 100%;
+    }
+}

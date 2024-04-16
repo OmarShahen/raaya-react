@@ -13,14 +13,6 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-hot-toast'
 import CardImage from '../../components/images/image'
 import { formatNumber } from '../../utils/numbers'
-import ServiceCard from '../../components/cards/service'
-import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined'
-import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined'
-import EventAvailableOutlinedIcon from '@mui/icons-material/EventAvailableOutlined'
-import { format, formatDistance  } from 'date-fns'
-import MaleIcon from '@mui/icons-material/Male'
-import FemaleIcon from '@mui/icons-material/Female'
-import { capitalizeFirstLetter } from '../../utils/formatString'
 import EmptySection from '../../components/sections/empty-section'
 import { addMinutesToDate } from '../../utils/time'
 import { onAnalytics } from '../../../google-analytics/analytics'
@@ -89,6 +81,18 @@ const ExpertBookingPage = () => {
             console.error(error)
         })
     }, [reload])
+
+    useEffect(() => {
+        if(user._id === expertId) {
+            return
+        }
+        const viewData = { seekerId: user._id, expertId, page: 'BOOKING' }
+        serverRequest.post(`/v1/views`, viewData)
+        .then(() => {})
+        .catch(error => {
+            console.error(error)
+        })
+    }, [])
 
 
     useEffect(() => {
@@ -328,7 +332,7 @@ const ExpertBookingPage = () => {
                                 <div>
                                     {
                                         openingTimes.length === 0 ?
-                                        <EmptySection text={'There is no time slots available :('} />
+                                        <EmptySection text={service ? 'There is no time slots available :(' : 'Please select a service to show the available time slots'} />
                                         :
                                         <div className="doctor-available-slots">
                                         {

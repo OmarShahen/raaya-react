@@ -16,6 +16,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import MenuIcon from '@mui/icons-material/Menu'
 import MobileMenu from './mobile-menu'
 import { setSettings } from '../../redux/slices/settingsSlice'
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined'
 
 
 const Navbar = () => {
@@ -37,6 +38,18 @@ const Navbar = () => {
         })
         .catch(error => {
             console.error(error)
+        })
+    }, [])
+
+    useEffect(() => {
+        if(!user.isLogged) {
+            return
+        }
+        serverRequest.get(`/v1/users/${user._id}`)
+        .then(() => {})
+        .catch(error => {
+            console.error(error)
+            navigate('/auth/login')
         })
     }, [])
 
@@ -86,7 +99,7 @@ const Navbar = () => {
                                 <li className="hide-mobile">
                                     <NavLink to="/users/profile">
                                         <AccountCircleOutlinedIcon />
-                                        <span>My Profile</span>
+                                        <span>Profile</span>
                                     </NavLink>
                                 </li>
                                 
@@ -124,6 +137,17 @@ const Navbar = () => {
                                         <NavLink to="/find-expert">
                                             <ClassOutlinedIcon />
                                             <span>Find Expert</span>
+                                        </NavLink>
+                                    </li>
+                                    :
+                                    null
+                                }
+                                {
+                                    user.type === 'EXPERT' ?
+                                    <li className="hide-mobile">
+                                        <NavLink to="/analytics/views">
+                                            <InsertChartOutlinedIcon />
+                                            <span>Analytics</span>
                                         </NavLink>
                                     </li>
                                     :

@@ -248,6 +248,11 @@ progress {
     font-weight: bold;
 }
 
+.user-profile-navigation-links li .active {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
 .user-profile-missing-fields ul {
     padding: 1rem 0 0 0;
     margin: 0;

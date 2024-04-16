@@ -141,6 +141,12 @@ body {
     justify-content: flex-start;
 }
 
+.flex-space-around-center {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
 .tag-light-blue-bg {
     background-color: #00D4FF;
 }
@@ -195,6 +201,10 @@ select {
 
 button {
     font-family: 'Cairo', sans-serif;
+}
+
+.form-input:disabled {
+    background-color: #FFF !important;
 }
 
 .form-input-container label, .form-input-container strong {
@@ -274,11 +284,12 @@ button {
     position: relative !important;
 }
 
-.cards-2-list-wrapper, .cards-2-list-wrapper-no-responsive {
+.cards-2-list-wrapper, .cards-2-list-wrapper-no-responsive, .cards-2-list-wrapper-gap {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 1rem;
 }
+
 
 .password-icon {
     position: absolute;

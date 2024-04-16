@@ -71,6 +71,7 @@ const AppointmentCard = ({ appointment, setReload, reload }) => {
             }
             <br />
             {
+                user.type === 'EXPERT' ?
                 !appointment.isPaid ?
                 <button 
                 onClick={e => {
@@ -85,6 +86,8 @@ const AppointmentCard = ({ appointment, setReload, reload }) => {
                     updateAppointmentPaymentStatus(!appointment.isPaid)
                 }} 
                 className="normal-button red-bg white-text bold-text">cancel</button>
+                :
+                null
             }
         </div>
     </div>

@@ -1,0 +1,51 @@
+.rate-chart-body-container {
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.rate-chart-score-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rate-chart-score-container strong {
+    font-size: 2.5rem;
+    color: #1E2022;
+}
+
+.rate-chart-score-container span {
+    font-size: .9rem;
+    color: #677788;
+}
+
+.rate-chart-progress-container {
+    display: grid;
+    grid-template-columns: 3fr 8fr 1fr;
+    column-gap: .5rem;
+    align-items: center;
+    padding-bottom: .7rem;
+}
+
+.rate-chart-progress-container span {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    text-wrap: nowrap;
+}
+
+.rate-chart-progress-container span {
+    font-size: .8rem;
+    color: #677788;
+}
+
+@media only screen and (max-width: 950px) {
+    .rate-chart-body-container {
+        display: grid;
+        grid-template-columns: 100%;
+        row-gap: 1rem;
+    }
+}
+
+  

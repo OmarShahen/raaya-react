@@ -36,6 +36,9 @@ import ServicesPage from './pages/services/services'
 import ExpertBookingPage from './pages/experts/expert-booking'
 import PrivacyPage from './pages/policies/privacy'
 import TestingPage from './pages/testing'
+import AnalyticsViewsPage from './pages/analytics/views'
+import AnalyticsLayout from './components/layouts/analytics-layout'
+import AnalyticsFeedbackPage from './pages/analytics/feedback'
 
 
 function App() {
@@ -66,6 +69,10 @@ function App() {
               <Route path="/users/services" element={<ServicesPage />} />
               <Route path="/appointments/:id/checkout" element={<CheckoutPage />} />
 
+              <Route element={<AnalyticsLayout />}>
+                <Route path="/analytics/views" element={<AnalyticsViewsPage />} />
+                <Route path="/analytics/feedback" element={<AnalyticsFeedbackPage />} />
+              </Route>
 
               <Route element={<AppointmentLayout />}>
                   <Route path="/appointments/status/upcoming" element={<UpcomingAppointments />} />

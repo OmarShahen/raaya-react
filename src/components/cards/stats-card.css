@@ -1,0 +1,444 @@
+.encounter-card-notes-container {
+    padding-top: .5rem;
+}
+
+.card-notes-container strong {
+    color: #000;
+    padding-left: .4rem;
+}
+
+.info-list {
+    display: flex;
+    flex-direction: row;
+}
+
+.info-list svg {
+    font-size: .5rem;
+    margin-left: .4rem;
+    margin-top: .5rem;
+    color: #000;
+}
+
+.codes-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cards-tags-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.codes-container span {
+    padding: .3rem .5rem;
+    margin: .3rem 0;
+    box-shadow: 0 0 0 1px rgba(23, 23, 23, 0.1);
+    border-radius: 12px;
+    text-align: left;
+    margin-right: .8rem;
+}
+
+.prescription-date-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #F3F4F0;
+    padding: 1rem .5rem;
+}
+
+.instructions-codes-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0rem 0;
+}
+
+.instructions-codes-container span {
+    margin: .5rem 0 .5rem .7rem;
+}
+
+.note-container {
+    padding: .5rem 0;
+}
+
+.rate-container {
+    padding-top: 1rem;
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-top: 1px solid #F3F4F0;
+}
+
+.rate-container div svg:hover {
+    cursor: pointer;
+}
+
+.card-list-container {
+    padding: .5rem 0;
+    text-align: left;
+}
+
+.card-list-container ul li {
+    list-style-type: none;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+.card-contact-section-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #F3F4F0;
+    border-bottom: 1px solid #F3F4F0;
+    padding: .5rem 0;
+    margin-top: .4rem;
+}
+
+.card-list-header {
+    padding: .4rem 0 0rem 0;
+}
+
+.card-list-container ul li svg {
+    font-size: .5rem;
+    margin-left: .4rem;
+}
+
+.card-header-left-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.card-buttons-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    padding-top: 1.2rem;
+}
+
+.card-buttons-container button {
+    margin-left: .5rem;
+}
+
+.appointment-card-container {
+    padding: .5rem 1rem 0 1rem;
+    margin: 1rem 0 0 0;
+    background-color: #FFF;
+    box-shadow: var(--box-shadow);
+    border-radius: .25rem;
+    /*border-right: 3px solid dodgerblue;*/
+}
+
+.date-container {
+    padding-top: .5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.date-container div {
+    display: flex;
+    align-items: center;
+}
+
+.date-container div svg {
+    font-size: .5rem;
+    margin: 0 .2rem;
+}
+
+.date-container svg {
+    margin-left: .4rem;
+    font-size: 1.5rem;
+}
+
+
+
+/* Main card CSS */
+
+.card-container {
+    padding: 1rem;
+    border-radius: .75rem;
+    box-shadow: var(--box-shadow);
+    /*border: 0.0625rem solid rgba(231, 234, 243, 0.7);*/
+    /*background-color: #F8F8F8;*/
+    /*box-shadow: 0rem 0.375rem 0.75rem rgba(140, 152, 164, 0.075);*/
+    background-color: #FFF;
+}
+
+.card-white-bg {
+    background-color: #FFF !important;
+}
+
+.card-container:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
+.disable-hover {
+    cursor: default !important;
+    opacity: 1 !important;
+}
+
+.card-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: .3rem;
+}
+
+.card-header-container span {
+    border-radius: 50%;
+    padding: .2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-header-person-info {
+    display: flex;
+    align-items: center;
+}
+
+.card-image-description-container {
+    padding-left: .5rem;
+}
+
+.card-image-description-container strong {
+    display: block;
+}
+
+.card-header-person-info div img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+.card-header-container span {
+    color: #6B7B93;
+    font-weight: 500;
+}
+
+.card-number-container {
+    font-size: 2rem;
+    font-weight: bold;
+    padding-top: .4rem;
+}
+
+.card-body ul li {
+    list-style-type: none;
+}
+
+.stat-card-icon-container {
+    padding: .5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FF579A;
+    color: #FFF !important;
+}
+
+.card-footer {
+    padding-top: .5rem;
+    display: flex;
+    align-items: center;
+}
+
+.card-footer div span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: .6rem;
+    padding: .2rem .5rem;
+}
+
+.card-footer div span svg {
+    margin-right: .3rem;
+    font-size: .7rem;
+}
+
+.card-date-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #F2F2F2;
+}
+
+.card-date-container span svg {
+    font-size: .4rem;
+    color: var(--dark-grey);
+}
+
+.card-date-container span {
+    margin-right: .2rem;
+    font-size: .8rem;
+}
+
+.card-image-container img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+.prescription-card-container {
+    background-color: #FFF;
+    border-radius: .25rem;
+    box-shadow: var(--box-shadow);
+    padding: 1rem;
+}
+
+.prescription-card-container:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
+.prescription-card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.prescription-image-and-name-container {
+    display: flex;
+    align-items: center;
+}
+
+.prescription-name-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: .5rem;
+}
+
+.prescription-card-body {
+    padding-top: .3rem;
+}
+
+.drug-header {
+    display: flex;
+    align-items: center;
+}
+.drug-icon-container {
+    padding-right: .7rem;
+}
+
+.drug-description p {
+    margin: .3rem 0;
+}
+
+.drug-container {
+    padding-top: 1rem;
+    display: flex;
+}
+
+.card-drug-container {
+    padding: 0;
+    display: flex;
+}
+
+.drug-container:last-child {
+    border-bottom: none;
+}
+
+.card-drug-footer-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.doctor-card-container {
+    background-color: #FFF;
+    padding: 1rem .5rem;
+    border-radius: .25rem;
+    box-shadow: var(--box-shadow);
+}
+
+
+.doctor-card-header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: .7rem;
+}
+
+.doctor-card-image-and-name {
+    display: flex;
+    align-items: center;
+}
+
+.doctor-card-image-and-name div {
+    padding-left: .3rem;
+}
+
+.doctor-card-header img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;   
+}
+
+.cards-view-container {
+    margin-bottom: 1rem;
+}
+
+.appointment-card-body {
+    padding-top: .5rem;
+}
+
+.appointment-card-body ul li {
+    list-style-type: none;
+}
+
+.appointment-card-body ul li strong {
+    display: block;
+    font-weight: 600;
+}
+
+.appointment-card-body ul li span {
+    color: #4c83ee;
+    font-weight: bold;
+}
+
+.folder-header-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.folder-header-container .folder-image-container {
+    display: flex;
+    align-items: center;
+}
+
+.folder-header-container .folder-image-container svg {
+    margin-right: .5rem;
+    font-size: 4rem;
+    color: #6B7B93;
+}
+
+.folder-header-container .folder-description-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.pin-icon-container {
+    display: flex;
+    align-items: center;
+}
+
+.pin-icon-container svg {
+    font-size: 1rem;
+    color: #6B7B93;
+}
+
+@media only screen and (max-width: 950px) {
+    .card-date-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

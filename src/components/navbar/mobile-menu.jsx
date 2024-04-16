@@ -80,6 +80,26 @@ const MobileMenu = ({ isShowMobileMenu, setIsShowMobileMenu }) => {
                 null
             }
             {
+                user.isLogged && user.type === 'EXPERT' ?
+                <li>
+                    <NavLink to="/analytics/views" onClick={() => setIsShowMobileMenu(false)}>
+                        Views Analytics
+                    </NavLink>
+                </li>
+                :
+                null
+            }
+            {
+                user.isLogged && user.type === 'EXPERT' ?
+                <li>
+                    <NavLink to="/analytics/feedback" onClick={() => setIsShowMobileMenu(false)}>
+                        Feedback Analytics
+                    </NavLink>
+                </li>
+                :
+                null
+            }
+            {
                 user.isLogged ?
                 <li>
                     <NavLink to="/logout" onClick={e => {

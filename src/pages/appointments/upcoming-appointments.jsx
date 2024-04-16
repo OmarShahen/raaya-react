@@ -14,13 +14,14 @@ const UpcomingAppointments = () => {
     const [reload, setReload] = useState(1)
     const [isLoading, setIsLoading] = useState(true)
     const [appointments, setAppointments] = useState([])
+    const [isPaid, setIsPaid] = useState('ALL')
 
     useEffect(() => scroll(0, 0), [])
 
     useEffect(() => {
 
         const endpointURL = user.type === 'EXPERT' ?
-        `/v1/appointments/experts/${user._id}/status/UPCOMING`
+        `/v1/appointments/experts/${user._id}/status/UPCOMING?isPaid=${isPaid}`
         :
         `/v1/appointments/seekers/${user._id}/status/UPCOMING`
 
@@ -34,7 +35,7 @@ const UpcomingAppointments = () => {
             console.error(error)
             toast.error(error?.response?.data?.message, { duration: 3000, position: 'top-right' })
         })
-    }, [reload])
+    }, [reload, isPaid])
 
     const searchAppointments = (e) => {
         const value = e.target.value
@@ -69,7 +70,34 @@ const UpcomingAppointments = () => {
                 :
                 null
             }
-
+            {
+                user.type === 'EXPERT' ?
+                <div className="flex-space-around-center margin-bottom-1">
+                    <div>
+                        <strong 
+                        onClick={() => setIsPaid('ALL')} 
+                        className={isPaid === 'ALL' ? 'main-color-text hoverable' : 'hoverable'}>
+                            All
+                        </strong>
+                    </div>
+                    <div>
+                        <strong 
+                        onClick={() => setIsPaid('TRUE')} 
+                        className={isPaid === 'TRUE' ? 'main-color-text hoverable' : 'hoverable'}>
+                            Paid
+                        </strong>
+                    </div>
+                    <div>
+                        <strong 
+                        onClick={() => setIsPaid('FALSE')} 
+                        className={isPaid === 'FALSE' ? 'main-color-text hoverable' : 'hoverable'}>
+                            Unpaid
+                        </strong>
+                    </div>
+                </div>
+                :
+                null
+            }
             {
                 isLoading ?
                 <div className="flex-center">

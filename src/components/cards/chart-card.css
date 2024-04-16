@@ -1,0 +1,35 @@
+.chart-table-container {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: left;
+}
+
+.chart-table-wrapper {
+    max-height: 15rem;
+    overflow: hidden;
+}
+
+.chart-table-wrapper:hover {
+    overflow: auto;
+}
+
+.chart-table-container tr th {
+    color: #677788;
+    background-color: #F8FAFD;
+    font-size: .8rem;
+    padding: .7rem 1.2rem;
+}
+
+.chart-table-container tr td {
+    color: #677788;
+    font-size: .8rem;
+    padding: .8rem 1.3rem;
+}
+
+.chart-table-container tr {
+    border-bottom: 0.0625rem solid rgba(231, 234, 243, 0.7);
+}
+
+.chart-table-container tr:last-child {
+    border-bottom: none;
+}

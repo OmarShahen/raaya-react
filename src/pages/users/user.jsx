@@ -558,8 +558,9 @@ const UserPage = () => {
                 <div className="styled-container margin-top-1">
                     <h6 className="no-space large-font">Expert Page URL</h6>
                     <div className="margin-top-1">
-                        <strong className="main-color-text user-profile-link-container">
-                            {`https://${window.location.hostname}/experts/${user._id}/${user.firstName}`}
+                        <strong className="main-color-text small-font user-profile-link-container">
+                            {`https://${window.location.hostname}/experts/
+                            ${user._id}/${user.firstName}`}
                         </strong>
                     </div>
                     <div className="margin-top-1 flex-space-between">
